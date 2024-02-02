@@ -1,14 +1,15 @@
-import Hlo from "./Components/Hlo"
+import HomePage from "./Pages/UserPage/HomePage";
+import RentNurse from "./Pages/UserPage/RentNurse";
+import WhatWeDo from "./Pages/UserPage/WhatWeDo";
 
 function App() {
-
   return (
     <>
-    <Hlo/>
-     <h1>hlo</h1>
-     <h6>hlo</h6>
+      <HomePage />
+      <RentNurse/>
+      <WhatWeDo/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
