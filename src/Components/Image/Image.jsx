@@ -2,7 +2,7 @@ import React from 'react'
 
 const Image = ({src,alt,}) => {
   return (
-    <img className='w-[450px] h-[250px] rounded-md' src={src} alt={alt} />
+    <img className='w-[250px] sm:w-[450px] h-[250px] rounded-md' src={src} alt={alt} />
   )
 }
 
