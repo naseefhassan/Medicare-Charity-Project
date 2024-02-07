@@ -3,6 +3,7 @@ import Button from "../../Components/Button/Button";
 
 import volunteer from '../../assets/Images/volunteer.jpeg'
 import Ambulance from '../../assets/Images/Ambulance.jpg'
+import { Link } from 'react-router-dom';
 
 function Volunteer() {
   return (
@@ -13,10 +14,10 @@ function Volunteer() {
     </div>
     <div className='sm:flex flex-wrap mt-10 mb-10 justify-around '>
       <div className=' h-96 w-[380px] rounded-xl bg-no-repeat bg-cover bg-center flex items-end justify-center  mb-4 sm:mb-0 p-2' style={{backgroundImage:`url(${volunteer})`}}>
-        <Button label="Be a Volunteer"/>
+        <Link to={'/beavolunteer'} ><Button label="Be a Volunteer"/></Link>
       </div>
       <div className=' h-96 w-[380px] rounded-xl bg-no-repeat bg-cover bg-center flex items-end justify-center  mb-4 sm:mb-0 p-2 ' style={{backgroundImage:`url(${Ambulance})`}}>
-      <Button label="Ambulance"/>
+      <Link to={'/ambulance'}><Button label="Ambulance"/></Link>
       </div>
     </div>
     </div>

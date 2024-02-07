@@ -3,6 +3,7 @@ import Header from "../../Components/Header/Header";
 import HomePhoto from "../../assets/Images/MainPhoto.jpg";
 import "../../../public/Header.css";
 import Button from '../Button/Button';
+import { Link } from 'react-router-dom';
 
 
 function Donate() {
@@ -17,7 +18,7 @@ function Donate() {
         <br /> but how much love we put into giving.
       </h1>
       <div className="flex items-center justify-center mt-8">
-        <Button label="Donate" />
+        <Link to={"/accountdetails"}><Button label="Donate" /></Link>
       </div>
     </div>
   </div>

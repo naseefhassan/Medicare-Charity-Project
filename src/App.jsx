@@ -1,13 +1,15 @@
-
 import { BrowserRouter } from "react-router-dom";
-import LandingRouter from "./Routes/CommonPage";
+import CommonRouter from "./Routes/CommonPage";
+import UserPage from "./Routes/UserPage";
+import OTP from "./Components/OTP/OTP";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <LandingRouter />
-
+        {/* <CommonRouter />
+        <UserPage/> */}
+        <OTP/>
       </BrowserRouter>
     </>
   );

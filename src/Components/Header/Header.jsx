@@ -14,11 +14,11 @@ function Header() {
           <div className="flex justify-between items-center">
             <h1 className="sm:text-2xl">Medicare</h1>
             <ul className="flex gap-2 sm:gap-5 lg:ml-60 sm:tracking-widest text-[9px] sm:text-[15px]">
-            <Link to={'/home'}><li onClick={Home} className="hover:scale-[1.05] cursor-pointer">Home </li></Link>
+            <Link to={'/'}><li onClick={Home} className="hover:scale-[1.05] cursor-pointer">Home </li></Link>
              <Link to={"/about"}> <li className="hover:scale-[1.05]">About </li></Link>
              <Link to={"/gallary"}> <li className="hover:scale-[1.05]">Gallery</li></Link>
-              <li className="hover:scale-[1.05] text-center">Board Members</li>
-              <li className="hover:scale-[1.05]">Contact </li>
+             <Link to={"/boardmembers"}> <li className="hover:scale-[1.05] text-center">Board Members</li></Link>
+              <Link to={"/contact"}><li className="hover:scale-[1.05]">Contact </li></Link>
             </ul>
             <div className="flex gap-1 sm:gap-2">
               <Link to={"/login"}>
@@ -26,19 +26,25 @@ function Header() {
                 Login
               </button>
               </Link>
-              <button className="bg-[#545454] p-2 rounded-xl h-6 flex justify-center items-center mt-1">
+
+              <Link to={"/login"}>
+              <button className="bg-[#545454] p-2 rounded-xl h-8 flex justify-center items-center mt-1">
                 <h1 className="hover:scale-[1.05] text-white text-[9px] sm:text-[15px]">
                   Signup
                 </h1>
               </button>
+              </Link>
+
+              <Link to={'/profile'}>
               <div className="border-2 border-black rounded-full">
                 {" "}
                 <img
                   src={Profile}
-                  className="w-5 h-5 sm:w-7 sm:h-7"
+                  className="w-5 h-5 sm:w-7 sm:h-7 hover:scale-[1.05]"
                   alt=""
                 />
               </div>
+              </Link>
             </div>
           </div>
         </div>
