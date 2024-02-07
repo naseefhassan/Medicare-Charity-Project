@@ -2,16 +2,16 @@ import React, { useRef } from "react";
 
 function OTP() {
     const inputRefs = Array.from({ length: 4 }, () => useRef(null));
-
     const handleInputChange = (index, value) => {
         if (value.length === 1 && index < inputRefs.length - 1) {
             inputRefs[index + 1].current.focus();
         } 
         else if(value.length -1){
             inputRefs[index - 1].current.focus();
-
         }
     };
+
+    
 
     return (
         <>
@@ -22,14 +22,15 @@ function OTP() {
                     </h1>
 
                     {/* Input for Phone Number */}
-                    <label htmlFor="text" className="text-left">
+                    <label type="text" className="text-left">
                         Mobile Number
                     </label>
                     <input
-                        type="tel"
+                        type="text"
                         className="w-full p-1 border rounded mb-4"
                         placeholder="Enter Phone Number"
                     />
+                    <button className="mt-6 p  bg-orange-400 text-white p-2 rounded">Get otp</button>
 
                     {/* OTP Input Fields */}
                     <label htmlFor="text" className="text-left">

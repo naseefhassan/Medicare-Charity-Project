@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../../../public/Signup/Signup.css";
+import OTP from "../../Components/OTP/OTP";
+import axios from "axios";
+
 
 function Login() {
   useEffect(() => {
@@ -15,12 +18,14 @@ function Login() {
   }, []);
 
   // sigup Validation
-  const[err,errmsg]=useState("")
+  const [err, errmsg] = useState("");
+  const [showOtp, setShowOtp]=useState(false)
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-    confirmPassword:""
+    confirmPassword: "",
   });
 
   const handlechage = (e) => {
@@ -30,26 +35,38 @@ function Login() {
       [name]: value,
     }));
     console.log(name, value);
-    errmsg("")
+    errmsg("");
   };
 
-  function Validation(){
-    const pass=formData.password
-    const confirmPass = formData.confirmPassword
-    const regex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
-    const password=regex.test(pass)
-    const  confirmPassword = regex.test(confirmPass)
+  function Validation() {
+    const pass = formData.password;
+    const confirmPass = formData.confirmPassword;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const password = regex.test(pass);
+    const confirmPassword = regex.test(confirmPass);
 
-
-  if(password && confirmPassword){
-    errmsg("");
-  }else{
-    errmsg("Password doesn't match")
+    if (password && confirmPassword) {
+      errmsg("");
+      axios.post("http://localhost:5000/signupPost",formData)
+      
+    }
+    if (!password) {
+      errmsg(
+        "password must contain 8 character with uppercase, lowercase,special character and number."
+      );
+    } 
+     if (pass !== confirmPass) {
+      errmsg("Password doesn't match");
+    }
   }
-}
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("signup data submitted", formData);
+    Validation()
+    if(err===""){
+      setShowOtp(true)
+    }
+
   };
 
   return (
@@ -88,7 +105,7 @@ function Login() {
             </div>
           </div>
           {/* Signup */}
-          <div className="form sign-up ">
+          {!showOtp ?( <div className="form sign-up ">
             <h2>Create your Account</h2>
             <form onSubmit={handleSubmit}>
               <label>
@@ -128,11 +145,18 @@ function Login() {
                 />
               </label>
               <p className="text-[10px] text-center text-red-600">{err}</p>
-              <button type="submit"  onClick={Validation} className="submit custom-class-name">
+              <button
+                type="submit"
+                onClick={Validation}
+                className="submit custom-class-name"
+              >
                 Sign Up
               </button>
             </form>
-          </div>
+          </div>):
+          (<OTP/>)
+
+          }
         </div>
       </div>
     </>

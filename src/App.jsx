@@ -7,9 +7,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {/* <CommonRouter />
-        <UserPage/> */}
-        <OTP/>
+        <CommonRouter />
+        <UserPage/>
+        {/* <OTP/> */}
       </BrowserRouter>
     </>
   );
