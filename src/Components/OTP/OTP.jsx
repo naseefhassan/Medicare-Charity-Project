@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import axios from "axios";
+import React, { useRef, useState } from "react";
 
 function OTP() {
     const inputRefs = Array.from({ length: 4 }, () => useRef(null));
@@ -10,6 +11,14 @@ function OTP() {
             inputRefs[index - 1].current.focus();
         }
     };
+
+    const [phoneNumber, setPhoneNumber]=useState('')
+
+    const sentOtp= ()=>{
+        axios.post("http://localhost:5000/sentOtp",{phoneNumber})
+        console.log(phoneNumber);
+    }
+
 
     
 
@@ -29,8 +38,10 @@ function OTP() {
                         type="text"
                         className="w-full p-1 border rounded mb-4"
                         placeholder="Enter Phone Number"
+                        value={phoneNumber}
+                        onChange={(e)=>setPhoneNumber(e.target.value)}
                     />
-                    <button className="mt-6 p  bg-orange-400 text-white p-2 rounded">Get otp</button>
+                    <button onClick={sentOtp}  className="mt-6 p  bg-orange-400 text-white p-2 rounded">Get otp</button>
 
                     {/* OTP Input Fields */}
                     <label htmlFor="text" className="text-left">
