@@ -20,6 +20,7 @@ function Login() {
   // sigup Validation
   const [err, errmsg] = useState("");
   const [showOtp, setShowOtp]=useState(false)
+  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
