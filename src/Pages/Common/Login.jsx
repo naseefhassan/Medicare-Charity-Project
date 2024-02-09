@@ -20,7 +20,6 @@ function Login() {
   // sigup Validation
   const [err, errmsg] = useState("");
   const [showOtp, setShowOtp]=useState(false)
-
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -47,7 +46,7 @@ function Login() {
 
     if (password && confirmPassword) {
       errmsg("");
-      axios.post("http://localhost:5000/signupPost",formData)
+      axios.post("http://localhost:5001/signupPost",formData)
       
     }
     if (!password) {
