@@ -10,7 +10,7 @@ function CommonPage() {
     
       <Routes>
         <Route path="/" element={<HomePage/>}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/auth" element={<Login />}></Route>
       
       </Routes>
     </>

@@ -17,7 +17,7 @@ function UserPage() {
       <Routes>
         <Route path="/about/*" element={<About />}></Route>
 
-        <Route path="/gallary/*" element={<NavGallary />}></Route>
+        <Route path="/gallery/*" element={<NavGallary />}></Route>
         <Route path="/boardmembers/*" element={<BoardMembers />}></Route>
         <Route path="/contact/*" element={<Contact />}></Route>
         <Route path="/profile/*" element={<Profile />}></Route>

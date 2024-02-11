@@ -1,4 +1,4 @@
-.image {
+/* .image {
   width: 100vw;
 }
 
@@ -6,17 +6,17 @@
   .image {
     width: 435px;
   }
-}
+} */
 
-@media screen and (min-width: 420px) and (max-width: 640px) {
+/* @media screen and (min-width: 420px) and (max-width: 640px) {
   .image {
-    /* width: 200px; */
+    width: 200px;
     background-image: none;
   }
-}
+} */
 
-@media screen and (min-width: 1024px) and (max-width: 1200px) {
+/* @media screen and (min-width: 1024px) and (max-width: 1200px) {
   .image {
     width: 1070px;
   }
-}
+} */

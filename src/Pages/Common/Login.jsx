@@ -18,16 +18,19 @@ function Login() {
   }, []);
 
   // sigup Validation
+    // State variables
+
   const [err, errmsg] = useState("");
   const [showOtp, setShowOtp]=useState(false)
   
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    username: "naseef",
+    email: "email@gmail.com",
+    password: "aA1!jkjk",
+    confirmPassword: "aA1!jkjk",
   });
 
+    // Event handlers
   const handlechage = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -35,39 +38,40 @@ function Login() {
       [name]: value,
     }));
     console.log(name, value);
-    errmsg("");
+    errmsg("");// Clear error message on input change
+  };
+        
+  function Validation() {
+    const { password, confirmPassword } = formData;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordValid = regex.test(password);
+    const confirmPasswordValid = password === confirmPassword;
+
+    if (!passwordValid) {
+      errmsg(
+        "Password must contain 8 characters with uppercase, lowercase, special character, and number."
+      );
+      return false;
+    } else if (password !== confirmPassword) {
+      errmsg("Passwords do not match.");
+      return false;
+    }
+    return true;
   };
 
-  function Validation() {
-    const pass = formData.password;
-    const confirmPass = formData.confirmPassword;
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    const password = regex.test(pass);
-    const confirmPassword = regex.test(confirmPass);
-
-    if (password && confirmPassword) {
-      errmsg("");
-      axios.post("http://localhost:5001/signupPost",formData)
-      
-    }
-    if (!password) {
-      errmsg(
-        "password must contain 8 character with uppercase, lowercase,special character and number."
-      );
-    } 
-     if (pass !== confirmPass) {
-      errmsg("Password doesn't match");
-    }
-  }
-  
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("signup data submitted", formData);
-    Validation()
-    if(err===""){
-      setShowOtp(true)
-    }
 
+    if (Validation(e)) {
+      try {
+        // Submit form data
+        const res = await axios.post("http://localhost:5001/signupPost", formData);
+        console.log(res.data);
+        setShowOtp(true);
+      } catch (error) {
+        errmsg("User already exists.Please Login");
+      }
+    }
   };
 
   return (
@@ -112,6 +116,7 @@ function Login() {
               <label>
                 <span>Name</span>
                 <input
+                  required
                   type="text"
                   name="username"
                   value={formData.username}
@@ -121,6 +126,7 @@ function Login() {
               <label>
                 <span>Email</span>
                 <input
+                required
                   type="email"
                   name="email"
                   value={formData.email}
@@ -130,6 +136,7 @@ function Login() {
               <label>
                 <span>Password</span>
                 <input
+                required
                   type="password"
                   name="password"
                   value={formData.password}
@@ -139,6 +146,7 @@ function Login() {
               <label>
                 <span>Confirm Password</span>
                 <input
+                required
                   type="password"
                   name="confirmPassword"
                   value={formData.confirmPassword}
