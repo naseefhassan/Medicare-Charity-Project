@@ -21,6 +21,7 @@ function Login() {
     // State variables
 
   const [err, errmsg] = useState("");
+  const[loginmsg, setLoginmsg]=useState("")
   const [showOtp, setShowOtp]=useState(false)
   
   const [formData, setFormData] = useState({
@@ -37,7 +38,6 @@ function Login() {
       ...prevData,
       [name]: value,
     }));
-    console.log(name, value);
     errmsg("");// Clear error message on input change
   };
         
@@ -74,6 +74,32 @@ function Login() {
     }
   };
 
+// Loginform
+  const [loginFormData,setLoginFormData]=useState({
+    email:'',
+    password:''
+  })
+
+  const handlelogin = async (e)=>{
+   const {name,value}=e.target
+   setLoginFormData((prevData)=>({
+    ...prevData,
+    [name]:value
+    
+  }))
+  setLoginmsg("")
+  }
+
+  const handleLoginSubmit=async (e)=>{
+    e.preventDefault()
+    try {
+      const res=await axios.post("http://localhost:5001/LoginPost",loginFormData)
+    } catch (error) {
+      console.error("Login error",error)
+      setLoginmsg("Invalid email or password. Please try again.")
+    }
+  }
+
   return (
     <>
       <br />
@@ -83,18 +109,21 @@ function Login() {
 
         <div className="form sign-in ">
           <h2>Welcome</h2>
+          <form onSubmit={handleLoginSubmit}>
           <label>
             <span>Email</span>
-            <input type="email" name="email" />
+            <input type="email" name="email" value={loginFormData.email} onChange={handlelogin} />
           </label>
           <label>
             <span>Password</span>
-            <input type="password" name="passord" />
+            <input type="password" name="password" value={loginFormData.password} onChange={handlelogin} />
           </label>
           <p className="forgot-pass">Forgot password?</p>
-          <button type="button" className="submit custom-class-name">
+          <p className="text-[10px] text-center text-red-600">{loginmsg}</p>
+          <button type="submit" className="submit custom-class-name">
             Login
           </button>
+          </form>
         </div>
         <div className="sub-cont">
           <div className="img">
