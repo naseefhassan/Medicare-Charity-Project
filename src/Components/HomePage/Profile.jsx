@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "axios";
 import React, { useState,useEffect } from "react";
 
 function Profile() {
@@ -13,7 +13,7 @@ function Profile() {
     useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/user/profile");
+        const response = await axiosInstance.get("/user/profile");
         const { data } = response;
         console.log(data);
         if (data.profile && data.profile.length > 0) {
@@ -45,7 +45,7 @@ function Profile() {
   const profiileSubmit=async(e)=>{
     e.preventDefault()
     try {
-      const res = await axios.post("http://localhost:5001/user/profileupdate",Profile)
+      const res = await axiosInstance.post("/user/profileupdate",Profile)
       console.log("pro success");
     } catch (error) {
       console.error("profile updation failed",error)

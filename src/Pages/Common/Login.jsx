@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../../public/Signup/Signup.css";
 import OTP from "../../Components/OTP/OTP";
-import axios from "axios";
+import axiosInstance from "../../api/axios";
 
 
 function Login() {
@@ -65,7 +65,7 @@ function Login() {
     if (Validation(e)) {
       try {
         // Submit form data
-        const res = await axios.post("http://localhost:5001/signupPost", formData);
+        const res = await axiosInstance.post("/signupPost", formData);
         console.log(res.data);
         setShowOtp(true);
       } catch (error) {
@@ -93,7 +93,7 @@ function Login() {
   const handleLoginSubmit=async (e)=>{
     e.preventDefault()
     try {
-      const res=await axios.post("http://localhost:5001/LoginPost",loginFormData)
+      const res=await axiosInstance.post("/LoginPost",loginFormData)
     } catch (error) {
       console.error("Login error",error)
       setLoginmsg("Invalid email or password. Please try again.")
