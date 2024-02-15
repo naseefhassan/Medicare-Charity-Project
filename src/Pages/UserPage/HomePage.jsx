@@ -10,6 +10,8 @@ import Donate from "../../Components/HomePage/Donate";
 function HomePage() {
   return (
     <>
+    <div className="">
+
       <Donate />
       <Renting />
       <WhatWeDo />
@@ -17,6 +19,7 @@ function HomePage() {
       <Gallary />
       <Blog />
       <Footer />
+    </div>
     </>
   );
 }

@@ -3,7 +3,6 @@ import "../../../public/Signup/Signup.css";
 import OTP from "../../Components/OTP/OTP";
 import axiosInstance from "../../api/axios";
 
-
 function Login() {
   useEffect(() => {
     const imgBtn = document.querySelector(".img__btn");
@@ -18,12 +17,12 @@ function Login() {
   }, []);
 
   // sigup Validation
-    // State variables
+  // State variables
 
   const [err, errmsg] = useState("");
-  const[loginmsg, setLoginmsg]=useState("")
-  const [showOtp, setShowOtp]=useState(false)
-  
+  const [loginmsg, setLoginmsg] = useState("");
+  const [showOtp, setShowOtp] = useState(false);
+
   const [formData, setFormData] = useState({
     username: "naseef",
     email: "email@gmail.com",
@@ -31,16 +30,16 @@ function Login() {
     confirmPassword: "aA1!jkjk",
   });
 
-    // Event handlers
+  // Event handlers
   const handlechage = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    errmsg("");// Clear error message on input change
+    errmsg(""); // Clear error message on input change
   };
-        
+
   function Validation() {
     const { password, confirmPassword } = formData;
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -57,7 +56,7 @@ function Login() {
       return false;
     }
     return true;
-  };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +65,9 @@ function Login() {
       try {
         // Submit form data
         const res = await axiosInstance.post("/signupPost", formData);
-        console.log(res.data);
+        const jwtToken = res.data.token;
+        localStorage.setItem("jwtToken", jwtToken);
+
         setShowOtp(true);
       } catch (error) {
         errmsg("User already exists.Please Login");
@@ -74,31 +75,30 @@ function Login() {
     }
   };
 
-// Loginform
-  const [loginFormData,setLoginFormData]=useState({
-    email:'',
-    password:''
-  })
+  // Loginform
+  const [loginFormData, setLoginFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handlelogin = async (e)=>{
-   const {name,value}=e.target
-   setLoginFormData((prevData)=>({
-    ...prevData,
-    [name]:value
-    
-  }))
-  setLoginmsg("")
-  }
+  const handlelogin = async (e) => {
+    const { name, value } = e.target;
+    setLoginFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    setLoginmsg("");
+  };
 
-  const handleLoginSubmit=async (e)=>{
-    e.preventDefault()
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const res=await axiosInstance.post("/LoginPost",loginFormData)
+      const res = await axiosInstance.post("/LoginPost", loginFormData);
     } catch (error) {
-      console.error("Login error",error)
-      setLoginmsg("Invalid email or password. Please try again.")
+      console.error("Login error", error);
+      setLoginmsg("Invalid email or password. Please try again.");
     }
-  }
+  };
 
   return (
     <>
@@ -110,19 +110,29 @@ function Login() {
         <div className="form sign-in ">
           <h2>Welcome</h2>
           <form onSubmit={handleLoginSubmit}>
-          <label>
-            <span>Email</span>
-            <input type="email" name="email" value={loginFormData.email} onChange={handlelogin} />
-          </label>
-          <label>
-            <span>Password</span>
-            <input type="password" name="password" value={loginFormData.password} onChange={handlelogin} />
-          </label>
-          <p className="forgot-pass">Forgot password?</p>
-          <p className="text-[10px] text-center text-red-600">{loginmsg}</p>
-          <button type="submit" className="submit custom-class-name">
-            Login
-          </button>
+            <label>
+              <span>Email</span>
+              <input
+                type="email"
+                name="email"
+                value={loginFormData.email}
+                onChange={handlelogin}
+              />
+            </label>
+            <label>
+              <span>Password</span>
+              <input
+                type="password"
+                name="password"
+                value={loginFormData.password}
+                onChange={handlelogin}
+              />
+            </label>
+            <p className="forgot-pass">Forgot password?</p>
+            <p className="text-[10px] text-center text-red-600">{loginmsg}</p>
+            <button type="submit" className="submit custom-class-name">
+              Login
+            </button>
           </form>
         </div>
         <div className="sub-cont">
@@ -139,62 +149,63 @@ function Login() {
             </div>
           </div>
           {/* Signup */}
-          {!showOtp ?( <div className="form sign-up ">
-            <h2>Create your Account</h2>
-            <form onSubmit={handleSubmit}>
-              <label>
-                <span>Name</span>
-                <input
-                  required
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handlechage}
-                />
-              </label>
-              <label>
-                <span>Email</span>
-                <input
-                required
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handlechage}
-                />
-              </label>
-              <label>
-                <span>Password</span>
-                <input
-                required
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handlechage}
-                />
-              </label>
-              <label>
-                <span>Confirm Password</span>
-                <input
-                required
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handlechage}
-                />
-              </label>
-              <p className="text-[10px] text-center text-red-600">{err}</p>
-              <button
-                type="submit"
-                onClick={Validation}
-                className="submit custom-class-name"
-              >
-                Sign Up
-              </button>
-            </form>
-          </div>):
-          (<OTP/>)
-
-          }
+          {!showOtp ? (
+            <div className="form sign-up ">
+              <h2>Create your Account</h2>
+              <form onSubmit={handleSubmit}>
+                <label>
+                  <span>Name</span>
+                  <input
+                    required
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handlechage}
+                  />
+                </label>
+                <label>
+                  <span>Email</span>
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handlechage}
+                  />
+                </label>
+                <label>
+                  <span>Password</span>
+                  <input
+                    required
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handlechage}
+                  />
+                </label>
+                <label>
+                  <span>Confirm Password</span>
+                  <input
+                    required
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handlechage}
+                  />
+                </label>
+                <p className="text-[10px] text-center text-red-600">{err}</p>
+                <button
+                  type="submit"
+                  onClick={Validation}
+                  className="submit custom-class-name"
+                >
+                  Sign Up
+                </button>
+              </form>
+            </div>
+          ) : (
+            <OTP />
+          )}
         </div>
       </div>
     </>
