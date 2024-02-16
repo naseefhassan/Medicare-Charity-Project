@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "../../../public/Signup/Signup.css";
 import OTP from "../../Components/OTP/OTP";
 import axiosInstance from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate()
   useEffect(() => {
     const imgBtn = document.querySelector(".img__btn");
     const handleClick = () => {
@@ -21,13 +23,12 @@ function Login() {
 
   const [err, errmsg] = useState("");
   const [loginmsg, setLoginmsg] = useState("");
-  const [showOtp, setShowOtp] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "naseef",
-    email: "email@gmail.com",
-    password: "aA1!jkjk",
-    confirmPassword: "aA1!jkjk",
+    email: "naseef@gmail.com",
+    password: "Naseef@2002",
+    confirmPassword: "Naseef@2002",
   });
 
   // Event handlers
@@ -68,9 +69,15 @@ function Login() {
         const jwtToken = res.data.token;
         localStorage.setItem("jwtToken", jwtToken);
 
-        setShowOtp(true);
+        navigate('/')
       } catch (error) {
-        errmsg("User already exists.Please Login");
+        if(error.response && error.response.data.message==="User already exists with this email."){
+          console.log(error.response.data.message);
+          errmsg("User already exists.Please Login")
+        }else{
+          
+          errmsg("Signup error, Please try again");
+        }
       }
     }
   };
@@ -94,6 +101,8 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axiosInstance.post("/LoginPost", loginFormData);
+      navigate('/')
+
     } catch (error) {
       console.error("Login error", error);
       setLoginmsg("Invalid email or password. Please try again.");
@@ -149,7 +158,7 @@ function Login() {
             </div>
           </div>
           {/* Signup */}
-          {!showOtp ? (
+          
             <div className="form sign-up ">
               <h2>Create your Account</h2>
               <form onSubmit={handleSubmit}>
@@ -203,9 +212,8 @@ function Login() {
                 </button>
               </form>
             </div>
-          ) : (
-            <OTP />
-          )}
+          
+          
         </div>
       </div>
     </>
