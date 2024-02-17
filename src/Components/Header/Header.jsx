@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import Profile from "../../assets/Images/Profile.png";
 import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
+import { useState } from "react";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,16 +40,16 @@ function Header() {
                 <Link to={"/"}>Home</Link>
               </li>
               <li className="hover:scale-[1.05]">
-                <Link to={"/about"}>About</Link>
+                <Link to={"/user/about"}>About</Link>
               </li>
               <li className="hover:scale-[1.05]">
-                <Link to={"/gallery"}>Gallery</Link>
+                <Link to={"/user/gallery"}>Gallery</Link>
               </li>
               <li className="hover:scale-[1.05] ">
-                <Link to={"/boardmembers"}>Board Members</Link>
+                <Link to={"/user/boardmembers"}>Board Members</Link>
               </li>
               <li className="hover:scale-[1.05]">
-                <Link to={"/contact"}>Contact</Link>
+                <Link to={"/user/contact"}>Contact</Link>
               </li>
             </ul>
 
@@ -62,7 +62,7 @@ function Header() {
                 </button>
               </Link>
 
-              <Link to={"/profile"}>
+              <Link to={"/user/profile"}>
                 <div className="border-2 border-black rounded-full">
                   <img
                     src={Profile}

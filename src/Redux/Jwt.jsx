@@ -17,7 +17,6 @@ const authSlice = createSlice({
     }
   }
 });
-console.log(authSlice,"2");
 
 
 export const {setToken,removeTOken}=authSlice.actions

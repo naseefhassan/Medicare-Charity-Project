@@ -1,4 +1,3 @@
-import React from "react";
 import About from "../Pages/UserPage/Navigation/About";
 import NavGallary from "../Pages/UserPage/Navigation/NavGallary";
 import BoardMembers from "../Components/HomePage/BoardMembers";

@@ -6,7 +6,7 @@ function GetOtp({onSentOtp}) {
 
     const handleSentOtp = async () => {
         try {
-            const res = await axios.post("http://localhost:5001/sentOtp", { phoneNumber })
+            const res = await axios.post("http://localhost:5001/verifyOtp", { phoneNumber })
             onSentOtp()
             console.log("PhoneNumber sended",res );
         } catch (error) {
@@ -19,14 +19,14 @@ function GetOtp({onSentOtp}) {
       <label className="text-left">Mobile Number</label>
       <input
         type="text"
-        className="w-full p-1 border rounded mb-4"
+        className="w-full p-1 mb-4 border rounded"
         placeholder="Enter Phone Number"
         value={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
       <button
         onClick={handleSentOtp}
-        className="mt-6 bg-orange-400 text-white p-2 rounded w-full" >
+        className="w-full p-2 mt-6 text-white bg-orange-400 rounded" >
         Get OTP
       </button>
     </div>

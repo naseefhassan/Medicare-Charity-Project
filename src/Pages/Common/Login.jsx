@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../../public/Signup/Signup.css";
-import OTP from "../../Components/OTP/OTP";
 import axiosInstance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -68,6 +67,7 @@ function Login() {
         const res = await axiosInstance.post("/signupPost", formData);
         const jwtToken = res.data.token;
         localStorage.setItem("jwtToken", jwtToken);
+        
 
         navigate('/')
       } catch (error) {
@@ -101,7 +101,15 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axiosInstance.post("/LoginPost", loginFormData);
-      navigate('/')
+      const {role}=res.data
+      console.log(role);
+      if(role === 'user'){
+        navigate('/')
+      }else{
+        
+        navigate('/admin/adminhome')
+      }
+      
 
     } catch (error) {
       console.error("Login error", error);

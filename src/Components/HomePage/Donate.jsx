@@ -18,7 +18,7 @@ function Donate() {
         <br /> but how much love we put into giving.
       </h1>
       <div className="flex items-center justify-center mt-8 ">
-        <Link to={"/accountdetails"}><Button label="Donate" /></Link>
+        <Link to={"/user/accountdetails"}><Button label="Donate" /></Link>
       </div>
     </div>
   </div>
