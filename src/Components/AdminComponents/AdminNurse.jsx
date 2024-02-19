@@ -1,20 +1,52 @@
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import AdminHeader from "./AdminHeader";
+import axiosInstance from "../../api/axios";
+
 
 function AdminNurse() {
+  const [NurseData, setNurseData] = useState({
+    username: "",
+    gender: "",
+    age: "",
+    phoneNumber: "",
+    Qualification:'',
+    Experience: "",
+    Image:''
+  });
+
+  const handleChange=(e)=>{
+    const {name,value}=e.target;
+    setNurseData((preData)=>({
+      ...preData,
+      [name]:value
+    }))
+    console.log(name,value);
+  }
+
+  const DataSubmit= async(e)=>{
+    e.preventDefault()
+    try {
+      const res = axiosInstance.post('/admin/PostNurse',NurseData)
+    } catch (error) {
+      console.error(error,"PostNurse Error")
+    }
+    
+  }
   return (
     <>
-      <div>
+      <div className="bg-gray-100 ">
         <AdminHeader />
-        <div className="">
-          <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div >
+          <div className="flex justify-center h-screen mt-2">
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
               <h1 className="mb-4 text-2xl font-bold text-center tc">
                 Add Nurse
               </h1>
 
-              <form>
+              <form onSubmit={DataSubmit}>
                 <label
-                  className="block mb-1 text-sm font-medium text-gray-600"
+                  className="block text-sm font-medium text-gray-600"
                   htmlFor="name"
                 >
                   Name:
@@ -24,11 +56,13 @@ function AdminNurse() {
                   id="name"
                   name="username"
                   required
-                  className="w-full px-4 py-2 mb-4 border rounded-md"
+                  value={NurseData.username}
+                  onChange={handleChange}
+                  className="w-full px-4 py-1 border rounded-md"
                 />
 
                 <label
-                  className="block mb-1 text-sm font-medium text-gray-600"
+                  className="block text-sm font-medium text-gray-600"
                   htmlFor="gender"
                 >
                   Gender:
@@ -37,14 +71,16 @@ function AdminNurse() {
                   id="gender"
                   name="gender"
                   required
-                  className="w-full px-4 py-2 mb-4 border rounded-md"
+                  value={NurseData.gender}
+                  onChange={handleChange}
+                  className="w-full px-4 py-1 border rounded-md"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
 
                 <label
-                  className="block mb-1 text-sm font-medium text-gray-600"
+                  className="block text-sm font-medium text-gray-600"
                   htmlFor="age"
                 >
                   Age:
@@ -54,11 +90,13 @@ function AdminNurse() {
                   id="age"
                   name="age"
                   required
-                  className="w-full px-4 py-2 mb-4 border rounded-md"
+                  value={NurseData.age}
+                  onChange={handleChange}
+                  className="w-full px-4 py-1 border rounded-md"
                 />
 
                 <label
-                  className="block mb-1 text-sm font-medium text-gray-600"
+                  className="block text-sm font-medium text-gray-600"
                   htmlFor="phoneNumber"
                 >
                   Phone Number:
@@ -68,10 +106,27 @@ function AdminNurse() {
                   id="phoneNumber"
                   name="phoneNumber"
                   required
-                  className="w-full px-4 py-2 mb-4 border rounded-md"
+                  value={NurseData.phoneNumber}
+                  onChange={handleChange}
+                  className="w-full px-4 py-1 border rounded-md"
+                />
+                 <label
+                  className="block text-sm font-medium text-gray-600"
+                  htmlFor="Qualification"
+                >
+                  Qualification:
+                </label>
+                <input
+                  type="text"
+                  id="Qualification"
+                  name="Qualification"
+                  required
+                  value={NurseData.Qualification}
+                  onChange={handleChange}
+                  className="w-full px-4 py-1 border rounded-md"
                 />
                 <label
-                  className="block mb-1 text-sm font-medium text-gray-600"
+                  className="block text-sm font-medium text-gray-600"
                   htmlFor="Experience"
                 >
                   Experience:
@@ -81,11 +136,13 @@ function AdminNurse() {
                   id="Experience"
                   name="Experience"
                   required
-                  className="w-full px-4 py-2 mb-4 border rounded-md"
+                  value={NurseData.Experience}
+                  onChange={handleChange}
+                  className="w-full px-4 py-1 border rounded-md"
                 />
 
-<label
-                  className="block mb-1 text-sm font-medium text-gray-600"
+                <label
+                  className="block text-sm font-medium text-gray-600"
                   htmlFor="Image"
                 >
                   Image:
@@ -95,12 +152,14 @@ function AdminNurse() {
                   id="Image"
                   name="Image"
                   required
-                  className="w-full px-4 py-2 mb-4 border rounded-md"
+                  value={NurseData.Image}
+                  onChange={handleChange}
+                  className="w-full px-4 py-1 border rounded-md"
                 />
 
                 <button
                   type="submit"
-                  className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
+                  className="px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
                 >
                   Submit
                 </button>

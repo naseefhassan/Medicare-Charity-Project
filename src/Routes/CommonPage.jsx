@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "../Pages/UserPage/HomePage";
-import Login from "../Pages/Common/Login";
 import OTP from "../Components/OTP/OTP";
+import Login from "../Pages/Common/Login";
 
    function CommonPage() {
   return (

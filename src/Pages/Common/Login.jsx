@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import "../../../public/Signup/Signup.css";
 import axiosInstance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import {  useDispatch } from "react-redux";
+import { setToken } from "../../Redux/Jwt";
 
 function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
   useEffect(() => {
     const imgBtn = document.querySelector(".img__btn");
     const handleClick = () => {
@@ -64,18 +67,22 @@ function Login() {
     if (Validation(e)) {
       try {
         // Submit form data
+        console.log("res")
+
         const res = await axiosInstance.post("/signupPost", formData);
+        console.log(res,"res")
         const jwtToken = res.data.token;
         localStorage.setItem("jwtToken", jwtToken);
-        
-
-        navigate('/')
+        dispatch(setToken(jwtToken))
+        navigate("/");
       } catch (error) {
-        if(error.response && error.response.data.message==="User already exists with this email."){
-          console.log(error.response.data.message);
-          errmsg("User already exists.Please Login")
-        }else{
-          
+        if (
+          error.response &&
+          error.response.data.message === "User already exists with this email."
+        ) {
+          console.log(error.response.data.message, "err");
+          errmsg("User already exists.Please Login");
+        } else {
           errmsg("Signup error, Please try again");
         }
       }
@@ -101,16 +108,13 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axiosInstance.post("/LoginPost", loginFormData);
-      const {role}=res.data
+      const { role } = res.data;
       console.log(role);
-      if(role === 'user'){
-        navigate('/')
-      }else{
-        
-        navigate('/admin/adminhome')
+      if (role === "user") {
+        navigate("/");
+      } else {
+        navigate("/admin/adminhome");
       }
-      
-
     } catch (error) {
       console.error("Login error", error);
       setLoginmsg("Invalid email or password. Please try again.");
@@ -166,62 +170,60 @@ function Login() {
             </div>
           </div>
           {/* Signup */}
-          
-            <div className="form sign-up ">
-              <h2>Create your Account</h2>
-              <form onSubmit={handleSubmit}>
-                <label>
-                  <span>Name</span>
-                  <input
-                    required
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handlechage}
-                  />
-                </label>
-                <label>
-                  <span>Email</span>
-                  <input
-                    required
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handlechage}
-                  />
-                </label>
-                <label>
-                  <span>Password</span>
-                  <input
-                    required
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handlechage}
-                  />
-                </label>
-                <label>
-                  <span>Confirm Password</span>
-                  <input
-                    required
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handlechage}
-                  />
-                </label>
-                <p className="text-[10px] text-center text-red-600">{err}</p>
-                <button
-                  type="submit"
-                  onClick={Validation}
-                  className="submit custom-class-name"
-                >
-                  Sign Up
-                </button>
-              </form>
-            </div>
-          
-          
+
+          <div className="form sign-up ">
+            <h2>Create your Account</h2>
+            <form onSubmit={handleSubmit}>
+              <label>
+                <span>Name</span>
+                <input
+                  required
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handlechage}
+                />
+              </label>
+              <label>
+                <span>Email</span>
+                <input
+                  required
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handlechage}
+                />
+              </label>
+              <label>
+                <span>Password</span>
+                <input
+                  required
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handlechage}
+                />
+              </label>
+              <label>
+                <span>Confirm Password</span>
+                <input
+                  required
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handlechage}
+                />
+              </label>
+              <p className="text-[10px] text-center text-red-600">{err}</p>
+              <button
+                type="submit"
+                onClick={Validation}
+                className="submit custom-class-name"
+              >
+                Sign Up
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </>
