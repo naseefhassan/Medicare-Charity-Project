@@ -1,12 +1,11 @@
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
-import axiosInstance from "../../api/axios";
+import axiosInstance  from  '../../api/axios'
+import { data } from "autoprefixer";
 
+function EditNurse() {
 
-function AdminNurse() {
-  const [NurseData, setNurseData] = useState({
+  const[EditNurse, SetEditedNurse]=useState({
     username: "",
     gender: "",
     age: "",
@@ -14,41 +13,40 @@ function AdminNurse() {
     Qualification:'',
     Experience: "",
     Image:''
-  });
+  })
 
-  const handleChange=(e)=>{
-    const {name,value}=e.target;
-    setNurseData((preData)=>({
-      ...preData,
+  const handleChage =(e)=>{
+    const{name,value}=e.target
+
+    SetEditedNurse((PrevData)=>({
+      ...PrevData,
       [name]:value
     }))
-    console.log(name,value);
   }
 
-  const DataSubmit= async(e)=>{
+  const DataSubmit=(e)=>{
     e.preventDefault()
     try {
-      const res = axiosInstance.post('/admin/PostNurse',NurseData)
+  const  res = axiosInstance.post('/admin/editnurse/:id',EditNurse)
     } catch (error) {
-      console.error(error,"PostNurse Error")
+      console.error(error,'error in editing');
     }
-    
   }
   return (
     <>
       <div className="bg-gray-100 ">
         <AdminHeader />
-        <div >
+        <div>
           <div className="flex justify-center h-screen mt-2">
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
               <h1 className="mb-4 text-2xl font-bold text-center tc">
-                Add Nurse
+                Edit Nurse
               </h1>
-
-              <form onSubmit={DataSubmit} enctype='multipart/form-data'>
+              <form onSubmit={DataSubmit}>
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="name"
+                  
                 >
                   Name:
                 </label>
@@ -56,12 +54,10 @@ function AdminNurse() {
                   type="text"
                   id="name"
                   name="username"
-                  required
-                  value={NurseData.username}
-                  onChange={handleChange}
                   className="w-full px-4 py-1 border rounded-md"
+                  value={EditNurse.username}
+                  onChange={handleChage}
                 />
-
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="gender"
@@ -71,10 +67,9 @@ function AdminNurse() {
                 <select
                   id="gender"
                   name="gender"
-                  required
-                  value={NurseData.gender}
-                  onChange={handleChange}
                   className="w-full px-4 py-1 border rounded-md"
+                  value={EditNurse.gender}
+                  onChange={handleChage}
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -90,12 +85,10 @@ function AdminNurse() {
                   type="number"
                   id="age"
                   name="age"
-                  required
-                  value={NurseData.age}
-                  onChange={handleChange}
                   className="w-full px-4 py-1 border rounded-md"
+                  value={EditNurse.age}
+                  onChange={handleChage}
                 />
-
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="phoneNumber"
@@ -106,12 +99,11 @@ function AdminNurse() {
                   type="tel"
                   id="phoneNumber"
                   name="phoneNumber"
-                  required
-                  value={NurseData.phoneNumber}
-                  onChange={handleChange}
                   className="w-full px-4 py-1 border rounded-md"
-                /> 
-                 <label
+                  value={EditNurse.phoneNumber}
+                  onChange={handleChage}
+                />
+                <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="Qualification"
                 >
@@ -121,10 +113,9 @@ function AdminNurse() {
                   type="text"
                   id="Qualification"
                   name="Qualification"
-                  required
-                  value={NurseData.Qualification}
-                  onChange={handleChange}
                   className="w-full px-4 py-1 border rounded-md"
+                  value={EditNurse.Qualification}
+                  onChange={handleChage}
                 />
                 <label
                   className="block text-sm font-medium text-gray-600"
@@ -136,12 +127,10 @@ function AdminNurse() {
                   type="text"
                   id="Experience"
                   name="Experience"
-                  required
-                  value={NurseData.Experience}
-                  onChange={handleChange}
                   className="w-full px-4 py-1 border rounded-md"
+                  value={EditNurse.Experience}
+                  onChange={handleChage}
                 />
-
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="Image"
@@ -152,17 +141,15 @@ function AdminNurse() {
                   type="file"
                   id="Image"
                   name="Image"
-                  required
-                  value={NurseData.Image}
-                  onChange={handleChange}
                   className="w-full px-4 py-1 border rounded-md"
+                  value={EditNurse.Image}
+                  onChange={handleChage}
                 />
-
                 <button
                   type="submit"
                   className="px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
                 >
-                  Submit
+                  Edit
                 </button>
               </form>
             </div>
@@ -173,4 +160,4 @@ function AdminNurse() {
   );
 }
 
-export default AdminNurse;
+export default EditNurse;
