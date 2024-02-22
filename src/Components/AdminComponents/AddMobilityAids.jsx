@@ -22,14 +22,14 @@ function AddMobilityAids() {
   };
 
   const Submit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const res = axiosInstance.post("/admin/mobilityAids", Mobility);
     } catch (error) {
       console.error(error);
     }
   };
-  console.log(Mobility,'mob')
+  console.log(Mobility, "mob");
   return (
     <div>
       <AdminHeader
@@ -39,8 +39,8 @@ function AddMobilityAids() {
         Edit={"Ediit Mobility Aids"}
       />
 
-      <div className="flex justify-center h-screen mt-2">
-        <div className="flex-wrap w-1/3 p-8 my-5 bg-white rounded shadow-md">
+      <div className="flex justify-center  mt-2">
+        <div className="flex-wrap w-1/3 p-8 my-5 bg-gradient-to-r from-purple-400 to-blue-500 rounded shadow-md">
           <h1 className="mb-4 text-2xl font-bold text-center tc">
             Mobility Aids
           </h1>
@@ -140,21 +140,21 @@ function AddMobilityAids() {
               className="w-full px-4 py-1 border rounded-md"
             />
 
-<label
-                  className="block text-sm font-medium text-gray-600"
-                  htmlFor="Image"
-                >
-                  Image:
-                </label>
-                <input
-                  type="file"
-                  id="Image"
-                  name="Image"
-                  required
-                  value={Mobility.Image}
-                  onChange={handleChange}
-                  className="w-full px-4 py-1 border rounded-md"
-                />
+            <label
+              className="block text-sm font-medium text-gray-600"
+              htmlFor="Image"
+            >
+              Image:
+            </label>
+            <input
+              type="file"
+              id="Image"
+              name="Image"
+              required
+              value={Mobility.Image}
+              onChange={handleChange}
+              className="w-full px-4 py-1 border rounded-md"
+            />
 
             <button
               type="submit"
