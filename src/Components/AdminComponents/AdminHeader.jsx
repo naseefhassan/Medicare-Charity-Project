@@ -1,23 +1,24 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
-function AdminHeader() {
+function AdminHeader({ title, Show, Add, Edit }) {
   return (
-    <div className="flex items-center justify-around p-2 bg-gray-400 ">
-      <h1 className="font-bold sm:text-3xl">Nurse Page</h1>
+    <div className="flex flex-wrap items-center justify-around p-2 bg-gray-400 text-[13px] ">
+      <h1 className="font-bold sm:text-3xl">{title}</h1>
       <div className="flex gap-1 sm:gap-3">
         <button className="bg-[#FF9D2B] p-2 sm:p-4 flex justify-center items-center hover:scale-[1.05] ">
-          Show Nurse
+          {Show}
         </button>
-     
-        <Link to={'/admin/adminnurse'}>   <button className="bg-[#FF9D2B] p-2 sm:p-4 flex justify-center items-center hover:scale-[1.05] ">
-          Add Nurse
-        </button>
-</Link>
 
-        <Link to={'/admin/editnurse'} >
+        <Link to={"/admin/adminnurse"}>
+          <button className="bg-[#FF9D2B] p-2 sm:p-4 flex justify-center items-center hover:scale-[1.05] ">
+            {Add}
+          </button>
+        </Link>
+
+        <Link to={"/admin/editnurse"}>
           <button className="bg-[#FF9D2B] p-2 sm:p-4 flex justify-center items-center hover:scale-[1.05]  ">
-            Edit Nurse
+            {Edit}
           </button>
         </Link>
       </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import "../../../public/Signup/Signup.css";
 import axiosInstance from "../../api/axios";
@@ -48,6 +49,7 @@ function Login() {
     const { password, confirmPassword } = formData;
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     const passwordValid = regex.test(password);
+    // eslint-disable-next-line no-unused-vars
     const confirmPasswordValid = password === confirmPassword;
 
     if (!passwordValid) {
@@ -117,7 +119,6 @@ function Login() {
         navigate("/admin/adminhome");
       }
     } catch (error) {
-      console.error("Login error", error);
       setLoginmsg("Invalid email or password. Please try again.");
     }
   };

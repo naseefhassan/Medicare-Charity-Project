@@ -34,10 +34,11 @@ function AdminNurse() {
     }
     
   }
+  
   return (
     <>
       <div className="bg-gray-100 ">
-        <AdminHeader />
+        <AdminHeader title={"Add Nurse"}  Show={'Show Nurse'} Add={'Add nurse'} Edit={'Ediit Nurse'}/>
         <div >
           <div className="flex justify-center h-screen mt-2">
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">

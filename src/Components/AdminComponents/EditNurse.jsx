@@ -1,41 +1,46 @@
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
-import axiosInstance  from  '../../api/axios'
+import axiosInstance from "../../api/axios";
 import { data } from "autoprefixer";
 
 function EditNurse() {
-
-  const[EditNurse, SetEditedNurse]=useState({
+  const [EditNurse, SetEditedNurse] = useState({
     username: "",
     gender: "",
     age: "",
     phoneNumber: "",
-    Qualification:'',
+    Qualification: "",
     Experience: "",
-    Image:''
-  })
+    Image: "",
+  });
 
-  const handleChage =(e)=>{
-    const{name,value}=e.target
+  const handleChage = (e) => {
+    const { name, value } = e.target;
 
-    SetEditedNurse((PrevData)=>({
+    SetEditedNurse((PrevData) => ({
       ...PrevData,
-      [name]:value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
-  const DataSubmit=(e)=>{
-    e.preventDefault()
+  const DataSubmit = (e) => {
+    e.preventDefault();
     try {
-  const  res = axiosInstance.post('/admin/editnurse/:id',EditNurse)
+      const res = axiosInstance.post("/admin/editnurse/:id", EditNurse);
     } catch (error) {
-      console.error(error,'error in editing');
+      console.error(error, "error in editing");
     }
-  }
+  };
   return (
     <>
       <div className="bg-gray-100 ">
-        <AdminHeader />
+        <AdminHeader
+          title={"Edit Nurse"}
+          Show={"Show Nurse"}
+          Add={"Add nurse"}
+          Edit={"Edit Nurse"}
+        />
+
         <div>
           <div className="flex justify-center h-screen mt-2">
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
@@ -46,7 +51,6 @@ function EditNurse() {
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="name"
-                  
                 >
                   Name:
                 </label>
