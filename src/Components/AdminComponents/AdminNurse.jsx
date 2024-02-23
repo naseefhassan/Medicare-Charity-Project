@@ -4,49 +4,58 @@ import { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 
-
 function AdminNurse() {
-  const [NurseData, setNurseData] = useState({
-    username: "",
-    gender: "",
-    age: "",
-    phoneNumber: "",
-    Qualification:'',
-    Experience: "",
-    Image:''
-  });
+  const [username, setUsername] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [phoneNumber, setPhonenumber] = useState("");
+  const [Qualification, setQualification] = useState("");
+  const [Experience, setExperience] = useState("");
+  const [Image, setImage] = useState("");
 
-  const handleChange=(e)=>{
-    const {name,value}=e.target;
-    setNurseData((preData)=>({
-      ...preData,
-      [name]:value
-    }))
-    console.log(name,value);
-  }
+  const DataSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
 
-  const DataSubmit= async(e)=>{
-    e.preventDefault()
+    formData.append("username", username);
+    formData.append("gender", gender);
+    formData.append("age", age);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("Qualification", Qualification);
+    formData.append("Experience", Experience);
+    formData.append("Image", Image);
+
     try {
-      const res = axiosInstance.post('/admin/PostNurse',NurseData)
+      const res = axiosInstance.post("/admin/PostNurse", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("file uploaded", res);
     } catch (error) {
-      console.error(error,"PostNurse Error")
+      console.error(error, "PostNurse Error");
     }
-    
-  }
-  
+  };
+
   return (
     <>
       <div className="bg-gray-100 ">
-        <AdminHeader title={"Add Nurse"}  Show={'Show Nurse'} Add={'Add nurse'} Edit={'Ediit Nurse'}/>
-        <div >
+        <AdminHeader
+          title={"Add Nurse"}
+          Show={"Show Nurse"}
+          Add={"Add nurse"}
+          Edit={"Ediit Nurse"}
+          Addroute={"/admin/adminnurse"}
+          Editroute={"/admin/editnurse"}
+        />
+        <div>
           <div className="flex justify-center h-screen mt-2">
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
               <h1 className="mb-4 text-2xl font-bold text-center tc">
                 Add Nurse
               </h1>
 
-              <form onSubmit={DataSubmit} enctype='multipart/form-data'>
+              <form onSubmit={DataSubmit} enctype="multipart/form-data">
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="name"
@@ -58,8 +67,8 @@ function AdminNurse() {
                   id="name"
                   name="username"
                   required
-                  value={NurseData.username}
-                  onChange={handleChange}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
                 />
 
@@ -73,8 +82,8 @@ function AdminNurse() {
                   id="gender"
                   name="gender"
                   required
-                  value={NurseData.gender}
-                  onChange={handleChange}
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
                 >
                   <option value="male">Male</option>
@@ -92,8 +101,8 @@ function AdminNurse() {
                   id="age"
                   name="age"
                   required
-                  value={NurseData.age}
-                  onChange={handleChange}
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
                 />
 
@@ -108,11 +117,11 @@ function AdminNurse() {
                   id="phoneNumber"
                   name="phoneNumber"
                   required
-                  value={NurseData.phoneNumber}
-                  onChange={handleChange}
+                  value={phoneNumber}
+                  onChange={(e) => setPhonenumber(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
-                /> 
-                 <label
+                />
+                <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="Qualification"
                 >
@@ -123,8 +132,8 @@ function AdminNurse() {
                   id="Qualification"
                   name="Qualification"
                   required
-                  value={NurseData.Qualification}
-                  onChange={handleChange}
+                  value={Qualification}
+                  onChange={(e) => setQualification(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
                 />
                 <label
@@ -138,8 +147,8 @@ function AdminNurse() {
                   id="Experience"
                   name="Experience"
                   required
-                  value={NurseData.Experience}
-                  onChange={handleChange}
+                  value={Experience}
+                  onChange={(e) => setExperience(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
                 />
 
@@ -154,8 +163,7 @@ function AdminNurse() {
                   id="Image"
                   name="Image"
                   required
-                  value={NurseData.Image}
-                  onChange={handleChange}
+                  onChange={(e) => setImage(e.target.files[0])}
                   className="w-full px-4 py-1 border rounded-md"
                 />
 

@@ -36,13 +36,16 @@ function AddMobilityAids() {
         title={"Mobility Aids"}
         Show={"Show Mobility Aids"}
         Add={"Add Mobility Aids"}
-        Edit={"Ediit Mobility Aids"}
+        Edit={"Edit Mobility Aids"}
+        Addroute={'/admin/mobilityAids'}
+        Editroute={'admin/editMobilityAids'}
+        
       />
 
-      <div className="flex justify-center  mt-2">
-        <div className="flex-wrap w-1/3 p-8 my-5 bg-gradient-to-r from-purple-400 to-blue-500 rounded shadow-md">
+      <div className="flex justify-center mt-2">
+        <div className="flex-wrap w-1/3 p-8 my-5 rounded shadow-md bg-gradient-to-r from-purple-400 to-blue-500">
           <h1 className="mb-4 text-2xl font-bold text-center tc">
-            Mobility Aids
+          Add Mobility Aids
           </h1>
 
           <form onSubmit={Submit}>
