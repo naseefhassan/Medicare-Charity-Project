@@ -1,8 +1,12 @@
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
+import { useParams } from "react-router-dom";
 
 function EditNurse() {
+
+  const { nurseId } = useParams();
+
   const [EditNurse, SetEditedNurse] = useState({
     username: "",
     gender: "",
@@ -21,11 +25,12 @@ function EditNurse() {
       [name]: value,
     }));
   };
-
-  const DataSubmit = (e) => {
-    e.preventDefault();
+ 
+  const DataSubmit = (event) => {
+    event.preventDefault();
     try {
-      const res = axiosInstance.post("/admin/editnurse/:id", EditNurse);
+      const res = axiosInstance.put(`/admin/editnurse/${nurseId}`, EditNurse);
+          console.log(res.data); 
     } catch (error) {
       console.error(error, "error in editing");
     }
@@ -153,9 +158,10 @@ function EditNurse() {
                 />
                 <button
                   type="submit"
+                  onClick={DataSubmit}
                   className="px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
                 >
-                  Edit
+                  submit
                 </button>
               </form>
             </div>

@@ -16,6 +16,15 @@ function ShowNurse() {
     };
     fetchdata();
   }, []);
+
+  const editnurse = async (nurseId) => {
+    try {
+      console.log(nurseId,'nurseeeeed');
+      const res= await axiosInstance.put(`/admin/editnurse/${nurseId}`)
+    } catch (error) {
+      console.error(error,"nurse id fecthing failed")
+    }
+  }
   console.log(NurseData);
   return (
     <>
@@ -52,8 +61,8 @@ function ShowNurse() {
                 <p>Gender: {nurse.gender}</p>
                 <p>Phone Number: {nurse.phoneNumber}</p>
 
-                <Link to={"/admin/editnurse"}>
-                  <button className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl">
+                <Link to={`/admin/editnurse/${nurse._id}`}>
+                  <button onClick={()=>editnurse(nurse._id)} className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl">
                     Edit
                   </button>
                 </Link>
