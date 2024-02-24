@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
-function AdminHeader({ title, Show, Add, Edit, Showroute, Addroute, Editroute  }) { // Destructuring props here
+function AdminHeader({ title, Show, Add, Edit, Showroute, Addroute, Editroute  }) { 
   return (
     <div className="flex flex-wrap items-center justify-around p-2 bg-gray-400 text-[13px] ">
       <h1 className="font-bold sm:text-3xl">{title}</h1>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
-import { data } from "autoprefixer";
 
 function EditNurse() {
   const [EditNurse, SetEditedNurse] = useState({
@@ -39,6 +38,9 @@ function EditNurse() {
           Show={"Show Nurse"}
           Add={"Add nurse"}
           Edit={"Edit Nurse"}
+          Addroute={"/admin/adminnurse"}
+          Editroute={"/admin/editnurse"}
+          Showroute={"/admin/showNurse"}
         />
 
         <div>

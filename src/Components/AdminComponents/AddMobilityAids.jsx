@@ -10,6 +10,7 @@ function AddMobilityAids() {
     Material: " ",
     Rate: " ",
     Description: " ",
+    Image:' '
   });
 
   const handleChange = (e) => {

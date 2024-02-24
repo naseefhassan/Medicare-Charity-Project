@@ -31,10 +31,10 @@ function AdminNurse() {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("file uploaded", res);
     } catch (error) {
       console.error(error, "PostNurse Error");
     }
+    console.log(formData);
   };
 
   return (
@@ -44,9 +44,10 @@ function AdminNurse() {
           title={"Add Nurse"}
           Show={"Show Nurse"}
           Add={"Add nurse"}
-          Edit={"Ediit Nurse"}
+          Edit={"Edit Nurse"}
           Addroute={"/admin/adminnurse"}
           Editroute={"/admin/editnurse"}
+          Showroute={"/admin/showNurse"}
         />
         <div>
           <div className="flex justify-center h-screen mt-2">
@@ -55,7 +56,7 @@ function AdminNurse() {
                 Add Nurse
               </h1>
 
-              <form onSubmit={DataSubmit} enctype="multipart/form-data">
+              <form onSubmit={DataSubmit}>
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="name"
@@ -78,18 +79,15 @@ function AdminNurse() {
                 >
                   Gender:
                 </label>
-                <select
+                <input
+                  type="text"
                   id="gender"
                   name="gender"
                   required
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-
+                />
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="age"
