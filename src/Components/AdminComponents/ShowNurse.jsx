@@ -2,30 +2,46 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import AdminHeader from "./AdminHeader";
 import { Link } from "react-router-dom";
+
 function ShowNurse() {
   const [NurseData, setNurseData] = useState([]);
+  const [deletedNurseIds, setDeletedNurseIds] = useState([]);
 
   useEffect(() => {
-    const fetchdata = async () => {
+    const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/admin/showNurse");
         setNurseData(res.data.NurseData);
       } catch (error) {
-        console.error(error, "nurse data fecthing failed");
+        console.error(error, "nurse data fetching failed");
       }
     };
-    fetchdata();
+    fetchData();
   }, []);
 
-  const editnurse = async (nurseId) => {
+  
+
+  const editNurse = async (nurseId) => {
     try {
-      console.log(nurseId,'nurseeeeed');
-      const res= await axiosInstance.put(`/admin/editnurse/${nurseId}`)
+      console.log(nurseId, "nurseeeeed");
+      const res = await axiosInstance.put(`/admin/editnurse/${nurseId}`);
     } catch (error) {
-      console.error(error,"nurse id fecthing failed")
+      console.error(error, "nurse id fetching failed");
     }
-  }
-  console.log(NurseData);
+  };
+
+  const deleteNurse = async (delId) => {
+    try {
+      setDeletedNurseIds([...deletedNurseIds, delId]);
+      const res = await axiosInstance.post(`/admin/delNurse/${delId}`)
+   
+    } catch (error) {
+      console.error(error,'deleting failed');
+    }
+  };
+
+  const FilterNurse = NurseData.filter((nurse) => nurse.delStatus === false);
+
   return (
     <>
       <AdminHeader
@@ -39,7 +55,7 @@ function ShowNurse() {
       />
       <div className="flex items-center justify-center min-h-screen py-5 text-white bg-gradient-to-tr from-gray-300 to-grey-200">
         <div className="gap-5 space-y-4 md:px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:space-y-0">
-          {NurseData.map((nurse) => (
+          {FilterNurse.map((nurse) => (
             <div
               key={nurse._id}
               className="max-w-sm px-6 pt-6 pb-2 transition duration-500 transform bg-slate-700 shadow-lg rounded-xl hover:scale-[1.02]"
@@ -51,7 +67,7 @@ function ShowNurse() {
                 <img
                   className="w-full rounded-xl h-[200px] "
                   src={nurse.Image}
-                  alt="Colors"
+                  alt="Nurse"
                 />
               </div>
               <div className="my-5 leading-7">
@@ -61,11 +77,19 @@ function ShowNurse() {
                 <p>Gender: {nurse.gender}</p>
                 <p>Phone Number: {nurse.phoneNumber}</p>
 
-                <Link to={`/admin/editnurse/${nurse._id}`}>
-                  <button onClick={()=>editnurse(nurse._id)} className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl">
-                    Edit
+                <div className="flex gap-3">
+                  <Link to={`/admin/editnurse/${nurse._id}`} className="w-full">
+                    <button
+                      onClick={() => editNurse(nurse._id)}
+                      className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl"
+                    >
+                      Edit
+                    </button>
+                  </Link>
+                  <button onClick={()=>deleteNurse(nurse._id)} className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl">
+                    Delete
                   </button>
-                </Link>
+                </div>
               </div>
             </div>
           ))}
