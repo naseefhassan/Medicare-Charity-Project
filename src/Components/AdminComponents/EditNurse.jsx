@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 import { useParams } from "react-router-dom";
 
 function EditNurse() {
-
   const { nurseId } = useParams();
+  console.log(nurseId);
 
-  const [EditNurse, SetEditedNurse] = useState({
+  const [editedNurse, setEditedNurse] = useState({
     username: "",
     gender: "",
     age: "",
@@ -17,24 +17,40 @@ function EditNurse() {
     Image: "",
   });
 
-  const handleChage = (e) => {
-    const { name, value } = e.target;
+  useEffect(() => {
+    const fetchData = async (nurseId) => {
+      try {
+        const res = await axiosInstance.put(`/admin/editnurse/${nurseId}`);
+        console.log(res, "resedit");
+        setEditedNurse(res.data);
+      } catch (error) {
+        console.error(error, "Error fetching nurse data");
+      }
+    };
+    fetchData(nurseId);
+  }, [nurseId]);
 
-    SetEditedNurse((PrevData) => ({
-      ...PrevData,
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedNurse((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
- 
-  const DataSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = axiosInstance.put(`/admin/editnurse/${nurseId}`, EditNurse);
-          console.log(res.data); 
+      const res = await axiosInstance.put(
+        `/admin/editnurse/${nurseId}`,
+        editedNurse
+      );
+      console.log(res);
     } catch (error) {
       console.error(error, "error in editing");
     }
   };
+
   return (
     <>
       <div className="bg-gray-100 ">
@@ -54,7 +70,7 @@ function EditNurse() {
               <h1 className="mb-4 text-2xl font-bold text-center tc">
                 Edit Nurse
               </h1>
-              <form onSubmit={DataSubmit}>
+              <form onSubmit={handleSubmit}>
                 <label
                   className="block text-sm font-medium text-gray-600"
                   htmlFor="name"
@@ -66,8 +82,8 @@ function EditNurse() {
                   id="name"
                   name="username"
                   className="w-full px-4 py-1 border rounded-md"
-                  value={EditNurse.username}
-                  onChange={handleChage}
+                  value={editedNurse.username}
+                  onChange={handleChange}
                 />
                 <label
                   className="block text-sm font-medium text-gray-600"
@@ -79,8 +95,8 @@ function EditNurse() {
                   id="gender"
                   name="gender"
                   className="w-full px-4 py-1 border rounded-md"
-                  value={EditNurse.gender}
-                  onChange={handleChage}
+                  value={editedNurse.gender}
+                  onChange={handleChange}
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -97,8 +113,8 @@ function EditNurse() {
                   id="age"
                   name="age"
                   className="w-full px-4 py-1 border rounded-md"
-                  value={EditNurse.age}
-                  onChange={handleChage}
+                  value={editedNurse.age}
+                  onChange={handleChange}
                 />
                 <label
                   className="block text-sm font-medium text-gray-600"
@@ -111,8 +127,8 @@ function EditNurse() {
                   id="phoneNumber"
                   name="phoneNumber"
                   className="w-full px-4 py-1 border rounded-md"
-                  value={EditNurse.phoneNumber}
-                  onChange={handleChage}
+                  value={editedNurse.phoneNumber}
+                  onChange={handleChange}
                 />
                 <label
                   className="block text-sm font-medium text-gray-600"
@@ -125,8 +141,8 @@ function EditNurse() {
                   id="Qualification"
                   name="Qualification"
                   className="w-full px-4 py-1 border rounded-md"
-                  value={EditNurse.Qualification}
-                  onChange={handleChage}
+                  value={editedNurse.Qualification}
+                  onChange={handleChange}
                 />
                 <label
                   className="block text-sm font-medium text-gray-600"
@@ -139,8 +155,8 @@ function EditNurse() {
                   id="Experience"
                   name="Experience"
                   className="w-full px-4 py-1 border rounded-md"
-                  value={EditNurse.Experience}
-                  onChange={handleChage}
+                  value={editedNurse.Experience}
+                  onChange={handleChange}
                 />
                 <label
                   className="block text-sm font-medium text-gray-600"
@@ -153,12 +169,12 @@ function EditNurse() {
                   id="Image"
                   name="Image"
                   className="w-full px-4 py-1 border rounded-md"
-                  value={EditNurse.Image}
-                  onChange={handleChage}
+                  value={editedNurse.Image}
+                  onChange={handleChange}
                 />
                 <button
                   type="submit"
-                  onClick={DataSubmit}
+                  // onClick={DataSubmit}
                   className="px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
                 >
                   submit

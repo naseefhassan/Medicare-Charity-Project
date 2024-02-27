@@ -10,7 +10,7 @@ function AdminPages() {
     <Routes>
         <Route path='/adminhome/*' element={<AdminPage/>} ></Route>
         <Route path='/adminnurse/*' element={<NursePage/>} ></Route>
-        <Route path='/editnurse/*' element={<EditNurse/>}></Route>
+        <Route path='/editnurse/:nurseId' element={<EditNurse/>}></Route>
         <Route path='/showNurse/*' element={<ShowNurse/>}></Route>
         <Route path='/mobilityAids/*' element={<AddMobilityAids/>}></Route>
 

@@ -19,24 +19,13 @@ function ShowNurse() {
     fetchData();
   }, []);
 
-  
-
-  const editNurse = async (nurseId) => {
-    try {
-      console.log(nurseId, "nurseeeeed");
-      const res = await axiosInstance.put(`/admin/editnurse/${nurseId}`);
-    } catch (error) {
-      console.error(error, "nurse id fetching failed");
-    }
-  };
 
   const deleteNurse = async (delId) => {
     try {
       setDeletedNurseIds([...deletedNurseIds, delId]);
-      const res = await axiosInstance.post(`/admin/delNurse/${delId}`)
-   
+      const res = await axiosInstance.post(`/admin/delNurse/${delId}`);
     } catch (error) {
-      console.error(error,'deleting failed');
+      console.error(error, "deleting failed");
     }
   };
 
@@ -80,13 +69,16 @@ function ShowNurse() {
                 <div className="flex gap-3">
                   <Link to={`/admin/editnurse/${nurse._id}`} className="w-full">
                     <button
-                      onClick={() => editNurse(nurse._id)}
+                      // onClick={() => editNurse(nurse._id)}
                       className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl"
                     >
                       Edit
                     </button>
                   </Link>
-                  <button onClick={()=>deleteNurse(nurse._id)} className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl">
+                  <button
+                    onClick={() => deleteNurse(nurse._id)}
+                    className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl"
+                  >
                     Delete
                   </button>
                 </div>
