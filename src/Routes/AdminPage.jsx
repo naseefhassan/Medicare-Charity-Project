@@ -4,6 +4,9 @@ import AdminPage from '../Pages/AdminPages/AdminPage'
 import EditNurse from '../Components/AdminComponents/EditNurse'
 import AddMobilityAids from '../Components/AdminComponents/AddMobilityAids'
 import ShowNurse from '../Components/AdminComponents/ShowNurse'
+import ShowMobilityAids from '../Components/AdminComponents/ShowMobilityAids'
+import EditMobility from '../Components/AdminComponents/EditMobility'
+
 
 function AdminPages() {
   return (
@@ -13,7 +16,8 @@ function AdminPages() {
         <Route path='/editnurse/:nurseId' element={<EditNurse/>}></Route>
         <Route path='/showNurse/*' element={<ShowNurse/>}></Route>
         <Route path='/mobilityAids/*' element={<AddMobilityAids/>}></Route>
-
+        <Route path='/showMobilityAids/*' element={<ShowMobilityAids/>}></Route>
+        <Route path='/editMobilityAids*' element={<EditMobility/>}></Route>
     </Routes>
   )
 }

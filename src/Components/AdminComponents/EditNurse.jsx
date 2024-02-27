@@ -5,10 +5,9 @@ import { useParams } from "react-router-dom";
 
 function EditNurse() {
   const { nurseId } = useParams();
-  console.log(nurseId);
 
   const [editedNurse, setEditedNurse] = useState({
-    username: "",
+    username: '',
     gender: "",
     age: "",
     phoneNumber: "",
@@ -16,13 +15,14 @@ function EditNurse() {
     Experience: "",
     Image: "",
   });
+  console.log(editedNurse);
 
   useEffect(() => {
     const fetchData = async (nurseId) => {
       try {
         const res = await axiosInstance.put(`/admin/editnurse/${nurseId}`);
         console.log(res, "resedit");
-        setEditedNurse(res.data);
+        setEditedNurse(res.data.nurse);
       } catch (error) {
         console.error(error, "Error fetching nurse data");
       }
@@ -58,9 +58,7 @@ function EditNurse() {
           title={"Edit Nurse"}
           Show={"Show Nurse"}
           Add={"Add nurse"}
-          Edit={"Edit Nurse"}
           Addroute={"/admin/adminnurse"}
-          Editroute={"/admin/editnurse"}
           Showroute={"/admin/showNurse"}
         />
 
@@ -158,20 +156,7 @@ function EditNurse() {
                   value={editedNurse.Experience}
                   onChange={handleChange}
                 />
-                <label
-                  className="block text-sm font-medium text-gray-600"
-                  htmlFor="Image"
-                >
-                  Image:
-                </label>
-                <input
-                  type="file"
-                  id="Image"
-                  name="Image"
-                  className="w-full px-4 py-1 border rounded-md"
-                  value={editedNurse.Image}
-                  onChange={handleChange}
-                />
+
                 <button
                   type="submit"
                   // onClick={DataSubmit}

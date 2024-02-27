@@ -14,7 +14,7 @@ function AdminNurse() {
   const [Image, setImage] = useState("");
 
   const DataSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     const formData = new FormData();
 
     formData.append("username", username);

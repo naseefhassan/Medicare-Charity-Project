@@ -3,53 +3,59 @@ import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 
 function AddMobilityAids() {
-  const [Mobility, setMobility] = useState({
-    Item: " ",
-    Brand: " ",
-    Color: " ",
-    Material: " ",
-    Rate: " ",
-    Description: " ",
-    Image:' '
-  });
+  const [item, setitem] = useState('');
+  const [brand, setbrand] = useState('');
+  const [color, setcolor] = useState('');
+  const [material, setmaterial] = useState('');
+  const [rate, setrate] = useState('');
+  const [description, setdescription] = useState('');
+  const [image, setimage] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setMobility((preData) => ({
-      ...preData,
-      [name]: value,
-    }));
-    console.log(name, value);
-  };
 
-  const Submit = async (e) => {
+
+
+ 
+  const DataSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData()
+    formData.append('item',item)
+    formData.append('brand',brand)
+    formData.append('color',color)
+    formData.append('material',material)
+    formData.append('rate',rate)
+    formData.append('description',description)
+    formData.append('image',image )
+
     try {
-      const res = axiosInstance.post("/admin/mobilityAids", Mobility);
+      const res = axiosInstance.post("/admin/mobilityAids", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      
     } catch (error) {
-      console.error(error);
+      console.error(error,'failed to append');
     }
+    console.log(formData, "mob");
   };
-  console.log(Mobility, "mob");
   return (
-    <div>
+    <div className="bg-gray-100">
       <AdminHeader
         title={"Mobility Aids"}
         Show={"Show Mobility Aids"}
         Add={"Add Mobility Aids"}
         Edit={"Edit Mobility Aids"}
-        Addroute={'/admin/mobilityAids'}
-        Editroute={'admin/editMobilityAids'}
-        
+        Showroute={"/admin/showMobilityAids"}
+        Addroute={"/admin/mobilityAids"}
       />
 
       <div className="flex justify-center mt-2">
-        <div className="flex-wrap w-1/3 p-8 my-5 rounded shadow-md bg-gradient-to-r from-purple-400 to-blue-500">
+        <div className="flex-wrap w-1/3 p-8 my-5 rounded shadow-md bg-white">
           <h1 className="mb-4 text-2xl font-bold text-center tc">
-          Add Mobility Aids
+            Add Mobility Aids
           </h1>
 
-          <form onSubmit={Submit}>
+          <form onSubmit={DataSubmit}>
             <label
               className="block text-sm font-medium text-gray-600"
               htmlFor="Item"
@@ -59,10 +65,10 @@ function AddMobilityAids() {
             <input
               type="text"
               id="Item"
-              name="Item"
+              name="item"
               required
-              value={Mobility.Item}
-              onChange={handleChange}
+              value={item}
+              onChange={(e) => setitem(e.target.value)}
               className="w-full px-4 py-1 border rounded-md"
             />
 
@@ -75,10 +81,10 @@ function AddMobilityAids() {
             <input
               type="text"
               id="Brand"
-              name="Brand"
+              name="brand"
               required
-              value={Mobility.Brand}
-              onChange={handleChange}
+              value={brand}
+              onChange={(e) => setbrand(e.target.value)}
               className="w-full px-4 py-1 border rounded-md"
             />
 
@@ -91,10 +97,10 @@ function AddMobilityAids() {
             <input
               type="tel"
               id="Color"
-              name="Color"
+              name="color"
               required
-              value={Mobility.Color}
-              onChange={handleChange}
+              value={color}
+              onChange={(e) => setcolor(e.target.value)}
               className="w-full px-4 py-1 border rounded-md"
             />
             <label
@@ -106,10 +112,10 @@ function AddMobilityAids() {
             <input
               type="text"
               id="Material"
-              name="Material"
+              name="material"
               required
-              value={Mobility.Material}
-              onChange={handleChange}
+              value={material}
+              onChange={(e) => setmaterial(e.target.value)}
               className="w-full px-4 py-1 border rounded-md"
             />
             <label
@@ -121,10 +127,10 @@ function AddMobilityAids() {
             <input
               type="number"
               id="Rate"
-              name="Rate"
+              name="rate"
               required
-              value={Mobility.Rate}
-              onChange={handleChange}
+              value={rate}
+              onChange={(e) => setrate(e.target.value)}
               className="w-full px-4 py-1 border rounded-md"
             />
 
@@ -137,10 +143,10 @@ function AddMobilityAids() {
             <input
               type="Description"
               id="Description"
-              name="Description"
+              name="description"
               required
-              value={Mobility.Description}
-              onChange={handleChange}
+              value={description}
+              onChange={(e) => setdescription(e.target.value)}
               className="w-full px-4 py-1 border rounded-md"
             />
 
@@ -153,10 +159,9 @@ function AddMobilityAids() {
             <input
               type="file"
               id="Image"
-              name="Image"
+              name="image"
               required
-              value={Mobility.Image}
-              onChange={handleChange}
+              onChange={(e) => setimage(e.target.files[0])}
               className="w-full px-4 py-1 border rounded-md"
             />
 
