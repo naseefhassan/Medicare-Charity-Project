@@ -17,7 +17,7 @@ function AdminPages() {
         <Route path='/showNurse/*' element={<ShowNurse/>}></Route>
         <Route path='/mobilityAids/*' element={<AddMobilityAids/>}></Route>
         <Route path='/showMobilityAids/*' element={<ShowMobilityAids/>}></Route>
-        <Route path='/editMobilityAids*' element={<EditMobility/>}></Route>
+        <Route path='/editMobilityAids/:toolsId/*' element={<EditMobility/>}></Route>
     </Routes>
   )
 }

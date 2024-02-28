@@ -67,7 +67,6 @@ function ShowNurse() {
                 <div className="flex gap-3">
                   <Link to={`/admin/editnurse/${nurse._id}`} className="w-full">
                     <button
-                      // onClick={() => editNurse(nurse._id)}
                       className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl"
                     >
                       Edit

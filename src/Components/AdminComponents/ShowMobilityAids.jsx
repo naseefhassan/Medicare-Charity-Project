@@ -62,11 +62,11 @@ function ShowMobilityAids() {
                 <p>description: {tools.description}</p>
 
                 <div className="flex gap-3">
-                  <Link to={"/admin/editMobilityAids"} className="w-full">
-                    <button
-                      onClick={() => editMobilityAids(tools._id)}
-                      className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl"
-                    >
+                  <Link
+                    to={`/admin/editMobilityAids/${tools._id}`}
+                    className="w-full"
+                  >
+                    <button className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl">
                       Edit
                     </button>
                   </Link>
