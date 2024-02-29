@@ -1,34 +1,49 @@
 import { useState } from "react";
 import Header from "../../Components/Header/Header";
 import axiosInstance from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 function VolunteerProfile() {
-  const [profile, setProfile] = useState({
-    username: "",
-    email: "",
-    phoneNumber: "",
-    gender: "",
-    age: "",
-    address: "",
-    district: "",
-    city: "",
-  });
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    const { name, value } = e.target;
-    setProfile((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+  const [gender, setgender] = useState("");
+  const [age, setage] = useState("");
+  const [address, setaddress] = useState("");
+  const [image, setimage] = useState("");
+  const [district, setdistrict] = useState("");
+  const [city, setcity] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("gender", gender);
+    formData.append("age", age);
+    formData.append("address", address);
+    formData.append("image", image);
+    formData.append("district", district);
+    formData.append("city", city);
+
+    console.log(formData.get("image"));
     try {
       // eslint-disable-next-line no-unused-vars
-      const res = axiosInstance.post("/user/volunteerProfile", profile);
+      const res = await axiosInstance.post("/user/volunteerProfile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("Thanks for being a Volunteer");
+      navigate("/user/beavolunteer");
     } catch (error) {
-      console.error(error, "error inn profile");
+      console.error(error, "error in profile");
+      // Handle error here, you might want to show a message to the user
     }
   };
 
@@ -67,8 +82,8 @@ function VolunteerProfile() {
                     id="name"
                     name="username"
                     required
-                    onChange={handleLogin}
-                    value={profile.username}
+                    onChange={(e) => setusername(e.target.value)}
+                    value={username}
                     placeholder="Name"
                     className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                   />
@@ -77,8 +92,8 @@ function VolunteerProfile() {
                     id="email"
                     name="email"
                     required
-                    onChange={handleLogin}
-                    value={profile.email}
+                    onChange={(e) => setemail(e.target.value)}
+                    value={email}
                     placeholder="Email"
                     className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                   />
@@ -87,8 +102,8 @@ function VolunteerProfile() {
                     id="phoneNumber"
                     name="phoneNumber"
                     required
-                    onChange={handleLogin}
-                    value={profile.phoneNumber}
+                    onChange={(e) => setphoneNumber(e.target.value)}
+                    value={phoneNumber}
                     placeholder="Phone Number"
                     className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                   />
@@ -100,8 +115,8 @@ function VolunteerProfile() {
                     id="gender"
                     name="gender"
                     required
-                    onChange={handleLogin}
-                    value={profile.gender}
+                    onChange={(e) => setgender(e.target.value)}
+                    value={gender}
                     placeholder="Gender"
                     className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                   />
@@ -110,8 +125,8 @@ function VolunteerProfile() {
                     id="age"
                     name="age"
                     required
-                    onChange={handleLogin}
-                    value={profile.age}
+                    onChange={(e) => setage(e.target.value)}
+                    value={age}
                     placeholder="Age"
                     className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                   />
@@ -120,10 +135,19 @@ function VolunteerProfile() {
                     id="address"
                     name="address"
                     required
-                    onChange={handleLogin}
-                    value={profile.address}
+                    onChange={(e) => setaddress(e.target.value)}
+                    value={address}
                     placeholder="Address"
                     className="w-full px-4 py-5 mt-2 text-base text-black placeholder-gray-600 transition duration-500 ease-in-out transform bg-gray-200 border-transparent rounded-lg focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+                  />
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    required
+                    onChange={(e) => setimage(e.target.files[0])}
+                    placeholder="Upload Image"
+                    className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                   />
                   <div className="flex">
                     <div className="flex-grow w-1/4 pr-2">
@@ -132,8 +156,8 @@ function VolunteerProfile() {
                         id="district"
                         name="district"
                         required
-                        onChange={handleLogin}
-                        value={profile.district}
+                        onChange={(e) => setdistrict(e.target.value)}
+                        value={district}
                         placeholder="District                      "
                         className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                       />
@@ -144,8 +168,8 @@ function VolunteerProfile() {
                         id="city"
                         name="city"
                         required
-                        onChange={handleLogin}
-                        value={profile.city}
+                        onChange={(e) => setcity(e.target.value)}
+                        value={city}
                         placeholder="City"
                         className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                       />

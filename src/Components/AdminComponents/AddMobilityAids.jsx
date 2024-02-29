@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
@@ -40,12 +41,14 @@ function AddMobilityAids() {
         Show={"Show Mobility Aids"}
         Add={"Add Mobility Aids"}
         Edit={"Edit Mobility Aids"}
+        Home={'Home'}
+        Homeroute={'/admin/adminhome'}
         Showroute={"/admin/showMobilityAids"}
         Addroute={"/admin/mobilityAids"}
       />
 
       <div className="flex justify-center mt-2">
-        <div className="flex-wrap w-1/3 p-8 my-5 rounded shadow-md bg-white">
+        <div className="flex-wrap w-1/3 p-8 my-5 bg-white rounded shadow-md">
           <h1 className="mb-4 text-2xl font-bold text-center tc">
             Add Mobility Aids
           </h1>
@@ -162,7 +165,7 @@ function AddMobilityAids() {
 
             <button
               type="submit"
-              className="transform active:scale-x-75 transition-transform  px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
+              className="px-4 py-2 mt-2 text-white transition-transform transform bg-green-500 rounded-md active:scale-x-75 hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
             >
               Submit
             </button>

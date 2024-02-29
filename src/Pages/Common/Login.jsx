@@ -70,10 +70,8 @@ function Login() {
     if (Validation(e)) {
       try {
         // Submit form data
-        console.log("res")
-
         const res = await axiosInstance.post("/signupPost", formData);
-        console.log(res,"res")
+   
         const jwtToken = res.data.token;
         localStorage.setItem("jwtToken", jwtToken);
         dispatch(setToken(jwtToken))

@@ -14,7 +14,7 @@ function AdminNurse() {
   const [Image, setImage] = useState("");
 
   const DataSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const formData = new FormData();
 
     formData.append("username", username);
@@ -45,12 +45,14 @@ function AdminNurse() {
           Show={"Show Nurse"}
           Add={"Add nurse"}
           Edit={"Edit Nurse"}
+          Home={'Home'}
+          Homeroute={'/admin/adminhome'}
           Addroute={"/admin/adminnurse"}
           Editroute={"/admin/editnurse"}
           Showroute={"/admin/showNurse"}
         />
         <div>
-          <div className="flex justify-center h-screen mt-2">
+          <div className="flex justify-center mt-2">
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
               <h1 className="mb-4 text-2xl font-bold text-center tc">
                 Add Nurse
@@ -167,7 +169,7 @@ function AdminNurse() {
 
                 <button
                   type="submit"
-                  className="px-4 py-2 mt-2 transform active:scale-x-75 transition-transform text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
+                  className="px-4 mt-2 text-white transition-transform transform bg-green-500 rounded-md active:scale-x-75 hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
                 >
                   Submit
                 </button>

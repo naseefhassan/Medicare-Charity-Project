@@ -12,7 +12,7 @@ function AdminHome() {
     { HomePhoto: nurse, label: "Nurse",route:"/admin/adminnurse" },
     { HomePhoto: MobilityAids, label: "Mobility Aids",route:'/admin/showMobilityAids' },
     { HomePhoto: Ambulance, label: "Ambulance" },
-    { HomePhoto: Volunteer, label: "Volunteer" },
+    { HomePhoto: Volunteer, label: "Volunteer", route:'/admin/showVolunteer' },
     { HomePhoto: Profile, label: "Profile" },
 
 

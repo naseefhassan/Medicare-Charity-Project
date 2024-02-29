@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 import { useParams } from "react-router-dom";
@@ -60,6 +60,8 @@ function EditMobility() {
         title={"Mobility Aids"}
         Show={"Show Mobility Aids"}
         Add={"Add Mobility Aids"}
+        Home={'Home'}
+        Homeroute={'/admin/adminhome'}
         Addroute={"/admin/mobilityAids"}
         Showroute={"/admin/showMobilityAids"}
       />
@@ -168,7 +170,7 @@ function EditMobility() {
 
               <button
                 type="submit"
-                className="px-4  py-2 mt-2 transform active:scale-x-75 transition-transform text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
+                className="px-4 py-2 mt-2 text-white transition-transform transform bg-green-500 rounded-md active:scale-x-75 hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
               >
                 submit
               </button>

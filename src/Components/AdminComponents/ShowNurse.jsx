@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import AdminHeader from "./AdminHeader";
@@ -16,7 +17,7 @@ function ShowNurse() {
         console.error(error, "nurse data fetching failed");
       }
     };
-    fetchData();
+    fetchData(); 
   }, []);
 
 
@@ -37,6 +38,8 @@ function ShowNurse() {
         title={"Edit Nurse"}
         Show={"Show Nurse"}
         Add={"Add nurse"}
+        Home={'Home'}
+        Homeroute={'/admin/adminhome'}
         Addroute={"/admin/adminnurse"}
         Showroute={"/admin/showNurse"}
       />

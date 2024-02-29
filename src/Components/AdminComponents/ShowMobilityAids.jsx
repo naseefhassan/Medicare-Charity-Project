@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 import { Link } from "react-router-dom";
@@ -33,6 +33,8 @@ function ShowMobilityAids() {
         title={"Mobility Aids"}
         Show={"Show Mobility Aids"}
         Add={"Add Mobility Aids"}
+        Home={"Home"}
+        Homeroute={"/admin/adminhome"}
         Addroute={"/admin/mobilityAids"}
         Showroute={"/admin/showMobilityAids"}
       />
