@@ -160,7 +160,7 @@ function EditNurse() {
                 <button
                   type="submit"
                   // onClick={DataSubmit}
-                  className="px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
+                  className="transform active:scale-x-75 transition-transform px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
                 >
                   submit
                 </button>

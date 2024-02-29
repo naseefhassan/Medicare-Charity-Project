@@ -3,38 +3,33 @@ import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 
 function AddMobilityAids() {
-  const [item, setitem] = useState('');
-  const [brand, setbrand] = useState('');
-  const [color, setcolor] = useState('');
-  const [material, setmaterial] = useState('');
-  const [rate, setrate] = useState('');
-  const [description, setdescription] = useState('');
-  const [image, setimage] = useState('');
+  const [item, setitem] = useState("");
+  const [brand, setbrand] = useState("");
+  const [color, setcolor] = useState("");
+  const [material, setmaterial] = useState("");
+  const [rate, setrate] = useState("");
+  const [description, setdescription] = useState("");
+  const [image, setimage] = useState("");
 
-
-
-
- 
   const DataSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData()
-    formData.append('item',item)
-    formData.append('brand',brand)
-    formData.append('color',color)
-    formData.append('material',material)
-    formData.append('rate',rate)
-    formData.append('description',description)
-    formData.append('image',image )
+    const formData = new FormData();
+    formData.append("item", item);
+    formData.append("brand", brand);
+    formData.append("color", color);
+    formData.append("material", material);
+    formData.append("rate", rate);
+    formData.append("description", description);
+    formData.append("image", image);
 
     try {
       const res = axiosInstance.post("/admin/mobilityAids", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      })
-      
+      });
     } catch (error) {
-      console.error(error,'failed to append');
+      console.error(error, "failed to append");
     }
     console.log(formData, "mob");
   };
@@ -167,7 +162,7 @@ function AddMobilityAids() {
 
             <button
               type="submit"
-              className="px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
+              className="transform active:scale-x-75 transition-transform  px-4 py-2 mt-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
             >
               Submit
             </button>

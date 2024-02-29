@@ -16,7 +16,7 @@ function Header() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center h-16 bg-gray-400 ring-opacity-70 ">
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center h-16 text-white bg-gray-400 ring-opacity-70">
         <div className="container px-4 mx-auto sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-center gap-3">
