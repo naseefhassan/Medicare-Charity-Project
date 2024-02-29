@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 import { Link } from "react-router-dom";
@@ -10,7 +10,6 @@ function ShowMobilityAids() {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/admin/showMobilityAids");
-        console.log(res);
         setMobilityAids(res.data.MobilityAidsData);
       } catch (error) {
         console.error(error, "mobility aids fecthing failed");

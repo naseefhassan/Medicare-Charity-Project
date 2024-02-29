@@ -1,86 +1,54 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import axiosInstance from "../../api/axios";
 import AdminHeader from "./AdminHeader";
-import { Link } from "react-router-dom";
+import axiosInstance from "../../api/axios";
 
-function ShowNurse() {
-  const [NurseData, setNurseData] = useState([]);
-  const [deletedNurseIds, setDeletedNurseIds] = useState([]);
+function ShowVolunteer() {
+  const [volunteer, setVolunteer] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.get("/admin/showNurse");
-        setNurseData(res.data.NurseData);
+        const res = await axiosInstance.get("/user/volunteerdata");
+        setVolunteer(res.data.volunteer);
       } catch (error) {
-        console.error(error, "nurse data fetching failed");
+        console.error("Error fetching volunteer data:", error); // Error handling
       }
     };
-    fetchData(); 
+    fetchData();
   }, []);
-
-
-  const deleteNurse = async (delId) => {
-    try {
-      setDeletedNurseIds([...deletedNurseIds, delId]);
-      const res = await axiosInstance.post(`/admin/delNurse/${delId}`);
-    } catch (error) {
-      console.error(error, "deleting failed");
-    }
-  };
-
-  const FilterNurse = NurseData.filter((nurse) => nurse.delStatus === false);
 
   return (
     <>
       <AdminHeader
-        title={"Edit Nurse"}
-        Show={"Show Nurse"}
-        Add={"Add nurse"}
-        Home={'Home'}
-        Homeroute={'/admin/adminhome'}
-        Addroute={"/admin/adminnurse"}
-        Showroute={"/admin/showNurse"}
+        title={"Volunteer Profile"}
+        Home={"Home"}
+        Homeroute={"/admin/adminhome"}
       />
-      <div className="flex items-center justify-center min-h-screen py-5 text-white bg-gradient-to-tr from-gray-300 to-grey-200">
-        <div className="gap-5 space-y-4 md:px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:space-y-0">
-          {FilterNurse.map((nurse) => (
-            <div
-              key={nurse._id}
-              className="max-w-sm px-6 pt-6 pb-2 transition duration-500 transform bg-slate-700 shadow-lg rounded-xl hover:scale-[1.02]"
-            >
-              <div className="relative">
-                <h1 className="mt-4 text-2xl font-bold text-center cursor-pointer">
-                  {nurse.username}
-                </h1>
+
+      <div className="flex items-center justify-center w-full h-screen">
+        <div className="flex flex-wrap justify-center max-w-xs ">
+          {volunteer.map((profile, index) => (
+            <div key={index} className="py-3 bg-red-900 rounded-lg shadow-xl">
+              <div className="p-2 bg-red-900 photo-wrapper">
                 <img
-                  className="w-full rounded-xl h-[200px] "
-                  src={nurse.Image}
-                  alt="Nurse"
+                  className="w-32 h-32 mx-auto rounded-full"
+                  src={profile.image}
+                  alt={profile.name}
                 />
               </div>
-              <div className="my-5 leading-7">
-                <p>Qualification: {nurse.Qualification}</p>
-                <p>Experience: {nurse.Experience}</p>
-                <p>Age: {nurse.age}</p>
-                <p>Gender: {nurse.gender}</p>
-                <p>Phone Number: {nurse.phoneNumber}</p>
-
-                <div className="flex gap-3">
-                  <Link to={`/admin/editnurse/${nurse._id}`} className="w-full">
-                    <button
-                      className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl"
-                    >
-                      Edit
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() => deleteNurse(nurse._id)}
-                    className="w-full mt-4 text-xl text-white bg-[#FF9D2B] shadow-lg rounded-xl"
-                  >
-                    Delete
-                  </button>
+              <div className="p-2 bg-red-900">
+                <div className="my-3 text-xs">
+                  <p className="font-semibold text-gray-500">Addkhhdddddress</p>
+                  <p>{profile.name}</p>
+                </div>
+                <div className="my-3 text-xs">
+                  <p className="font-semibold text-gray-500">Phone</p>
+                  <p>{profile.phone}</p>
+                </div>
+                <div className="my-3 text-xs">
+                  <p className="font-semibold text-gray-500">Email</p>
+                  <p>{profile.email}</p>
                 </div>
               </div>
             </div>
@@ -91,4 +59,4 @@ function ShowNurse() {
   );
 }
 
-export default ShowNurse;
+export default ShowVolunteer;

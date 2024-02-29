@@ -1,6 +1,23 @@
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
+import axiosInstance from "../../api/axios";
 
 function ShowVolunteer() {
+  const [volunteer, setVolunteer] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axiosInstance.get("/user/volunteerdata");
+        setVolunteer(res.data.volunteer);
+      } catch (error) {
+        console.error("Error fetching volunteer data:", error); // Error handling
+      }
+    };
+    fetchData();
+  }, []);
+  console.log(volunteer);
   return (
     <>
       <AdminHeader
@@ -8,54 +25,58 @@ function ShowVolunteer() {
         Home={"Home"}
         Homeroute={"/admin/adminhome"}
       />
-      <div className="flex items-center justify-center w-full h-screen">
-        <div className="max-w-xs">
-          <div className="py-3 bg-white rounded-lg shadow-xl">
+      <div className="flex flex-wrap items-center justify-center ">
+        {/* <div className="flex flex-wrap justify-center bg-red-900 w-72"> */}
+        {volunteer.map((profile, index) => (
+          <div
+            key={index}
+            className="py-3 m-2 bg-white rounded-lg shadow-xl w-72"
+          >
             <div className="p-2 photo-wrapper">
               <img
                 className="w-32 h-32 mx-auto rounded-full"
-                src="https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp"
-                alt="John Doe"
+                src={profile.vimage} // Dynamically set image source
+                alt={profile.name} // Alt text should be dynamic
               />
             </div>
-            <div className="p-2">
-              
-              <table className="my-3 text-xs">
-                <tbody>
-                  <tr>
-                    <td className="px-2 py-2 font-semibold text-gray-500">
-                      Address
-                    </td>
-                    <td className="px-2 py-2">
-                      Chatakpur-3, Dhangadhi Kailali
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-2 py-2 font-semibold text-gray-500">
-                      Phone
-                    </td>
-                    <td className="px-2 py-2">+977 9955221114</td>
-                  </tr>
-                  <tr>
-                    <td className="px-2 py-2 font-semibold text-gray-500">
-                      Email
-                    </td>
-                    <td className="px-2 py-2">john@example.com</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="my-3 text-center">
-                <a
-                  className="text-xs italic font-medium text-indigo-500 hover:underline hover:text-indigo-600"
-                  href="#"
-                >
-                  View Profile
-                </a>
+            <div className="p-2 ">
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">Name:</p>
+                <p>{profile.username}</p>
+              </div>
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">Email:</p>
+                <p>{profile.email}</p>
+              </div>
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">Phone:</p>
+                <p>{profile.phoneNumber}</p>
+              </div>
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">Gender:</p>
+                <p>{profile.gender}</p>
+              </div>
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">Age:</p>
+                <p>{profile.age}</p>
+              </div>
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">Address:</p>
+                <p>{profile.address}</p>
+              </div>
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">District:</p>
+                <p>{profile.district}</p>
+              </div>
+              <div className="flex gap-3 my-3 text-xs">
+                <p className="font-semibold text-gray-500">City:</p>
+                <p>{profile.city}</p>
               </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
+      {/* </div> */}
     </>
   );
 }
