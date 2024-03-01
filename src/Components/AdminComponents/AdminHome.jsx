@@ -11,9 +11,9 @@ function AdminHome() {
     { HomePhoto: payment, label: "Payment" },
     { HomePhoto: nurse, label: "Nurse",route:"/admin/adminnurse" },
     { HomePhoto: MobilityAids, label: "Mobility Aids",route:'/admin/showMobilityAids' },
-    { HomePhoto: Ambulance, label: "Ambulance" },
+    { HomePhoto: Ambulance, label: "Ambulance"  },
     { HomePhoto: Volunteer, label: "Volunteer", route:'/admin/showVolunteer' },
-    { HomePhoto: Profile, label: "Profile" },
+    { HomePhoto: Profile, label: "Profile",route:'/admin/userProfile' },
 
 
   ];

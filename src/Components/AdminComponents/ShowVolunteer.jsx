@@ -10,6 +10,7 @@ function ShowVolunteer() {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/user/volunteerdata");
+        console.log(res.data.volunteer.item);
         setVolunteer(res.data.volunteer);
       } catch (error) {
         console.error("Error fetching volunteer data:", error); // Error handling

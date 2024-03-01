@@ -7,6 +7,7 @@ import ShowNurse from '../Components/AdminComponents/ShowNurse'
 import ShowMobilityAids from '../Components/AdminComponents/ShowMobilityAids'
 import EditMobility from '../Components/AdminComponents/EditMobility'
 import ShowVolunteer from '../Components/AdminComponents/ShowVolunteer'
+import UserProfile from '../Components/AdminComponents/UserProfile'
 
 
 function AdminPages() {
@@ -20,6 +21,8 @@ function AdminPages() {
         <Route path='/showMobilityAids/*' element={<ShowMobilityAids/>}></Route>
         <Route path='/editMobilityAids/:toolsId/*' element={<EditMobility/>}></Route>
         <Route path='/showVolunteer/*' element={<ShowVolunteer/>}></Route>
+        <Route path='/userProfile/*' element={<UserProfile/>}></Route>
+
     </Routes>
   )
 }
