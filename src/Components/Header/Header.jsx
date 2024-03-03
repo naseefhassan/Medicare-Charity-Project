@@ -35,20 +35,20 @@ function Header() {
             >
               <li
                 onClick={scrollToTop}
-                className="hover:scale-[1.05] cursor-pointer"
+                className="leading-4 cursor-pointer hover:border-b-2"
               >
                 <Link to={"/"}>Home</Link>
               </li>
-              <li className="hover:scale-[1.05]">
+              <li className="leading-4 hover:border-b-2">
                 <Link to={"/user/about"}>About</Link>
               </li>
-              <li className="hover:scale-[1.05]">
+              <li className="leading-4 hover:border-b-2">
                 <Link to={"/user/gallery"}>Gallery</Link>
               </li>
-              <li className="hover:scale-[1.05] ">
+              <li className="leading-4 hover:border-b-2 ">
                 <Link to={"/user/boardmembers"}>Board Members</Link>
               </li>
-              <li className="hover:scale-[1.05]">
+              <li className="leading-4 hover:border-b-2">
                 <Link to={"/user/contact"}>Contact</Link>
               </li>
             </ul>

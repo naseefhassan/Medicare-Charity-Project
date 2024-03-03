@@ -30,7 +30,6 @@ function VolunteerProfile() {
     formData.append("district", district);
     formData.append("city", city);
 
-    console.log(formData.get("image"));
     try {
       // eslint-disable-next-line no-unused-vars
       const res = await axiosInstance.post("/user/volunteerProfile", formData, {

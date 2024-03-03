@@ -10,6 +10,7 @@ import Ambulance from "../Components/HomePage/Ambulance";
 import { Route, Routes } from "react-router-dom";
 import BeAVolunteer from "../Components/HomePage/BeAVolunteer";
 import VolunteerProfile from "../Components/HomePage/VolunteerProfile";
+import AddVehicle from "../Components/HomePage/AddVehicle";
 
 function UserPage() {
   return (
@@ -22,12 +23,12 @@ function UserPage() {
         <Route path="/contact/*" element={<Contact />}></Route>
         <Route path="/profile/*" element={<Profile />}></Route>
         <Route path="/accountdetails/*" element={<Account />}></Route>
-
         <Route path="/nurse/*" element={<Nurse />}></Route>
         <Route path="/mobilityaids/*" element={<MobilityAids />}></Route>
         <Route path="/beavolunteer/*" element={<BeAVolunteer />}></Route>
         <Route path="/ambulance/*" element={<Ambulance />}></Route>
         <Route path="/volunteerprofile" element={<VolunteerProfile/>}></Route>
+        <Route path="/addVehicle/*" element={<AddVehicle />}></Route>
       </Routes>
     </>
   );

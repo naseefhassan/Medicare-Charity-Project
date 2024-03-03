@@ -9,9 +9,9 @@ import Profile from "../../../src/assets/Images/profile.png"
 function AdminHome() {
   const CardData = [
     { HomePhoto: payment, label: "Payment" },
-    { HomePhoto: nurse, label: "Nurse",route:"/admin/adminnurse" },
+    { HomePhoto: nurse, label: "Nurse",route:"/admin/showNurse" },
     { HomePhoto: MobilityAids, label: "Mobility Aids",route:'/admin/showMobilityAids' },
-    { HomePhoto: Ambulance, label: "Ambulance"  },
+    { HomePhoto: Ambulance, label: "Ambulance", route:'/admin/showVehicle' },
     { HomePhoto: Volunteer, label: "Volunteer", route:'/admin/showVolunteer' },
     { HomePhoto: Profile, label: "Profile",route:'/admin/userProfile' },
 

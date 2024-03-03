@@ -55,12 +55,12 @@ function Nurse() {
 
               <div className="flex justify-center p-2 m-auto mt-6 text-center text-white bg-blue-700 shadow-xl w-72 lg:w-5/6 hover:bg-indigo-500 rounded-2xl shadow-bg-blue-700">
                 <button className="text-lg font-bold lg:text-sm">
-                  Proceed to Payment
+                  Proceed to booking
                 </button>
               </div>
-              <div className="flex justify-center w-full h-16 m-auto mt-6">
+              <div className="flex justify-center w-full h-16 m-auto ">
                 <button className="font-bold text-center text-gray-500 lg:text-sm hover:text-gray-900">
-                  Cancel Order
+                  Cancel Booking
                 </button>
               </div>
             </div>

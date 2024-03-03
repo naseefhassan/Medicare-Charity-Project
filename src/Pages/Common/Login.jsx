@@ -81,7 +81,6 @@ function Login() {
           error.response &&
           error.response.data.message === "User already exists with this email."
         ) {
-          console.log(error.response.data.message, "err");
           errmsg("User already exists.Please Login");
         } else {
           errmsg("Signup error, Please try again");

@@ -47,6 +47,8 @@ function ShowNurse() {
         title={"Our Angels"}
         Show={"Show Nurse"}
         Add={"Add nurse"}
+        Home={'Home'}
+        Homeroute={'/admin/adminhome'}
         Edit={"Edit Nurse"}
         Addroute={"/admin/adminnurse"}
         Editroute={"/admin/editnurse"}

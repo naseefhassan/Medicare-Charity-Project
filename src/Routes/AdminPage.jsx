@@ -8,6 +8,7 @@ import ShowMobilityAids from '../Components/AdminComponents/ShowMobilityAids'
 import EditMobility from '../Components/AdminComponents/EditMobility'
 import ShowVolunteer from '../Components/AdminComponents/ShowVolunteer'
 import UserProfile from '../Components/AdminComponents/UserProfile'
+import ShowVehicle from '../Components/AdminComponents/ShowVehicle'
 
 
 function AdminPages() {
@@ -22,6 +23,8 @@ function AdminPages() {
         <Route path='/editMobilityAids/:toolsId/*' element={<EditMobility/>}></Route>
         <Route path='/showVolunteer/*' element={<ShowVolunteer/>}></Route>
         <Route path='/userProfile/*' element={<UserProfile/>}></Route>
+        <Route path='/showVehicle/*' element={<ShowVehicle/>}></Route>
+
 
     </Routes>
   )
