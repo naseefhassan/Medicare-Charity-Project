@@ -25,7 +25,7 @@ function AddVehicle() {
       const { name, value } = e.target;
       setVehicle({ ...vehicle, [name]: value });
     }
-    seterrmsg('')
+    seterrmsg("");
   };
 
   const handleSubmit = async (e) => {
@@ -39,6 +39,7 @@ function AddVehicle() {
     formData.append("vehicleGrade", vehicle.vehicleGrade);
     formData.append("image", vehicle.image);
     try {
+      // eslint-disable-next-line no-unused-vars
       const res = await axiosInstance.post("/user/addVehicle", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -47,8 +48,8 @@ function AddVehicle() {
       navigate("/user/ambulance");
       alert("Thanks for joining us");
     } catch (error) {
-      if (error.response.data.message === 'This vehicle is already exists') {
-        seterrmsg('This vehicle is already exists');
+      if (error.response.data.message === "This vehicle is already exists") {
+        seterrmsg("This vehicle is already exists");
       }
     }
   };
@@ -59,12 +60,12 @@ function AddVehicle() {
       className="w-[100%] h-[100vh] bg-cover bg-no-repeat bg-right flex justify-center items-center"
     >
       <Header />
-      <div className="flex my-[60px]  ">
+      <div className="flex my-[60px]">
         <div className="m-auto">
           <div className="mt-5 bg-transparent rounded-lg shadow">
             <div className="flex">
-              <div className="flex items-center gap-3 py-5 pl-5 overflow-hidden">
-                <h1 className="inline text-2xl font-semibold leading-none text-center text-white">
+              <div className="flex items-center gap-3 pl-5 mt-10 overflow-hidden">
+                <h1 className="inline text-2xl font-semibold leading-none text-white">
                   Ambulance
                 </h1>
               </div>
@@ -151,6 +152,7 @@ function AddVehicle() {
                   placeholder="Location                      "
                   className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                 />
+                <h1 className="text-white text-end">Running  charge will be $320/KM</h1>
                 <p className="mt-3 text-red-600">{errmsg}</p>
               </div>
               <div className="flex flex-row-reverse p-3">

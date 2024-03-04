@@ -24,7 +24,11 @@ function MobilityAids() {
         <div key={index} className="container flex justify-center">
           <div className="py-32 w-72">
             <div className="relative transition duration-500 bg-white rounded-lg shadow-lg hover:shadow-xl">
-              <img className="rounded-t-lg" src={mobility.image} alt="" />
+              <img
+                className="rounded-t-lg h-[200px] w-full bg-center"
+                src={mobility.image}
+                alt=""
+              />
               <div className="px-8 py-6 bg-white rounded-lg">
                 <h1 className="mb-3 text-2xl font-bold text-gray-700 hover:text-gray-900 hover:cursor-pointer">
                   {mobility.item}
