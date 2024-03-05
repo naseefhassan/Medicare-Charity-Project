@@ -1,7 +1,11 @@
 import axiosInstance from "axios";
-import  { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function Profile() {
+  const { userId } = useParams();
+  console.log(userId, "if");
+
   const [Profile, setProfile] = useState({
     username: "",
     email: "",
@@ -10,7 +14,7 @@ function Profile() {
     phoneNumber: "",
   });
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await axiosInstance.get("/user/profile");
@@ -42,16 +46,15 @@ function Profile() {
     }));
   };
 
-  const profiileSubmit=async(e)=>{
-    e.preventDefault()
+  const profiileSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const res = await axiosInstance.post("/user/profileupdate",Profile)
+      const res = await axiosInstance.post("/user/profileupdate", Profile);
       console.log("pro success");
     } catch (error) {
-      console.error("profile updation failed",error)
+      console.error("profile updation failed", error);
     }
-  }
-
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -153,5 +156,3 @@ function Profile() {
   );
 }
 export default Profile;
-
-

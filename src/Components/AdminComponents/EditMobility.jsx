@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 
 function EditMobility() {
   const { toolsId } = useParams();
-  console.log(toolsId);
 
   const [editMobilty, setMobility] = useState({
     item: "",

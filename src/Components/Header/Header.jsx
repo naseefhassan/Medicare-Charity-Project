@@ -1,10 +1,24 @@
 import Profile from "../../assets/Images/Profile.png";
 import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axiosInstance from '../../api/axios'
 
 function Header() {
+  const [user, setUser] = useState(''); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      try {
+        const res = axiosInstance.get('/user/getprofile')
+        console.log(res);
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -62,7 +76,7 @@ function Header() {
                 </button>
               </Link>
 
-              <Link to={"/user/profile"}>
+              <Link to={`/user/profile/${user._id}`}>
                 <div className="border-2 border-black rounded-full">
                   <img
                     src={Profile}

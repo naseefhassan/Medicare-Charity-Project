@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import Header from "../Header/Header";
 
@@ -49,8 +49,8 @@ function MobilityAids() {
                   Rent
                 </button>
               </div>
-              <div className="absolute px-4 py-2 bg-white rounded-lg top-2 right-2">
-                <span className="text-md">${mobility.rate}</span>
+              <div className="absolute px-4 py-2 bg-black rounded-lg top-2 right-2">
+                <span className="text-white text-md ">${mobility.rate}</span>
               </div>
             </div>
           </div>

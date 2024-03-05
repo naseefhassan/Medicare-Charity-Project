@@ -9,6 +9,7 @@ import EditMobility from '../Components/AdminComponents/EditMobility'
 import ShowVolunteer from '../Components/AdminComponents/ShowVolunteer'
 import UserProfile from '../Components/AdminComponents/UserProfile'
 import ShowVehicle from '../Components/AdminComponents/ShowVehicle'
+import AdminChats from '../Components/AdminComponents/AdminChats'
 
 
 function AdminPages() {
@@ -24,6 +25,7 @@ function AdminPages() {
         <Route path='/showVolunteer/*' element={<ShowVolunteer/>}></Route>
         <Route path='/userProfile/*' element={<UserProfile/>}></Route>
         <Route path='/showVehicle/*' element={<ShowVehicle/>}></Route>
+        <Route path='/chats' element={<AdminChats/>}></Route>
 
 
     </Routes>
