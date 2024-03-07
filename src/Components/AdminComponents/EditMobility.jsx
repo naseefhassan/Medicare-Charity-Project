@@ -14,7 +14,6 @@ function EditMobility() {
     rate: "",
     description: "",
   });
-  console.log(editMobilty);
 
   useEffect(() => {
     const fetchData = async (toolsId) => {
@@ -22,8 +21,6 @@ function EditMobility() {
         const res = await axiosInstance.put(
           `/admin/editMobilityAids/${toolsId}`
         );
-        console.log("uytfghj");
-        console.log(res, "resssssss24");
         setMobility(res.data.MobilityTools);
       } catch (error) {
         console.error(error, "feching mobility aids failed");
@@ -47,7 +44,6 @@ function EditMobility() {
         `/admin/editMobilityAids/${toolsId}`,
         editMobilty
       );
-      console.log(res);
     } catch (error) {
       console.error(error, "error in editing");
     }

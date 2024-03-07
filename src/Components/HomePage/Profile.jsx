@@ -1,14 +1,15 @@
-import axiosInstance from "axios";
+import axiosInstance from "../../api/axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Header from "../Header/Header";
 
 function Profile() {
   const { userId } = useParams();
-  console.log(userId, "if");
-
-  const [Profile, setProfile] = useState({
+  const [user, setUser] = useState({
     username: "",
-    email: "",
+  });
+  
+  const [profile, setProfile] = useState({
     gender: "",
     age: "",
     phoneNumber: "",
@@ -17,51 +18,56 @@ function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axiosInstance.get("/user/profile");
-        const { data } = response;
-        console.log(data);
-        if (data.profile && data.profile.length > 0) {
-          const { username, email, gender, age, phoneNumber } = data.profile[0];
-          setProfile({
-            username,
-            email,
-            gender,
-            age,
-            phoneNumber,
-          });
-        }
+        const res = await axiosInstance.get(`/user/profile/${userId}`);
+        setUser(res.data.userData);
+        setProfile(res.data.profileData[0]);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
 
     fetchProfile();
-  }, []);
+  }, [userId]);
 
-  const ProfileChange = async (e) => {
+  const handleProfileChange = (e) => {
     const { name, value } = e.target;
-    setProfile((prevData) => ({
-      ...prevData,
+    setProfile((prevProfile) => ({
+      ...prevProfile,
       [name]: value,
     }));
   };
 
-  const profiileSubmit = async (e) => {
+  const handleUserChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axiosInstance.post("/user/profileupdate", Profile);
-      console.log("pro success");
+      const updatedProfile = { ...profile, ...user, userId: userId };
+      const res = await axiosInstance.post(
+        "/user/profileupdate",
+        updatedProfile
+      );
     } catch (error) {
-      console.error("profile updation failed", error);
+      console.error("Failed to update profile:", error);
     }
   };
 
+ 
+
   return (
+    <>
+    <Header/>
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
         <h1 className="mb-4 text-2xl font-bold">User Profile</h1>
 
-        <form onSubmit={profiileSubmit}>
+        <form onSubmit={handleSubmit}>
           <label
             className="block mb-1 text-sm font-medium text-gray-600"
             htmlFor="name"
@@ -73,24 +79,8 @@ function Profile() {
             id="name"
             name="username"
             required
-            value={Profile.username}
-            onChange={ProfileChange}
-            className="w-full px-4 py-2 mb-4 border rounded-md"
-          />
-
-          <label
-            className="block mb-1 text-sm font-medium text-gray-600"
-            htmlFor="email"
-          >
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={Profile.email}
-            onChange={ProfileChange}
+            value={user.username}
+            onChange={handleUserChange}
             className="w-full px-4 py-2 mb-4 border rounded-md"
           />
 
@@ -100,17 +90,15 @@ function Profile() {
           >
             Gender:
           </label>
-          <select
-            id="gender"
+          <input
+            type="text"
+            id="name"
             name="gender"
             required
-            value={Profile.gender}
-            onChange={ProfileChange}
+            value={profile.gender}
+            onChange={handleProfileChange}
             className="w-full px-4 py-2 mb-4 border rounded-md"
-          >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          />
 
           <label
             className="block mb-1 text-sm font-medium text-gray-600"
@@ -123,8 +111,8 @@ function Profile() {
             id="age"
             name="age"
             required
-            value={Profile.age}
-            onChange={ProfileChange}
+            value={profile.age}
+            onChange={handleProfileChange}
             className="w-full px-4 py-2 mb-4 border rounded-md"
           />
 
@@ -139,20 +127,22 @@ function Profile() {
             id="phoneNumber"
             name="phoneNumber"
             required
-            value={Profile.phoneNumber}
-            onChange={ProfileChange}
+            value={profile.phoneNumber}
+            onChange={handleProfileChange}
             className="w-full px-4 py-2 mb-4 border rounded-md"
           />
 
           <button
             type="submit"
-            className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
-          >
+            className="px-4 py-2 mt-2 text-white transition-transform transform bg-green-500 rounded-md active:scale-x-75 hover:bg-green-600 focus:outline-none focus:ring focus:border-green-700"
+            >
             Submit
           </button>
         </form>
       </div>
     </div>
+    </>
   );
 }
+
 export default Profile;
