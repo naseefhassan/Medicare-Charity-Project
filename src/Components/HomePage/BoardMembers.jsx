@@ -55,11 +55,14 @@ function BoardMembers() {
   return (
     <>
       <Header />
-      <div className="flex flex-wrap justify-around gap-5 my-24">
+      <p className="my-24 text-3xl italic font-bold text-center">
+        MEET OUR TEAM
+      </p>
+      <div className="flex flex-wrap justify-around gap-5 ">
         {MembersData.map((MB, index) => (
           <div
             key={index}
-            className="flex flex-col overflow-hidden bg-gray-900 rounded-lg shadow-lg md:flex-row w-[450px] m-10 "
+            className="flex flex-col overflow-hidden bg-gray-900 rounded-lg shadow-lg md:flex-row w-[450px]  "
           >
             <div className="w-full md:w-1/2 ">
               <img

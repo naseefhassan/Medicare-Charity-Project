@@ -1,7 +1,7 @@
-// import { useEffect, useState } from "react";
-// import io from "socket.io-client";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
 
-// const socket = io("http://localhost:3333",{transports:['websocket']});
+const socket = io("http://localhost:3333",{transports:['websocket']});
 
 function Chats() {
   // const  token = localStorage.getItem('jwtToken')
@@ -39,14 +39,16 @@ function Chats() {
       <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
         <div className="h-10 text-center bg-blue-600 ">user</div>
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-          {sendmsg.map((msg, index) => (
+          {/* {sendmsg.map((msg, index) => ( */}
             <div
-              key={index}
+              // key={index}
               className="flex justify-end w-full max-w-xs mt-2 ml-auto space-x-3"
             >
               <div>
                 <div className="p-3 text-white bg-blue-600 rounded-l-lg rounded-br-lg">
-                  <p className="text-sm">{msg.text}</p>
+                  <p className="text-sm">
+                    {/* {msg.text} */}
+                    </p>
                 </div>
                 <span className="text-xs leading-none text-gray-500">
                   2 min ago
@@ -54,7 +56,7 @@ function Chats() {
               </div>
               <div className="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full"></div>
             </div>
-          ))}
+          {/* ))} */}
         </div>
 
         <div className="flex gap-2 p-4 bg-gray-300">

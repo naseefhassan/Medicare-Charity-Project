@@ -9,7 +9,6 @@ function Nurse() {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/user/nursedata");
-        console.log(res.data.Nurse);
         setNurse(res.data.Nurse);
       } catch (error) {
         console.error(error, "nurse data fetching failed");
@@ -29,7 +28,7 @@ function Nurse() {
             <img
               src={nurse.Image}
               alt=""
-              className="shadow-2xl object-fit h-60 rounded-t-2xl lg:w-full 2xl:w-full"
+              className="w-full shadow-2xl object-fit h-60 rounded-t-2xl "
             />
             <div className="bg-white shadow-2xl rounded-b-3xl">
               <h2 className="pt-6 text-2xl font-bold text-center text-gray-800">

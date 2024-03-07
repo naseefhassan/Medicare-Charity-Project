@@ -109,7 +109,12 @@ function Login() {
     try {
       const res = await axiosInstance.post("/LoginPost", loginFormData);
       const { role } = res.data;
-      console.log(role);
+      
+      const jwtToken = res.data.token;
+      console.log(jwtToken)
+        localStorage.setItem("jwtToken", jwtToken);
+        dispatch(setToken(jwtToken))
+        
       if (role === "user") {
         navigate("/");
       } else {

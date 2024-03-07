@@ -13,6 +13,7 @@ import VolunteerProfile from "../Components/HomePage/VolunteerProfile";
 import AddVehicle from "../Components/HomePage/AddVehicle";
 import Chats from "../Components/HomePage/Chats";
 import ShowAmbulance from "../Components/HomePage/ShowAmbulance";
+import AuthGraud from "../RouteGurad/AuthGraud";
 
 function UserPage() {
   return (
@@ -22,17 +23,19 @@ function UserPage() {
         <Route path="/gallery/*" element={<NavGallary />}></Route>
         <Route path="/boardmembers/*" element={<BoardMembers />}></Route>
         <Route path="/contact/*" element={<Contact />}></Route>
-        <Route path="/profile/:userId/*" element={<Profile />}></Route>
-        <Route path="/accountdetails/*" element={<Account />}></Route>
-        <Route path="/nurse/*" element={<Nurse />}></Route>
-        <Route path="/mobilityaids/*" element={<MobilityAids />}></Route>
-        <Route path="/beavolunteer/*" element={<BeAVolunteer />}></Route>
-        <Route path="/ambulance/*" element={<Ambulance />}></Route>
-        <Route path="/volunteerprofile" element={<VolunteerProfile/>}></Route>
-        <Route path="/addVehicle/*" element={<AddVehicle />}></Route>
-        <Route path="/Chats/*" element={<Chats/>}></Route>
-        <Route path='/showAmbulance/*' element={<ShowAmbulance/>}></Route>
 
+        <Route path="/" element={<AuthGraud/>}>
+          <Route path="/profile/:userId/*" element={<Profile />}></Route>
+          <Route path="/accountdetails/*" element={<Account />}></Route>
+          <Route path="/nurse/*" element={<Nurse />}></Route>
+          <Route path="/mobilityaids/*" element={<MobilityAids />}></Route>
+          <Route path="/beavolunteer/*" element={<BeAVolunteer />}></Route>
+          <Route path="/ambulance/*" element={<Ambulance />}></Route>
+          <Route path="/volunteerprofile" element={<VolunteerProfile />}></Route>
+          <Route path="/addVehicle/*" element={<AddVehicle />}></Route>
+          <Route path="/Chats/*" element={<Chats />}></Route>
+          <Route path="/showAmbulance/*" element={<ShowAmbulance />}></Route>
+        </Route>
       </Routes>
     </>
   );
