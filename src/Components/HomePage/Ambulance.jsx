@@ -5,31 +5,31 @@ import { Link } from "react-router-dom";
 function Ambulance() {
   return (
     <div
-      className="image w-[100%] h-[100vh] bg-cover bg-no-repeat bg-right flex justify-center items-center  "
+      className="image w-[100%] h-[100vh] bg-cover bg-no-repeat bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${ambulance})` }}
     >
       <Header />
 
-      <div className="flex items-center justify-around w-full text-white">
-        <h1 className="text-2xl ">
+      <div className="flex flex-wrap items-center justify-around w-full text-white ">
+        <h1 className="mt-5 text-2xl text-center md:text-start">
           If you do call overnight, know that we can <br />
           be just as busy as we are during the day <br />
           Please be patient we will get to you as <br />
           soon as we can
-        <Link to={'/user/showAmbulance'}>
-        <button className="flex items-center justify-center p-3 text-sm bg-orange-600 rounded-lg">
-            Ambulance
-          </button>
-        </Link>
+          <Link to={"/user/showAmbulance"}>
+            <button className="flex items-center justify-center p-3 mb-5 text-sm bg-orange-600 rounded-lg">
+              Ambulance
+            </button>
+          </Link>
         </h1>
-        <h1 className="text-5xl font-bold ">
+        <h1 className="text-5xl font-bold md:text-left">
           Day or Night, <br />
-          We,re Here <br />
+          We're Here <br />
           For You.
-          <Link to={'/user/addVehicle'}>
-          <button className="flex items-center justify-center p-3 text-sm bg-gray-900 rounded-lg">
-            Add Vehicle
-          </button>
+          <Link to={"/user/addVehicle"}>
+            <button className="flex items-center justify-center p-3 text-sm bg-gray-900 rounded-lg ">
+              Add Vehicle
+            </button>
           </Link>
         </h1>
       </div>

@@ -3,9 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
+import { useDispatch } from 'react-redux'
+import {clearToken} from '../../Redux/Jwt'
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const token = localStorage.getItem("jwtToken");
   const [user, setUser] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,9 +32,13 @@ function Header() {
   };
 
   const handleLogOut = () => {
+    // Clear token from Redux
+    dispatch(clearToken());
+    // Clear token from local storage
     localStorage.removeItem("jwtToken");
+    // Redirect to home
     navigate("/");
-    console.log("token destroyed");
+    alert('Successfully Logout')
   };
 
   return (
@@ -91,12 +98,12 @@ function Header() {
                   />
                 </div>
               </Link>
-              <p
+              <button
                 onClick={handleLogOut}
                 className="p-1 leading-4 text-red-600 border-red-600 rounded-lg hover:border-2"
               >
                 Logout
-              </p>
+              </button>
             </div>
           </div>
         </div>

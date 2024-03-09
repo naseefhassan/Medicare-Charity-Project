@@ -10,7 +10,6 @@ function MobilityAids() {
       try {
         const res = await axiosInstance.get("/user/showMobility");
         setMobility(res.data.Mobility);
-        console.log(res);
       } catch (error) {
         console.error(error, "mobilittyaids  fecthing failed");
       }
@@ -18,18 +17,18 @@ function MobilityAids() {
     fetchData();
   }, []);
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-wrap items-center justify-center gap-5 bg-gray-100">
       <Header />
       {mobility.map((mobility, index) => (
-        <div key={index} className="container flex justify-center">
-          <div className="py-32 w-72">
-            <div className="relative transition duration-500 bg-white rounded-lg shadow-lg hover:shadow-xl">
+        <div key={index} className="flex justify-center ">
+          <div className="pt-24 w-72">
+            <div className="relative transition duration-500 bg-gray-200 rounded-lg shadow-lg hover:shadow-xl">
               <img
                 className="rounded-t-lg h-[200px] w-full bg-center"
                 src={mobility.image}
                 alt=""
               />
-              <div className="px-8 py-6 bg-white rounded-lg">
+              <div className="px-8 py-6 rounded-lg">
                 <h1 className="mb-3 text-2xl font-bold text-gray-700 hover:text-gray-900 hover:cursor-pointer">
                   {mobility.item}
                 </h1>
