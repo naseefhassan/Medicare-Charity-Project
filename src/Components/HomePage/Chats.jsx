@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import io from "socket.io-client";
+// import { useEffect, useState } from "react";
+// import io from "socket.io-client";
 
-const socket = io("http://localhost:3333",{transports:['websocket']});
+// const socket = io("http://localhost:3333",{transports:['websocket']});
 
 function Chats() {
   // const  token = localStorage.getItem('jwtToken')

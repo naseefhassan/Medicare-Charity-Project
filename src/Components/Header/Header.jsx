@@ -15,7 +15,7 @@ function Header() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.post("/user/getprofile", { token });
+        const res = await axiosInstance.post("/user/getprofile");
         setUser(res.data.profileData);
       } catch (error) {
         console.error(error);
