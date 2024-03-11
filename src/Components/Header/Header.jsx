@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
-import { useDispatch } from 'react-redux'
-import {clearToken} from '../../Redux/Jwt'
+import { useDispatch } from "react-redux";
+import { clearToken } from "../../Redux/Jwt";
 
 function Header() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const token = localStorage.getItem("jwtToken");
   const [user, setUser] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +38,15 @@ function Header() {
     localStorage.removeItem("jwtToken");
     // Redirect to home
     navigate("/");
-    alert('Successfully Logout')
+    alert("Successfully Logout");
+  };
+
+  const handleRegister = () => {
+    if (token) {
+      alert("please Logout First");
+    } else {
+      navigate("/auth");
+    }
   };
 
   return (
@@ -81,13 +89,14 @@ function Header() {
             </ul>
 
             <div className="flex items-center justify-center gap-3">
-              <Link to={"/auth"}>
-                <button className="bg-[#545454]  rounded-md w-14 sm:w-20 h-6 flex justify-center items-center mt-1 p-4">
-                  <h1 className="hover:scale-[1.05] text-white text-[9px] sm:text-[15px]">
-                    Register
-                  </h1>
-                </button>
-              </Link>
+              <button
+                onClick={handleRegister}
+                className="bg-[#545454]  rounded-md w-14 sm:w-20 h-6 flex justify-center items-center mt-1 p-4"
+              >
+                <h1 className="hover:scale-[1.05] text-white text-[9px] sm:text-[15px]">
+                  Register
+                </h1>
+              </button>
 
               <Link to={`/user/profile/${user._id}`}>
                 <div className="border-2 border-black rounded-full">
