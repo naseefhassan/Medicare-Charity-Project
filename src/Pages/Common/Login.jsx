@@ -2,14 +2,14 @@
 import { useEffect, useState } from "react";
 import "../../../public/Signup/Signup.css";
 import axiosInstance from "../../api/axios";
-import { useNavigate } from "react-router-dom";
-import {  useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { setToken } from "../../Redux/Jwt";
 
 function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const imgBtn = document.querySelector(".img__btn");
     const handleClick = () => {
@@ -29,10 +29,10 @@ function Login() {
   const [loginmsg, setLoginmsg] = useState("");
 
   const [formData, setFormData] = useState({
-    username: "naseef",
-    email: "naseef@gmail.com",
-    password: "Naseef@2002",
-    confirmPassword: "Naseef@2002",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   // Event handlers
@@ -71,10 +71,10 @@ function Login() {
       try {
         // Submit form data
         const res = await axiosInstance.post("/signupPost", formData);
-   
+
         const jwtToken = res.data.token;
         localStorage.setItem("jwtToken", jwtToken);
-        dispatch(setToken(jwtToken))
+        dispatch(setToken(jwtToken));
         navigate("/");
       } catch (error) {
         if (
@@ -109,12 +109,11 @@ function Login() {
     try {
       const res = await axiosInstance.post("/LoginPost", loginFormData);
       const { role } = res.data;
-      
+
       const jwtToken = res.data.token;
-      console.log(jwtToken)
-        localStorage.setItem("jwtToken", jwtToken);
-        dispatch(setToken(jwtToken))
-        
+      localStorage.setItem("jwtToken", jwtToken);
+      dispatch(setToken(jwtToken));
+
       if (role === "user") {
         navigate("/");
       } else {
@@ -153,7 +152,7 @@ function Login() {
                 onChange={handlelogin}
               />
             </label>
-            <p className="forgot-pass">Forgot password?</p>
+            <Link to={'/forgotPassword'}><p className="cursor-pointer forgot-pass">Forgot password?</p></Link>
             <p className="text-[10px] text-center text-red-600">{loginmsg}</p>
             <button type="submit" className="submit custom-class-name">
               Login
