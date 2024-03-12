@@ -12,10 +12,9 @@ function CommonPage() {
       <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/auth" element={<Login />}></Route>
-          <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
-          <Route path='/resetPassword/:id/:token' element={<Resetpassword/>}></Route>
-          
         <Route path="/" element={<PublicRoute/>}>
+          <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
+          <Route path='/resetPassword/:id/:token' element={<Resetpassword/>}></Route>  
           <Route path="/otp" element={<OTP />}></Route>
         </Route>
 

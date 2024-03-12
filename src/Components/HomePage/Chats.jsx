@@ -1,28 +1,37 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
-// import jwt_decode from 'jwt-decode';
-
-const socket = io("http://localhost:3333", { transports: ["websocket"] });
+import axiosInstance from "../../api/axios";
 
 function Chats() {
+  const [socket, setSocket] = useState(null); // Define socket state
+  const [user, SetUser] = useState("");
+
+  useEffect(() => {
+    const SocketIo = io("http://localhost:3333", {
+      transports: ["websocket"],
+    });
+    setSocket(SocketIo); // Set the socket in the state
+    const fetchData = async () => {
+      const res = await axiosInstance.get("/user/getUser");
+      console.log(res.data.userInfo.email);
+      const user =res.data.userInfo.email
+      SetUser(user);
+      SocketIo.emit('userConnection', {user})
+      console.log(user);
+      setSocket(SocketIo  )
+    };
+    fetchData();
+    // return () => {
+    //   SocketIo.close(); // Close the socket when component unmounts
+    // };
+  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+
   const [message, setMessage] = useState("");
   const [sendmsg, setSendmsg] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken");
-
-    // socket.emit('addUser',token)
-  }, []);
-  console.log(token);
-  useEffect(() => {
-    socket.on("chat_message", (msg) => {
-      console.log(msg);
-      setSendmsg([...sendmsg, msg]);
-    });
-    return () => {
-      socket.off("chat_message");
-    };
-  }, [sendmsg]);
+    if (!socket) return;
+  }, [socket]);
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
@@ -30,8 +39,10 @@ function Chats() {
 
   const handleSend = () => {
     if (message.trim() !== "") {
-      //   setSendmsg([...sendmsg, { text: message, sender: "user" }]);
-      socket.emit("chat_msg", { message: "hello" });
+      setSendmsg([...sendmsg, { text: message, sender: "user" }]);
+      if (socket) {
+        socket.emit("chat_msg", { message: message });
+      }
       setMessage("");
     }
   };
@@ -40,22 +51,22 @@ function Chats() {
       <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
         <div className="h-10 text-center bg-blue-600 ">user</div>
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-          {/* {sendmsg.map((msg, index) => ( */}
-          <div
-            // key={index}
-            className="flex justify-end w-full max-w-xs mt-2 ml-auto space-x-3"
-          >
-            <div>
-              <div className="p-3 text-white bg-blue-600 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">{/* {msg.text} */}</p>
+          {sendmsg.map((msg, index) => (
+            <div
+              key={index}
+              className="flex justify-end w-full max-w-xs mt-2 ml-auto space-x-3"
+            >
+              <div>
+                <div className="p-3 text-white bg-blue-600 rounded-l-lg rounded-br-lg">
+                  <p className="text-sm">{msg.text}</p>
+                </div>
+                <span className="text-xs leading-none text-gray-500">
+                  2 min ago
+                </span>
               </div>
-              <span className="text-xs leading-none text-gray-500">
-                2 min ago
-              </span>
+              <div className="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full"></div>
             </div>
-            <div className="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full"></div>
-          </div>
-          {/* ))} */}
+          ))}
         </div>
 
         <div className="flex gap-2 p-4 bg-gray-300">

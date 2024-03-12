@@ -1,12 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axioInstance from  '../../api/axios'
+import io from "socket.io-client";
+
 
 function AdminChats() {
   const [message, setMessage] = useState("");
   const [sendmsg, setSendmsg] = useState([]);
+  const [socket, setSocket] = useState(null);
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
+  useEffect(()=>{
+    const SocketIo = io("http://localhost:3333", {
+      transports: ["websocket"],
+    });
+    setSocket(SocketIo);
+    const fetchData = async ()=>{
+      try {
+        const res = await axioInstance.get('/admin/getAdmin')
+        const admin = res.data.admin
+
+        SocketIo.emit('AdminConnection', {admin})
+      console.log(admin);
+      setSocket(SocketIo  )
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+    
+  },[])
 
   const handleSend = () => {
     if (message.trim() !== "") {
@@ -14,7 +38,7 @@ function AdminChats() {
       setMessage("");
     }
   };
-  return (
+  return ( 
     <div className="flex flex-col items-center justify-center w-screen min-h-screen p-10 text-gray-800 bg-gray-100">
       <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
         <div className="h-10 text-center bg-blue-600 ">Admin</div>

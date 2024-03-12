@@ -13,6 +13,6 @@ const PublicRoute = () => {
   return (
     <div>{token && <Outlet/>}</div>
   )
-}
+}         
 
 export default PublicRoute
