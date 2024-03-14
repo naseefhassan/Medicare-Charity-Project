@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import axiosInstance from "../../api/axios";
+import axios from "axios";
 
 function Chats() {
   const [socket, setSocket] = useState(null); // Define socket state
-  const [user, SetUser] = useState("");
+  const [sender, SetSender] = useState("");
+  const [receiver, SetReceiver] = useState("");
+  const [message, setMessage] = useState("");
+  const [sendmsg, setSendmsg] = useState([]);
+  const [receivedMsg, SetReceivedMsg] = useState([])
 
   useEffect(() => {
     const SocketIo = io("http://localhost:3333", {
@@ -13,12 +18,17 @@ function Chats() {
     setSocket(SocketIo); // Set the socket in the state
     const fetchData = async () => {
       const res = await axiosInstance.get("/user/getUser");
-      console.log(res.data.userInfo.email);
-      const user =res.data.userInfo.email
-      SetUser(user);
-      SocketIo.emit('userConnection', {user})
-      console.log(user);
-      setSocket(SocketIo  )
+      const sender = res.data.userInfo.email;
+      SetSender(sender);
+
+      const response = await axiosInstance.get("/admin/adminemail");
+      console.log(response);
+      SetReceiver(response.data.admin.email);
+
+      SocketIo.emit("userConnection", { sender });
+      console.log(sender);
+
+      setSocket(SocketIo);
     };
     fetchData();
     // return () => {
@@ -26,26 +36,55 @@ function Chats() {
     // };
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-  const [message, setMessage] = useState("");
-  const [sendmsg, setSendmsg] = useState([]);
 
+  console.log(sender,'sender',receiver)
   useEffect(() => {
     if (!socket) return;
-  }, [socket]);
+    socket.on('message',({message, sender, receiver})=>{
+      
+    if(sender == sender || receiver == receiver ){
+      SetReceivedMsg((prevMsg)=>[
+        ...prevMsg,
+        {message:message.trim(), sender}
+      ])
+    }
+  })
+}, [socket]);
+console.log(receivedMsg);
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
 
-  const handleSend = () => {
-    if (message.trim() !== "") {
-      setSendmsg([...sendmsg, { text: message, sender: "user" }]);
-      if (socket) {
-        socket.emit("chat_msg", { message: message });
-      }
+  const handleSend = async () => {
+    if (!socket || !message.trim()) return;
+  
+    console.log(sender);
+    console.log(sender, receiver, message.trim());
+  
+    socket.emit("message", {
+      sender: sender,
+      receiver: receiver,
+      message: message.trim(),
+    });
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:3333/message/saveMessage",
+        { message: message.trim(), sender: sender, receiver:receiver }
+      );
+  
+      setSendmsg((prevMessages) => [
+        ...prevMessages,
+        { content: message.trim(), sender: sender },
+      ]);
+  
       setMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
     }
-  };
+  }
+  
   return (
     <div className="flex flex-col items-center justify-center w-screen min-h-screen p-10 text-gray-800 bg-gray-100">
       <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
