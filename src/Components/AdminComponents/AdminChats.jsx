@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import io from "socket.io-client";
+import axios from "axios";
 
 function AdminChats() {
   const [message, setMessage] = useState("");
@@ -42,25 +43,32 @@ function AdminChats() {
     if (!socket) return;
     socket.on('message',({message, sender, receiver})=>{
          console.log(message);
-    if(sender === sender || receiver === receiver ){
+    // if(sender == sender || receiver == receiver ){
       SetReceivedMsg((prevMsg)=>[
         ...prevMsg,
         {Msg:message.trim(), sender}
       ])
-    }
+    // }
   })
 }, [socket]);
-console.log(receivedMsg);
 
-  const handleSend = () => {
-    if (message.trim() !== "" && socket && selectedReceiver) {
+  const handleSend =async () => {
       
+      
+      if (!socket || !selectedReceiver.email || !message.trim()) return;
+      const response = await axios.post(
+        "http://localhost:3333/message/saveMessage",
+        { message, sender: sender, receiver:selectedReceiver.email }
+      );
+      const sentMessage = { message: message.trim(), sender: sender }; // Update the structure of the sent message
+      if (message.trim()) {
+        setMessage("");
+      }
       SetReceivedMsg((prevMsg)=>[
         ...prevMsg,
         {Msg:message.trim(), sender}
+        // sentMessage
       ])
-
-
       setMessage("");
 
       socket.emit("message", {
@@ -68,7 +76,7 @@ console.log(receivedMsg);
         receiver: selectedReceiver.email,
         message: message.trim(),
       });
-    }
+    
   };
 
   const handleReceiverClick = (receiver) => {
@@ -80,7 +88,6 @@ console.log(receivedMsg);
       );
     });
 
-    console.log(filteredMessages);
     SetReceivedMsg(filteredMessages)
     setSelectedReceiver(receiver);
   };
@@ -143,7 +150,6 @@ console.log(receivedMsg);
                   } py-3 px-4 mr-2`}>
                     {msg.Msg}
                   </div>
-                  <div className="w-8 h-8 bg-gray-300 rounded-full" />
                 </div>
               ))}
           </div>

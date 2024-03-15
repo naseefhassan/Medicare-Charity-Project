@@ -9,6 +9,7 @@ function Chats() {
   const [receiver, SetReceiver] = useState("");
   const [message, setMessage] = useState("");
   const [receivedMsg, SetReceivedMsg] = useState([])
+  const [chatReceiver, SetChatReceiver]=useState('')
 
   useEffect(() => {
     const SocketIo = io("http://localhost:3333", {
@@ -19,13 +20,12 @@ function Chats() {
       const res = await axiosInstance.get("/user/getUser");
       const sender = res.data.userInfo.email;
       SetSender(sender);
-
+      
       const response = await axiosInstance.get("/admin/adminemail");
-      console.log(response);
+      SetChatReceiver(response.data.admin)
       SetReceiver(response.data.admin.email);
 
       SocketIo.emit("userConnection", { sender });
-      console.log(sender);
 
       setSocket(SocketIo);
     };
@@ -33,19 +33,17 @@ function Chats() {
     
   }, []); 
 
-  console.log(sender,'sender',receiver)
   useEffect(() => {
     if (!socket) return;
     socket.on('message',({message, sender, receiver})=>{
-         console.log(message);
+    // if(sender == sender || receiver == receiver ){
       SetReceivedMsg((prevMsg)=>[
         ...prevMsg,
         {Msg:message.trim(), sender}
       ])
-    
+    // }
   })
 }, [socket]);
-console.log(receivedMsg);
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
@@ -54,9 +52,7 @@ console.log(receivedMsg);
   const handleSend = async () => {
     if (!socket || !message.trim()) return;
   
-    console.log(sender);
-    console.log(sender, receiver, message.trim());
-  
+   
     socket.emit("message", {
       sender: sender,
       receiver: receiver,
@@ -64,10 +60,11 @@ console.log(receivedMsg);
     });
   
     try {
-      // const response = await axios.post(
-      //   "http://localhost:3333/message/saveMessage",
-      //   { message: message.trim(), sender: sender, receiver:receiver }
-      // );
+      
+      const response = await axios.post(
+        "http://localhost:3333/message/saveMessage",
+        { message: message, sender: sender, receiver:receiver }
+      );
   
       SetReceivedMsg((prevMessages) => [
         ...prevMessages,
@@ -79,11 +76,14 @@ console.log(receivedMsg);
       console.error("Error sending message:", error);
     }
   }
-  
+  // console.log(chatReceiver);
   return (
     <div className="flex flex-col items-center justify-center w-screen min-h-screen p-10 text-gray-800 bg-gray-100">
       <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
-        <div className="h-10 text-center bg-blue-600 ">user</div>
+        <div className="h-10 flex item-center justify-center text-2xl  text-center bg-blue-600 ">
+          
+          <h1>{chatReceiver.username}</h1>
+          </div>
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
  
   {receivedMsg.map((Msg, index) => (
