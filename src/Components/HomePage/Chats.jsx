@@ -8,7 +8,6 @@ function Chats() {
   const [sender, SetSender] = useState("");
   const [receiver, SetReceiver] = useState("");
   const [message, setMessage] = useState("");
-  const [sendmsg, setSendmsg] = useState([]);
   const [receivedMsg, SetReceivedMsg] = useState([])
 
   useEffect(() => {
@@ -31,21 +30,18 @@ function Chats() {
       setSocket(SocketIo);
     };
     fetchData();
-    // return () => {
-    //   SocketIo.close(); // Close the socket when component unmounts
-    // };
-  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
+    
+  }, []); 
 
   console.log(sender,'sender',receiver)
   useEffect(() => {
     if (!socket) return;
     socket.on('message',({message, sender, receiver})=>{
-      
-    if(sender == sender || receiver == receiver ){
+         console.log(message);
+    if(sender === sender || receiver === receiver ){
       SetReceivedMsg((prevMsg)=>[
         ...prevMsg,
-        {message:message.trim(), sender}
+        {Msg:message.trim(), sender}
       ])
     }
   })
@@ -69,14 +65,14 @@ console.log(receivedMsg);
     });
   
     try {
-      const response = await axios.post(
-        "http://localhost:3333/message/saveMessage",
-        { message: message.trim(), sender: sender, receiver:receiver }
-      );
+      // const response = await axios.post(
+      //   "http://localhost:3333/message/saveMessage",
+      //   { message: message.trim(), sender: sender, receiver:receiver }
+      // );
   
-      setSendmsg((prevMessages) => [
+      SetReceivedMsg((prevMessages) => [
         ...prevMessages,
-        { content: message.trim(), sender: sender },
+        { Msg: message.trim(), sender: sender },
       ]);
   
       setMessage("");
@@ -90,23 +86,32 @@ console.log(receivedMsg);
       <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
         <div className="h-10 text-center bg-blue-600 ">user</div>
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-          {sendmsg.map((msg, index) => (
-            <div
-              key={index}
-              className="flex justify-end w-full max-w-xs mt-2 ml-auto space-x-3"
-            >
-              <div>
-                <div className="p-3 text-white bg-blue-600 rounded-l-lg rounded-br-lg">
-                  <p className="text-sm">{msg.text}</p>
-                </div>
-                <span className="text-xs leading-none text-gray-500">
-                  2 min ago
-                </span>
-              </div>
-              <div className="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full"></div>
-            </div>
-          ))}
+ 
+  {receivedMsg.map((Msg, index) => (
+    <div
+      key={index}
+      className={`flex mb-4 ${
+        Msg.sender === sender
+          ? "justify-end"
+          : "justify-start"
+      }`}
+    >
+      <div>
+        <div className={`${
+                    Msg.sender === sender
+                      ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
+                      : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
+                  } py-3 px-4 mr-2`}>
+          <p className="text-sm">{Msg.Msg}</p>
         </div>
+        <span className="text-xs leading-none text-gray-500">
+          2 min ago
+        </span>
+      </div>
+    </div>
+  ))}
+</div>
+
 
         <div className="flex gap-2 p-4 bg-gray-300">
           <input

@@ -4,11 +4,12 @@ import io from "socket.io-client";
 
 function AdminChats() {
   const [message, setMessage] = useState("");
-  const [sendmsg, setSendmsg] = useState({});
   const [socket, setSocket] = useState(null);
   const [receivers, SetReceiver] = useState([]);
   const [selectedReceiver, setSelectedReceiver] = useState(null);
   const [sender, setSender] = useState("");
+  const [receivedMsg, SetReceivedMsg] = useState([])
+
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
@@ -37,19 +38,29 @@ function AdminChats() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (!socket) return;
+    socket.on('message',({message, sender, receiver})=>{
+         console.log(message);
+    if(sender === sender || receiver === receiver ){
+      SetReceivedMsg((prevMsg)=>[
+        ...prevMsg,
+        {Msg:message.trim(), sender}
+      ])
+    }
+  })
+}, [socket]);
+console.log(receivedMsg);
+
   const handleSend = () => {
     if (message.trim() !== "" && socket && selectedReceiver) {
-      const newMessage = { text: message, sender: "admin" };
-      const receiverId = selectedReceiver._id; // Assuming receiver has an _id field
-      const updatedMessages = { ...sendmsg };
+      
+      SetReceivedMsg((prevMsg)=>[
+        ...prevMsg,
+        {Msg:message.trim(), sender}
+      ])
 
-      if (!updatedMessages[receiverId]) {
-        updatedMessages[receiverId] = [newMessage];
-      } else {
-        updatedMessages[receiverId] = [...updatedMessages[receiverId], newMessage];
-      }
 
-      setSendmsg(updatedMessages);
       setMessage("");
 
       socket.emit("message", {
@@ -61,6 +72,14 @@ function AdminChats() {
   };
 
   const handleReceiverClick = (receiver) => {
+    const filteredMessages = receivedMsg.filter((msg) => {
+      return (
+        (sender === sender &&
+          receiver === receiver) ||
+        (receiver === receiver && sender === sender)
+      );
+    });
+    console.log(filteredMessages);
     setSelectedReceiver(receiver);
   };
 
@@ -109,12 +128,18 @@ function AdminChats() {
             </div>
           </div>
           <div className="flex flex-col flex-grow p-2 overflow-auto">
-            {selectedReceiver &&
-              sendmsg[selectedReceiver._id] &&
-              sendmsg[selectedReceiver._id].map((msg, index) => (
-                <div key={index} className="flex items-center justify-end mb-4">
-                  <div className="px-4 py-3 mr-2 text-white bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl">
-                    {msg.text}
+            {receivedMsg.map((msg, index) => (
+                <div key={index}  className={`flex mb-4 ${
+                  msg.sender === sender
+                    ? "justify-end"
+                    : "justify-start"
+                }`}>
+                  <div className={`${
+                    msg.sender === sender
+                      ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
+                      : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
+                  } py-3 px-4 mr-2`}>
+                    {msg.Msg}
                   </div>
                   <div className="w-8 h-8 bg-gray-300 rounded-full" />
                 </div>
