@@ -38,12 +38,11 @@ function Chats() {
     if (!socket) return;
     socket.on('message',({message, sender, receiver})=>{
          console.log(message);
-    if(sender === sender || receiver === receiver ){
       SetReceivedMsg((prevMsg)=>[
         ...prevMsg,
         {Msg:message.trim(), sender}
       ])
-    }
+    
   })
 }, [socket]);
 console.log(receivedMsg);

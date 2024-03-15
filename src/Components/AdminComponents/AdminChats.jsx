@@ -74,12 +74,14 @@ console.log(receivedMsg);
   const handleReceiverClick = (receiver) => {
     const filteredMessages = receivedMsg.filter((msg) => {
       return (
-        (sender === sender &&
-          receiver === receiver) ||
-        (receiver === receiver && sender === sender)
+        (msg.sender === sender &&
+          msg.receiver === receiver) ||
+        (msg.receiver === sender && msg.sender === receiver)
       );
     });
+
     console.log(filteredMessages);
+    SetReceivedMsg(filteredMessages)
     setSelectedReceiver(receiver);
   };
 
