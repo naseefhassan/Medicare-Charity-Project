@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import io from "socket.io-client";
 import axios from "axios";
-
 function AdminChats() {
   const [message, setMessage] = useState("");
   const [socket, setSocket] = useState(null);
-  const [receivers, SetReceiver] = useState([]);
+  const [receivers, setReceivers] = useState([]);
+  const [filteredReceivers, setFilteredReceivers] = useState([]);
   const [selectedReceiver, setSelectedReceiver] = useState(null);
   const [sender, setSender] = useState("");
-  const [receivedMsg, SetReceivedMsg] = useState([]);
+  const [receivedMsg, setReceivedMsg] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
@@ -27,7 +28,8 @@ function AdminChats() {
         setSender(admin);
 
         const allUsers = await axiosInstance.get("/admin/getAlluser");
-        SetReceiver(allUsers.data.getAlluser);
+        setReceivers(allUsers.data.getAlluser);
+        setFilteredReceivers(allUsers.data.getAlluser);
 
         SocketIo.emit("AdminConnection", { admin });
 
@@ -43,64 +45,62 @@ function AdminChats() {
     if (!socket) return;
     socket.on("message", ({ message, sender, receiver }) => {
       console.log(message);
-      // if(sender == sender || receiver == receiver ){
-      SetReceivedMsg((prevMsg) => [
+      setReceivedMsg((prevMsg) => [
         ...prevMsg,
         { Msg: message.trim(), sender },
       ]);
-      // }
     });
   }, [socket]);
 
   const handleSend = async () => {
     if (!socket || !selectedReceiver?.email || !message.trim()) return;
-  
+
     try {
-      // Send message to the server
       await axios.post("http://localhost:3333/message/saveMessage", {
         message: message.trim(),
         sender: sender,
-        receiver: selectedReceiver.email
+        receiver: selectedReceiver.email,
       });
-  
-      // Emit message through socket
+
       socket.emit("message", {
         sender: sender,
         receiver: selectedReceiver.email,
-        message: message.trim()
+        message: message.trim(),
       });
-  
-      // Update local state with the sent message
+
       const sentMessage = { message: message.trim(), sender: sender };
-      SetReceivedMsg(prevMsg => [...prevMsg, sentMessage]);
-  
-      // Clear input field after sending
+      setReceivedMsg((prevMsg) => [...prevMsg, sentMessage]);
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
-  
 
   const handleReceiverClick = async (receiver) => {
-    // const filteredMessages = receivedMsg.filter((msg) => {
-    //   return (
-    //     (msg.sender === sender && msg.receiver === receiver) ||
-    //     (msg.receiver === sender && msg.sender === receiver)
-    //   );
-    // });
     const chat = await axios.get("http://localhost:3333/message/getMessage");
     const messages = chat.data.message;
-    console.log(messages);
     const filteredMessages = messages.filter((msg) => {
       return (
         (msg.sender === sender && msg.receiver === receiver.email) ||
         (msg.sender === receiver.email && msg.receiver === sender)
       );
     });
-    console.log(sender, receiver.email);
-    SetReceivedMsg(filteredMessages);
+    setReceivedMsg(filteredMessages);
     setSelectedReceiver(receiver);
+  };
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filteredReceivers = receivers.filter((receiver) => {
+      return receiver.username.toLowerCase().includes(query);
+    });
+
+    if (query === "") {
+      setFilteredReceivers(receivers);
+    } else {
+      setFilteredReceivers(filteredReceivers);
+    }
   };
 
   return (
@@ -118,10 +118,12 @@ function AdminChats() {
             <input
               type="text"
               placeholder="Search chatting"
+              value={searchQuery}
+              onChange={handleSearch}
               className="w-full px-2 border-2 border-gray-200 rounded-2xl"
             />
           </div>
-          {receivers.map((receiver, index) => (
+          {filteredReceivers.map((receiver, index) => (
             <div
               key={index}
               className="flex flex-row items-center gap-5 px-2 py-4 border-b-2 border-l-4 border-blue-400"
