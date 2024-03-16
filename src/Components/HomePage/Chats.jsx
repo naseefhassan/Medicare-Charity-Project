@@ -4,46 +4,65 @@ import axiosInstance from "../../api/axios";
 import axios from "axios";
 
 function Chats() {
-  const [socket, setSocket] = useState(null); // Define socket state
-  const [sender, SetSender] = useState("");
-  const [receiver, SetReceiver] = useState("");
+  const [socket, setSocket] = useState(null);
+  const [sender, setSender] = useState("");
+  const [receiver, setReceiver] = useState("");
   const [message, setMessage] = useState("");
-  const [receivedMsg, SetReceivedMsg] = useState([])
-  const [chatReceiver, SetChatReceiver]=useState('')
+  const [receivedMsg, setReceivedMsg] = useState([]);
+  const [chatReceiver, setChatReceiver] = useState("");
 
   useEffect(() => {
     const SocketIo = io("http://localhost:3333", {
       transports: ["websocket"],
     });
-    setSocket(SocketIo); // Set the socket in the state
-    const fetchData = async () => {
-      const res = await axiosInstance.get("/user/getUser");
-      const sender = res.data.userInfo.email;
-      SetSender(sender);
-      
-      const response = await axiosInstance.get("/admin/adminemail");
-      SetChatReceiver(response.data.admin)
-      SetReceiver(response.data.admin.email);
-
-      SocketIo.emit("userConnection", { sender });
-
-      setSocket(SocketIo);
-    };
-    fetchData();
-    
-  }, []); 
+    setSocket(SocketIo);
+  }, []);
 
   useEffect(() => {
     if (!socket) return;
-    socket.on('message',({message, sender, receiver})=>{
-    // if(sender == sender || receiver == receiver ){
-      SetReceivedMsg((prevMsg)=>[
+  
+    const fetchData = async () => {
+      try {
+        const res = await axiosInstance.get("/user/getUser");
+        const senderEmail = res.data.userInfo.email;
+        setSender(senderEmail);
+  
+        const response = await axiosInstance.get("/admin/adminemail");
+        setChatReceiver(response.data.admin);
+        setReceiver(response.data.admin.email);
+  
+        const chat = await axios.get("http://localhost:3333/message/getMessage");
+        const messages = chat.data.message;
+        const filteredMessages = messages.filter((msg) => {
+          return (
+            (msg.sender === sender && msg.receiver === receiver) ||
+            (msg.sender === receiver && msg.receiver === sender)
+          );
+          
+        });
+
+        setReceivedMsg(filteredMessages);
+        console.log(sender, receiver);
+  
+        socket.emit("userConnection", { sender: senderEmail });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [socket]);
+  
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.on("message", ({ message, sender }) => {
+      setReceivedMsg((prevMsg) => [
         ...prevMsg,
-        {Msg:message.trim(), sender}
-      ])
-    // }
-  })
-}, [socket]);
+        { Msg: message.trim(), sender },
+      ]);
+    });
+  }, [socket]);
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
@@ -51,66 +70,62 @@ function Chats() {
 
   const handleSend = async () => {
     if (!socket || !message.trim()) return;
-  
-   
+
     socket.emit("message", {
       sender: sender,
       receiver: receiver,
       message: message.trim(),
     });
-  
+
     try {
-      
-      const response = await axios.post(
-        "http://localhost:3333/message/saveMessage",
-        { message: message, sender: sender, receiver:receiver }
-      );
-  
-      SetReceivedMsg((prevMessages) => [
+      await axios.post("http://localhost:3333/message/saveMessage", {
+        message: message,
+        sender: sender,
+        receiver: receiver,
+      });
+
+      setReceivedMsg((prevMessages) => [
         ...prevMessages,
         { Msg: message.trim(), sender: sender },
       ]);
-  
+
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
-  }
-  // console.log(chatReceiver);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-screen min-h-screen p-10 text-gray-800 bg-gray-100">
       <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
-        <div className="h-10 flex item-center justify-center text-2xl  text-center bg-blue-600 ">
-          
+        <div className="h-10 flex item-center justify-center text-2xl text-center bg-blue-600">
           <h1>{chatReceiver.username}</h1>
-          </div>
+        </div>
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
- 
-  {receivedMsg.map((Msg, index) => (
-    <div
-      key={index}
-      className={`flex mb-4 ${
-        Msg.sender === sender
-          ? "justify-end"
-          : "justify-start"
-      }`}
-    >
-      <div>
-        <div className={`${
+          {receivedMsg.map((Msg, index) => (
+            <div
+              key={index}
+              className={`flex mb-4 ${
+                Msg.sender === sender ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div>
+                <div
+                  className={`${
                     Msg.sender === sender
                       ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
                       : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
-                  } py-3 px-4 mr-2`}>
-          <p className="text-sm">{Msg.Msg}</p>
+                  } py-3 px-4 mr-2`}
+                >
+                  <p className="text-sm">{Msg.message}</p>
+                </div>
+                <span className="text-xs leading-none text-gray-500">
+                  2 min ago
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
-        <span className="text-xs leading-none text-gray-500">
-          2 min ago
-        </span>
-      </div>
-    </div>
-  ))}
-</div>
-
 
         <div className="flex gap-2 p-4 bg-gray-300">
           <input

@@ -9,8 +9,7 @@ function AdminChats() {
   const [receivers, SetReceiver] = useState([]);
   const [selectedReceiver, setSelectedReceiver] = useState(null);
   const [sender, setSender] = useState("");
-  const [receivedMsg, SetReceivedMsg] = useState([])
-
+  const [receivedMsg, SetReceivedMsg] = useState([]);
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
@@ -31,6 +30,7 @@ function AdminChats() {
         SetReceiver(allUsers.data.getAlluser);
 
         SocketIo.emit("AdminConnection", { admin });
+
         setSocket(SocketIo);
       } catch (error) {
         console.error(error);
@@ -41,54 +41,65 @@ function AdminChats() {
 
   useEffect(() => {
     if (!socket) return;
-    socket.on('message',({message, sender, receiver})=>{
-         console.log(message);
-    // if(sender == sender || receiver == receiver ){
-      SetReceivedMsg((prevMsg)=>[
+    socket.on("message", ({ message, sender, receiver }) => {
+      console.log(message);
+      // if(sender == sender || receiver == receiver ){
+      SetReceivedMsg((prevMsg) => [
         ...prevMsg,
-        {Msg:message.trim(), sender}
-      ])
-    // }
-  })
-}, [socket]);
+        { Msg: message.trim(), sender },
+      ]);
+      // }
+    });
+  }, [socket]);
 
-  const handleSend =async () => {
-      
-      
-      if (!socket || !selectedReceiver.email || !message.trim()) return;
-      const response = await axios.post(
-        "http://localhost:3333/message/saveMessage",
-        { message, sender: sender, receiver:selectedReceiver.email }
-      );
-      const sentMessage = { message: message.trim(), sender: sender }; // Update the structure of the sent message
-      if (message.trim()) {
-        setMessage("");
-      }
-      SetReceivedMsg((prevMsg)=>[
-        ...prevMsg,
-        {Msg:message.trim(), sender}
-        // sentMessage
-      ])
-      setMessage("");
-
+  const handleSend = async () => {
+    if (!socket || !selectedReceiver?.email || !message.trim()) return;
+  
+    try {
+      // Send message to the server
+      await axios.post("http://localhost:3333/message/saveMessage", {
+        message: message.trim(),
+        sender: sender,
+        receiver: selectedReceiver.email
+      });
+  
+      // Emit message through socket
       socket.emit("message", {
         sender: sender,
         receiver: selectedReceiver.email,
-        message: message.trim(),
+        message: message.trim()
       });
-    
+  
+      // Update local state with the sent message
+      const sentMessage = { message: message.trim(), sender: sender };
+      SetReceivedMsg(prevMsg => [...prevMsg, sentMessage]);
+  
+      // Clear input field after sending
+      setMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
+  
 
-  const handleReceiverClick = (receiver) => {
-    const filteredMessages = receivedMsg.filter((msg) => {
+  const handleReceiverClick = async (receiver) => {
+    // const filteredMessages = receivedMsg.filter((msg) => {
+    //   return (
+    //     (msg.sender === sender && msg.receiver === receiver) ||
+    //     (msg.receiver === sender && msg.sender === receiver)
+    //   );
+    // });
+    const chat = await axios.get("http://localhost:3333/message/getMessage");
+    const messages = chat.data.message;
+    console.log(messages);
+    const filteredMessages = messages.filter((msg) => {
       return (
-        (msg.sender === sender &&
-          msg.receiver === receiver) ||
-        (msg.receiver === sender && msg.sender === receiver)
+        (msg.sender === sender && msg.receiver === receiver.email) ||
+        (msg.sender === receiver.email && msg.receiver === sender)
       );
     });
-
-    SetReceivedMsg(filteredMessages)
+    console.log(sender, receiver.email);
+    SetReceivedMsg(filteredMessages);
     setSelectedReceiver(receiver);
   };
 
@@ -137,21 +148,24 @@ function AdminChats() {
             </div>
           </div>
           <div className="flex flex-col flex-grow p-2 overflow-auto">
-            {receivedMsg.map((msg, index) => (
-                <div key={index}  className={`flex mb-4 ${
-                  msg.sender === sender
-                    ? "justify-end"
-                    : "justify-start"
-                }`}>
-                  <div className={`${
-                    msg.sender === sender
+            {receivedMsg.map((Msg, index) => (
+              <div
+                key={index}
+                className={`flex mb-4 ${
+                  Msg.sender === sender ? "justify-end" : "justify-start"
+                }`}
+              >
+                <div
+                  className={`${
+                    Msg.sender === sender
                       ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
                       : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
-                  } py-3 px-4 mr-2`}>
-                    {msg.Msg}
-                  </div>
+                  } py-3 px-4 mr-2`}
+                >
+                  {Msg.message}
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
 
           <div className="absolute bottom-0 flex items-center w-full">
