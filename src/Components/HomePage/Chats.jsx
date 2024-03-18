@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import axiosInstance from "../../api/axios";
 import axios from "axios";
+import Header from "../Header/Header";
 
 function Chats() {
   const [socket, setSocket] = useState(null);
@@ -9,57 +10,54 @@ function Chats() {
   const [receiver, setReceiver] = useState("");
   const [message, setMessage] = useState("");
   const [receivedMsg, setReceivedMsg] = useState([]);
-  const [chatReceiver, setChatReceiver] = useState("");
 
   useEffect(() => {
     const SocketIo = io("http://localhost:3333", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
-  }, []);
+  }, [message]);
 
   useEffect(() => {
     if (!socket) return;
-  
+
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/user/getUser");
         const senderEmail = res.data.userInfo.email;
         setSender(senderEmail);
-  
+
         const response = await axiosInstance.get("/admin/adminemail");
-        setChatReceiver(response.data.admin);
         setReceiver(response.data.admin.email);
-  
-        const chat = await axios.get("http://localhost:3333/message/getMessage");
+
+        const chat = await axios.get(
+          "http://localhost:3333/message/getMessage"
+        );
         const messages = chat.data.message;
         const filteredMessages = messages.filter((msg) => {
           return (
             (msg.sender === sender && msg.receiver === receiver) ||
             (msg.sender === receiver && msg.receiver === sender)
           );
-          
         });
 
         setReceivedMsg(filteredMessages);
         console.log(sender, receiver);
-  
+
         socket.emit("userConnection", { sender: senderEmail });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
     fetchData();
-  }, [socket]);
-  
+  }, [socket, sender, receiver]);
 
   useEffect(() => {
     if (!socket) return;
     socket.on("message", ({ message, sender }) => {
       setReceivedMsg((prevMsg) => [
         ...prevMsg,
-        { Msg: message.trim(), sender },
+        { message: message.trim(), sender },
       ]);
     });
   }, [socket]);
@@ -96,28 +94,35 @@ function Chats() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen min-h-screen p-10 text-gray-800 bg-gray-100">
-      <div className="flex flex-col flex-grow w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
-        <div className="h-10 flex item-center justify-center text-2xl text-center bg-blue-600">
-          <h1>{chatReceiver.username}</h1>
+    <div className="flex  flex-col items-center justify-center w-screen min-h-screen   text-gray-800 bg-gray-100">
+      <div className="mb-10">
+        <Header />
+      </div>
+      <div className="flex  flex-col h-[450px]  w-full max-w-xl overflow-hidden bg-fixed rounded-lg shadow-xl">
+        <div className="h-16 p-4 flex item-center justify-between text-2xl text-center bg-blue-600">
+          <h1 className="text-white font-bold">Chat With Founder</h1>
+          <h1 className="bg-white rounded-full w-10 h-10 flex justify-center item-center">
+            A
+          </h1>
         </div>
+
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-          {receivedMsg.map((Msg, index) => (
+          {receivedMsg.map((msg, index) => (
             <div
               key={index}
               className={`flex mb-4 ${
-                Msg.sender === sender ? "justify-end" : "justify-start"
+                msg.sender === sender ? "justify-end" : "justify-start"
               }`}
             >
               <div>
                 <div
                   className={`${
-                    Msg.sender === sender
+                    msg.sender === sender
                       ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
                       : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
                   } py-3 px-4 mr-2`}
                 >
-                  <p className="text-sm">{Msg.message}</p>
+                  <p className="text-sm">{msg.message}</p>
                 </div>
                 <span className="text-xs leading-none text-gray-500">
                   2 min ago

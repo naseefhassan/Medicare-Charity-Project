@@ -32,7 +32,6 @@ function AdminChats() {
         setFilteredReceivers(allUsers.data.getAlluser);
 
         SocketIo.emit("AdminConnection", { admin });
-
         setSocket(SocketIo);
       } catch (error) {
         console.error(error);
@@ -47,7 +46,7 @@ function AdminChats() {
       console.log(message);
       setReceivedMsg((prevMsg) => [
         ...prevMsg,
-        { Msg: message.trim(), sender },
+        { message: message.trim(), sender },
       ]);
     });
   }, [socket]);
@@ -150,21 +149,21 @@ function AdminChats() {
             </div>
           </div>
           <div className="flex flex-col flex-grow p-2 overflow-auto">
-            {receivedMsg.map((Msg, index) => (
+            {receivedMsg.map((msg, index) => (
               <div
                 key={index}
                 className={`flex mb-4 ${
-                  Msg.sender === sender ? "justify-end" : "justify-start"
+                  msg.sender === sender ? "justify-end" : "justify-start"
                 }`}
               >
                 <div
                   className={`${
-                    Msg.sender === sender
+                    msg.sender === sender
                       ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
                       : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
                   } py-3 px-4 mr-2`}
                 >
-                  {Msg.message}
+                  {msg.message}
                 </div>
               </div>
             ))}
