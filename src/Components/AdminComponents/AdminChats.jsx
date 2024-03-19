@@ -49,6 +49,10 @@ function AdminChats() {
         { message: message.trim(), sender },
       ]);
     });
+     // Clean up the event listener when the component unmounts
+  return () => {
+    socket.off("message");
+  };
   }, [socket]);
 
   const handleSend = async () => {
