@@ -8,15 +8,21 @@ export const useExcludedDates = () => useContext(ExcludedDatesContext);
 
 // Provider component to provide the excluded dates context
 export const ExcludedDatesProvider = ({ children }) => {
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  // Initialize fromDate with the current date and toDate with the next day
+  const initialFromDate = new Date();
+  const initialToDate = new Date();
+  initialToDate.setDate(initialToDate.getDate() + 1);
+
+  const [fromDate, setFromDate] = useState(initialFromDate);
+  const [toDate, setToDate] = useState(initialToDate);
 
   // Function to generate an array of dates between fromDate and toDate
   const generateDateRange = (startDate, endDate) => {
     const dates = [];
     const currentDate = new Date(startDate);
-    while (currentDate <= endDate) {
-      dates.push(new Date(currentDate));
+    const lastDate = new Date(endDate);
+    while (currentDate <= lastDate) {
+      dates.push(new Date(currentDate)); // Push a new Date object
       currentDate.setDate(currentDate.getDate() + 1);
     }
     return dates;
@@ -32,4 +38,3 @@ export const ExcludedDatesProvider = ({ children }) => {
     </ExcludedDatesContext.Provider>
   );
 };
-

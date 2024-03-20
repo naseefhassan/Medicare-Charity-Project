@@ -20,7 +20,7 @@ function Nurse() {
     <div className="flex flex-wrap gap-3 m-6">
       <Header />
       {nurse
-        .filter((nurse) => nurse.delStatus === false)
+        .filter((nurse) => nurse.delStatus === false && nurse.booking === false)
         .map((nurse, index) => (
           <div key={index} className="m-auto mt-24 max-72 w-80 lg:mt-16">
             <img

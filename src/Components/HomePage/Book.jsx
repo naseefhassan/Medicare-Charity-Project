@@ -7,6 +7,7 @@ import { useRazorpay } from "../../Context/Payment";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+
 function Book() {
   const navigate = useNavigate();
   const { nurseId } = useParams();
@@ -36,6 +37,7 @@ function Book() {
       setSelectedDatesCount(diffInDays);
     }
   }, [fromDate, toDate]);
+  console.log(selectedDatesCount);
 
   function formatDate(date) {
     const year = date.getFullYear();
@@ -64,7 +66,8 @@ function Book() {
 
   const handlePaymentClick = async () => {
     try {
-      const response = await createPayment(details.rate);
+      const price = details.rate * selectedDatesCount
+      const response = await createPayment(price);
       navigate("/user/nurse");
       const bookid = details._id;
       setBooking([...booking, bookid]);

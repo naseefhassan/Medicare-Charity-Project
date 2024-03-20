@@ -55,14 +55,19 @@ export const RazorpayProvider = ({ children }) => {
   };
 
   const handlePaymentSuccess = async (response) => {
-    console.log(order.data.amount);
     try {
-      await axiosInstance.post("/user/save_payment", {
-        orderId: response.razorpay_order_id,
-        paymentId: response.razorpay_payment_id,
-        amount: order.data.amount,
-        status: "success",
-      });
+      // Ensure order is defined before accessing its properties
+      if (order && order.data && order.data.amount) {
+        console.log(order.data.amount);
+        await axiosInstance.post("/user/save_payment", {
+          orderId: response.razorpay_order_id,
+          paymentId: response.razorpay_payment_id,
+          amount: order.data.amount,
+          status: "success",
+        });
+      } else {
+        console.error("Order information is missing or invalid");
+      }
     } catch (error) {
       console.error("Error saving payment:", error);
     }
