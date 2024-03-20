@@ -14,16 +14,15 @@ function Account() {
         console.log(response);
         Setorder(response);
         const options = {
-          key: "rzp_test_j1Jya15nBJEWe2", // Replace with your Razorpay key
-          amount: 50000, // Amount in smallest currency unit (e.g., paisa for INR)
+          key: "rzp_test_j1Jya15nBJEWe2",
+          amount: 500,
           currency: "INR",
           name: "Medicare",
           description: "Test Payment",
           order_id: response.data.id,
           handler: function (response) {
-            handlePaymentSuccess(response); // Call function to handle payment success
+            handlePaymentSuccess(response); 
             alert("Payment successful!");
-            // You can send the payment response to the server for further processing if needed
           },
           prefill: {
             name: "Naseef",
@@ -54,8 +53,7 @@ function Account() {
         paymentId: response.razorpay_payment_id,
         // amount: order.data.amount,
         amount: response.razorpay_signature,
-        status: "success", // You can customize this based on your requirements
-        // Add any other payment details you want to save
+        status: "success", 
       });
       // Optionally, you can update the UI to reflect the successful payment
     } catch (error) {

@@ -13,6 +13,7 @@ function EditNurse() {
     phoneNumber: "",
     Qualification: "",
     Experience: "",
+    rate:"",
     Image: "",
   });
   console.log(editedNurse);
@@ -156,6 +157,20 @@ function EditNurse() {
                   name="Experience"
                   className="w-full px-4 py-1 border rounded-md"
                   value={editedNurse.Experience}
+                  onChange={handleChange}
+                />
+                <label
+                  className="block text-sm font-medium text-gray-600"
+                  htmlFor="rate"
+                >
+                  Rate:
+                </label>
+                <input
+                  type="number"
+                  id="rate"
+                  name="rate"
+                  className="w-full px-4 py-1 border rounded-md"
+                  value={editedNurse.rate}
                   onChange={handleChange}
                 />
 

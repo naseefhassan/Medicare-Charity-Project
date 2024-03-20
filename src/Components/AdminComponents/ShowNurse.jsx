@@ -77,6 +77,7 @@ function ShowNurse() {
                 <p>Age: {nurse.age}</p>
                 <p>Gender: {nurse.gender}</p>
                 <p>Phone Number: {nurse.phoneNumber}</p>
+                <p>Rate:{nurse.rate}</p>
 
                 <div className="flex gap-3">
                   <Link to={`/admin/editnurse/${nurse._id}`} className="w-full">

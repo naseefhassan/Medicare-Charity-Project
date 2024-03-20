@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import Header from "../Header/Header";
+import { Link } from "react-router-dom";
 
 function Nurse() {
   const [nurse, setNurse] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -14,10 +14,8 @@ function Nurse() {
         console.error(error, "nurse data fetching failed");
       }
     };
-
     fetchData();
   }, []);
-
   return (
     <div className="flex flex-wrap gap-3 m-6">
       <Header />
@@ -50,12 +48,17 @@ function Nurse() {
                 <p className="pt-1 text-center text-gray-500">
                   Age: {nurse.age}
                 </p>
+                <p className="pt-1 text-center text-gray-500">
+                  Rate:Rs {nurse.rate}
+                </p>
               </div>
 
               <div className="flex justify-center p-2 m-auto mt-6 text-center text-white bg-blue-700 shadow-xl w-72 lg:w-5/6 hover:bg-indigo-500 rounded-2xl shadow-bg-blue-700">
-                <button className="text-lg font-bold lg:text-sm">
-                  Proceed to booking
-                </button>
+                <Link to={`/user/book/${nurse._id}`}>
+                  <button className="text-lg font-bold lg:text-sm">
+                    Proceed to booking
+                  </button>
+                </Link>
               </div>
               <div className="flex justify-center w-full h-16 m-auto ">
                 <button className="font-bold text-center text-gray-500 lg:text-sm hover:text-gray-900">

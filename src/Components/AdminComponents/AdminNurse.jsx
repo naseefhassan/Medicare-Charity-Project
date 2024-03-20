@@ -12,6 +12,7 @@ function AdminNurse() {
   const [Qualification, setQualification] = useState("");
   const [Experience, setExperience] = useState("");
   const [Image, setImage] = useState("");
+  const [rate, setRate] = useState("");
 
   const DataSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ function AdminNurse() {
     formData.append("Qualification", Qualification);
     formData.append("Experience", Experience);
     formData.append("Image", Image);
+    formData.append("rate", rate);
 
     try {
       const res = axiosInstance.post("/admin/PostNurse", formData, {
@@ -45,8 +47,8 @@ function AdminNurse() {
           Show={"Show Nurse"}
           Add={"Add nurse"}
           Edit={"Edit Nurse"}
-          Home={'Home'}
-          Homeroute={'/admin/adminhome'}
+          Home={"Home"}
+          Homeroute={"/admin/adminhome"}
           Addroute={"/admin/adminnurse"}
           Editroute={"/admin/editnurse"}
           Showroute={"/admin/showNurse"}
@@ -149,6 +151,21 @@ function AdminNurse() {
                   required
                   value={Experience}
                   onChange={(e) => setExperience(e.target.value)}
+                  className="w-full px-4 py-1 border rounded-md"
+                />
+                <label
+                  className="block text-sm font-medium text-gray-600"
+                  htmlFor="rate"
+                >
+                  Rate:
+                </label>
+                <input
+                  type="number"
+                  id="rate"
+                  name="rate"
+                  required
+                  value={rate}
+                  onChange={(e) => setRate(e.target.value)}
                   className="w-full px-4 py-1 border rounded-md"
                 />
 

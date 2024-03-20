@@ -14,10 +14,17 @@ import AddVehicle from "../Components/HomePage/AddVehicle";
 import Chats from "../Components/HomePage/Chats";
 import ShowAmbulance from "../Components/HomePage/ShowAmbulance";
 import AuthGraud from "../RouteGurad/AuthGraud";
+import Booking from "../Components/HomePage/Book";
+import { ExcludedDatesProvider } from '../Context/Booking'
+import { RazorpayProvider } from "../Context/Payment";
+
+
 
 function UserPage() {
   return (
     <>
+        <ExcludedDatesProvider>
+        <RazorpayProvider>
       <Routes>
         <Route path="/about/*" element={<About />}></Route>
         <Route path="/gallery/*" element={<NavGallary />}></Route>
@@ -35,8 +42,11 @@ function UserPage() {
           <Route path="/addVehicle/*" element={<AddVehicle />}></Route>
           <Route path="/Chats/*" element={<Chats />}></Route>
           <Route path="/showAmbulance/*" element={<ShowAmbulance />}></Route>
+          <Route path="/book/:nurseId/*" element={<Booking/>}></Route>
         </Route>
       </Routes>
+      </RazorpayProvider>
+      </ExcludedDatesProvider>
     </>
   );
 }
