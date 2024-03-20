@@ -49,7 +49,7 @@ function Nurse() {
                   Age: {nurse.age}
                 </p>
                 <p className="pt-1 text-center text-gray-500">
-                  Rate:Rs {nurse.rate}
+                  Rate:Rs {nurse.rate}/Day
                 </p>
               </div>
 

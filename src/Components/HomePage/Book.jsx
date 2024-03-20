@@ -1,44 +1,40 @@
+// Book.js
 import React, { useEffect, useState } from "react";
 import { useExcludedDates } from "../../Context/Booking";
 import "react-datepicker/dist/react-datepicker.css";
+import axiosInstance from "../../api/axios";
 import { useRazorpay } from "../../Context/Payment";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 function Book() {
+  const navigate = useNavigate();
   const { nurseId } = useParams();
-  console.log(nurseId);
   const [details, setDetails] = useState("");
+  const [booking, setBooking] = useState([]);
 
   useEffect(() => {
     const fetchData = async (nurseId) => {
       try {
         const res = await axiosInstance.get(`/user/getBookingNurse/${nurseId}`);
         setDetails(res.data.NurseDetails);
-        console.log(res);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData(nurseId);
   }, [nurseId]);
-  console.log(details.rate);
 
-  const { fromDate, toDate, setFromDate, setToDate, excludedDates } =
-    useExcludedDates();
+  const { fromDate, toDate, setFromDate, setToDate } = useExcludedDates();
   const [selectedDatesCount, setSelectedDatesCount] = useState(0);
   const { createPayment } = useRazorpay();
 
-  
-
   useEffect(() => {
-    // Calculate the difference between fromDate and toDate when they both are selected
     if (fromDate && toDate) {
       const diffInTime = toDate.getTime() - fromDate.getTime();
-      const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24) + 1); // Add 1 to include both start and end dates
+      const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24) + 1);
       setSelectedDatesCount(diffInDays);
     }
- 
   }, [fromDate, toDate]);
 
   function formatDate(date) {
@@ -66,10 +62,18 @@ function Book() {
     }
   }
 
-  // Trigger Razorpay payment
-  function handlePaymentClick() {
-    createPayment(details.rate);
-  }
+  const handlePaymentClick = async () => {
+    try {
+      const response = await createPayment(details.rate);
+      navigate("/user/nurse");
+      const bookid = details._id;
+      setBooking([...booking, bookid]);
+      const res = await axiosInstance.post(`/user/bookingStatus/${bookid}`);
+      console.log(res);
+    } catch (error) {
+      console.error(error, "failed");
+    }
+  };
 
   return (
     <div className="max-w-md m-auto p-6 bg-white rounded-md shadow-md">

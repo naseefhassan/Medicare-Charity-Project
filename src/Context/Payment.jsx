@@ -1,3 +1,4 @@
+// PaymentContext.js
 import axiosInstance from "../api/axios";
 import { createContext, useContext, useState } from "react";
 import useRazorpays from "react-razorpay";
@@ -7,15 +8,22 @@ const RazorpayContext = createContext();
 export const useRazorpay = () => useContext(RazorpayContext);
 
 export const RazorpayProvider = ({ children }) => {
-  const [order, SetOrder] = useState("");
+  const [order, setOrder] = useState("");
   const [Razorpay] = useRazorpays();
-  console.log(order);
+
+  const createOrder = async (amount) => {
+    try {
+      const response = await axiosInstance.post(`/user/payment/${amount}`);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const createPayment = async (amount) => {
     try {
-      const response = await axiosInstance.post(`/user/payment/${amount}`);
-      console.log(response);
-      SetOrder(response);
+      const response = await createOrder(amount);
+      setOrder(response);
       const options = {
         key: "rzp_test_j1Jya15nBJEWe2",
         amount: amount,
@@ -45,25 +53,23 @@ export const RazorpayProvider = ({ children }) => {
       console.error(error);
     }
   };
+
   const handlePaymentSuccess = async (response) => {
-    console.log(response, "gytffyt");
+    console.log(order.data.amount);
     try {
-      // Send payment details to backend for storage
       await axiosInstance.post("/user/save_payment", {
         orderId: response.razorpay_order_id,
         paymentId: response.razorpay_payment_id,
         amount: order.data.amount,
-        // amount: response.razorpay_signature,
         status: "success",
       });
-      // Optionally, you can update the UI to reflect the successful payment
     } catch (error) {
       console.error("Error saving payment:", error);
     }
   };
 
   return (
-    <RazorpayContext.Provider value={{ createPayment, handlePaymentSuccess }}>
+    <RazorpayContext.Provider value={{ createPayment }}>
       {children}
     </RazorpayContext.Provider>
   );
