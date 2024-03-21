@@ -26,8 +26,8 @@ function ShowVehicle() {
           Homeroute={"/admin/adminhome"}
         />
       </div>
-      <div className="w-full m-10 ">
-        <div className="flex w-full gap-5 ">
+      <div className="w-full  ">
+        <div className="flex flex-wrap justify-around w-full gap-5 ">
           {vehicle.map((ambulance, index) => (
             <div key={index} className="p-4 bg-white rounded-lg shadow-2xl ">
               <div className="relative flex justify-center overflow-hidden rounded-lg h-52">
@@ -49,9 +49,7 @@ function ShowVehicle() {
                 >
                   {ambulance.vehicleNumber}
                 </h2>
-                <p
-                  className="mt-2 text-gray-800 text-md line-clamp-1"
-                >
+                <p className="mt-2 text-gray-800 text-md line-clamp-1">
                   {ambulance.email}
                 </p>
               </div>
