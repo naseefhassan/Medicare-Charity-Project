@@ -20,7 +20,7 @@ function MobilityAids() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-5 bg-gray-100">
       <Header />
-      {mobility.map((mobility, index) => (
+      {mobility.filter((mobility) =>mobility.booking === false).map((mobility,index)=>(
         <div key={index} className="flex justify-center ">
           <div className="pt-24 w-72">
             <div className="relative transition duration-500 bg-gray-200 rounded-lg shadow-lg hover:shadow-xl">

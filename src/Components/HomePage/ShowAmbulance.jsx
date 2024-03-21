@@ -8,6 +8,7 @@ function ShowAmbulance() {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/user/showambulance");
+        console.log(res);
         setambulance(res.data.ambulance);
       } catch (error) {
         console.error(error);

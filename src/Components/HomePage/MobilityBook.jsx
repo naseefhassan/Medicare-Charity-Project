@@ -75,9 +75,10 @@ function MobilityBook() {
       const response = await createPayment(price);
       navigate("/user/mobilityaids");
       const bookid = details._id;
+      console.log(bookid);
       setBooking([...booking, bookid]);
-      //   const res = await axiosInstance.post(`/user/bookingStatus/${bookid}`);
-      //   console.log(res);
+        const res = await axiosInstance.post(`/user/MobilitybookingStatus/${bookid}`);
+        console.log(res);
     } catch (error) {
       console.error(error, "failed");
     }
