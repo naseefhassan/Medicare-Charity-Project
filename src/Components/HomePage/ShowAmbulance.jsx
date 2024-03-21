@@ -15,6 +15,10 @@ function ShowAmbulance() {
     };
     fetchData();
   }, []);
+
+  const handleCall = (phoneNumber) => {
+    window.location.href = `tel:${phoneNumber}`;
+  };
   return (
     <>
       <div>
@@ -106,7 +110,10 @@ function ShowAmbulance() {
                 </p>
               </div>
               <div className="flex justify-center ">
-                <button className="flex items-center justify-center gap-3 p-3 bg-red-500 rounded-md">
+                <button
+                  onClick={() => handleCall(ambulance.phoneNumber)}
+                  className="flex items-center justify-center gap-3 p-3 bg-red-500 rounded-md"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
