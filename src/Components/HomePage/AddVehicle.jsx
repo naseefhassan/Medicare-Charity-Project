@@ -3,6 +3,10 @@ import image from "../../assets/Images/resque.jpg";
 import { useState } from "react";
 import axiosInstance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 function AddVehicle() {
   const navigate = useNavigate();
@@ -47,6 +51,7 @@ function AddVehicle() {
       });
       navigate("/user/ambulance");
       alert("Thanks for joining us");
+      toast.success('Thanks for joining us')
     } catch (error) {
       if (error.response.data.message === "This vehicle is already exists") {
         seterrmsg("This vehicle is already exists");
@@ -201,6 +206,7 @@ function AddVehicle() {
           </div>
         </div>
       </div>
+      <ToastContainer style={{ width: "300px" }} />
     </div>
   );
 }

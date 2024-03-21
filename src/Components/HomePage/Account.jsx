@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Account() {
   const navigate = useNavigate();
@@ -75,6 +77,8 @@ function Account() {
       setAmount(amount); // This line is optional, just to ensure the latest amount is set
     } else {
       alert("Please enter a valid amount");
+      toast.error('Please enter a valid amount')
+
     }
   };
 
@@ -91,6 +95,7 @@ function Account() {
       <button className="bg-orange-500 rounded-md p-3" onClick={() => initiatePayment(amount)}>Initiate Payment</button>
       {/* Redirect back to home page after initiating payment */}
       {order && navigate("/")}
+      <ToastContainer style={{ width: "300px" }} />
     </div>
   );
 }

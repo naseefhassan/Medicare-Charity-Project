@@ -6,6 +6,8 @@ import axiosInstance from "../../api/axios";
 import { useRazorpay } from "../../Context/Payment";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Book() {
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ function Book() {
   function handleFromDateChange(e) {
     const newFromDate = new Date(e.target.value);
     if (toDate && newFromDate < toDate) {
-      alert("Please select a valid date range");
+      ("Please select a valid date range");
     } else {
       setFromDate(newFromDate);
     }
@@ -57,14 +59,15 @@ function Book() {
   function handleToDateChange(e) {
     const newToDate = new Date(e.target.value);
     if (newToDate <= fromDate) {
-      alert("To Date cannot be before From Date");
+      // alert("To Date cannot be before From Date");
+      toast.error("To Date cannot be before From Date");
     } else {
       setToDate(newToDate);
     }
   }
 
   const handlePaymentClick = async () => {
-    if (selectedDatesCount===0) {
+    if (selectedDatesCount === 0) {
       alert("Please select a date first!");
     } else {
       try {
@@ -116,6 +119,7 @@ function Book() {
           Payment
         </button>
       </div>
+      <ToastContainer style={{ width: "300px" }} />
     </div>
   );
 }

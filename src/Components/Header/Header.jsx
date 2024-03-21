@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import { useDispatch } from "react-redux";
 import { clearToken } from "../../Redux/Jwt";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Header() {
   const navigate = useNavigate();
@@ -38,12 +40,12 @@ function Header() {
     localStorage.removeItem("jwtToken");
     // Redirect to home
     navigate("/");
-    alert("Successfully Logout");
+    toast.success("Successfully Logout 🤗");
   };
 
   const handleRegister = () => {
     if (token) {
-      alert("please Logout First");
+      toast.error("Please Logout First 🙏");
     } else {
       navigate("/auth");
     }
@@ -117,6 +119,7 @@ function Header() {
           </div>
         </div>
       </div>
+      <ToastContainer style={{ width: "300px" }} />
     </>
   );
 }

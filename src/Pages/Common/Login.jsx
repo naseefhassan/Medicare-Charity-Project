@@ -5,6 +5,8 @@ import axiosInstance from "../../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../Redux/Jwt";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -56,8 +58,10 @@ function Login() {
       errmsg(
         "Password must contain 8 characters with uppercase, lowercase, special character, and number."
       );
+      toast.error("Enter Valid Characters");
       return false;
     } else if (password !== confirmPassword) {
+      toast.error("Passwords do not match.");
       errmsg("Passwords do not match.");
       return false;
     }
@@ -117,10 +121,12 @@ function Login() {
       if (role === "user") {
         navigate("/");
       } else {
+        toast.success('Welcome to Medicare')
         navigate("/admin/adminhome");
       }
     } catch (error) {
       setLoginmsg("Invalid email or password. Please try again.");
+      toast.error("Invalid email or password");
     }
   };
 
@@ -129,6 +135,7 @@ function Login() {
       <br />
       <br />
       <div className="cont">
+
         {/* Login */}
 
         <div className="form sign-in ">
@@ -152,7 +159,9 @@ function Login() {
                 onChange={handlelogin}
               />
             </label>
-            <Link to={'/forgotPassword'}><p className="cursor-pointer forgot-pass">Forgot password?</p></Link>
+            <Link to={"/forgotPassword"}>
+              <p className="cursor-pointer forgot-pass">Forgot password?</p>
+            </Link>
             <p className="text-[10px] text-center text-red-600">{loginmsg}</p>
             <button type="submit" className="submit custom-class-name">
               Login
@@ -228,6 +237,7 @@ function Login() {
             </form>
           </div>
         </div>
+        <ToastContainer />           
       </div>
     </>
   );

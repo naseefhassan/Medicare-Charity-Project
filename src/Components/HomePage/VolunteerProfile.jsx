@@ -2,6 +2,8 @@ import { useState } from "react";
 import Header from "../../Components/Header/Header";
 import axiosInstance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function VolunteerProfile() {
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ function VolunteerProfile() {
       });
 
       alert("Thanks for being a Volunteer");
+      toast.error('Thanks for being a Volunteer')
       navigate("/user/beavolunteer");
     } catch (error) {
       console.error(error, "error in profile");
@@ -222,6 +225,8 @@ function VolunteerProfile() {
             </div>
           </div>
         </div>
+        <ToastContainer style={{ width: "300px" }} />
+
       </div>
     </>
   );
