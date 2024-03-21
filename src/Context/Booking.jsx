@@ -11,7 +11,7 @@ export const ExcludedDatesProvider = ({ children }) => {
   // Initialize fromDate with the current date and toDate with the next day
   const initialFromDate = new Date();
   const initialToDate = new Date();
-  initialToDate.setDate(initialToDate.getDate() + 1);
+  initialToDate.setDate(initialToDate);
 
   const [fromDate, setFromDate] = useState(initialFromDate);
   const [toDate, setToDate] = useState(initialToDate);
@@ -23,7 +23,7 @@ export const ExcludedDatesProvider = ({ children }) => {
     const lastDate = new Date(endDate);
     while (currentDate <= lastDate) {
       dates.push(new Date(currentDate)); // Push a new Date object
-      currentDate.setDate(currentDate.getDate() + 1);
+      currentDate.setDate(currentDate);
     }
     return dates;
   };

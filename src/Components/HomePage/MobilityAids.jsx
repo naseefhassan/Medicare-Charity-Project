@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import Header from "../Header/Header";
+import { Link } from "react-router-dom";
 
 function MobilityAids() {
   const [mobility, setMobility] = useState([]);
@@ -44,9 +45,11 @@ function MobilityAids() {
                 <p className="tracking-wide text-gray-700">
                   Description: {mobility.description}
                 </p>
+                <Link to={`/user/mobilitybooking/${mobility._id}`}>
                 <button className="px-4 py-2 mt-6 font-bold text-gray-800 transition duration-300 bg-yellow-400 rounded-lg shadow-md hover:shadow-lg">
                   Rent
                 </button>
+                </Link>
               </div>
               <div className="absolute px-4 py-2 bg-black rounded-lg top-2 right-2">
                 <span className="text-white text-md ">${mobility.rate}</span>

@@ -8,10 +8,9 @@ const RazorpayContext = createContext();
 export const useRazorpay = () => useContext(RazorpayContext);
 
 export const RazorpayProvider = ({ children }) => {
-  const [order, setOrder] = useState("");
   const [Razorpay] = useRazorpays();
   const [successOrder, setsuccessOrder] = useState(null);
-  const [paymentId, setPaymentId] = useState('');
+  const [paymentId, setPaymentId] = useState("");
 
   const createOrder = async (amount) => {
     console.log("2", amount);
@@ -34,13 +33,13 @@ export const RazorpayProvider = ({ children }) => {
       setsuccessOrder(successOrderResponse);
       const options = {
         key: "rzp_test_j1Jya15nBJEWe2",
-        amount: amount*100,
+        amount: amount * 100,
         currency: "INR",
         name: "Medicare",
         description: "Test Payment",
         order_id: response.data.id,
         handler: function (response) {
-          console.log(response,'response of handler');
+          console.log(response, "response of handler");
           setPaymentId(response);
           // handlePaymentSuccess(response);
           alert("Payment successful!");
@@ -65,29 +64,27 @@ export const RazorpayProvider = ({ children }) => {
     }
   };
 
-  console.log(order, "order");
-useEffect(()=>{
-  const handlePaymentSuccess = async () => {
-    console.log("3");
-    try {
-      console.log('success aaan tto naseefee', successOrder);
-      // Ensure order is defined before accessing its properties
-      await axiosInstance.post("/user/save_payment", {
-        orderId: successOrder?.id,
-        paymentId: paymentId.razorpay_payment_id,
-        amount: successOrder?.amount,
-        status: "success",
-      });
-    } catch (error) {
-      console.error("Error saving payment:", error);
+  useEffect(() => {
+    const handlePaymentSuccess = async () => {
+      console.log("3");
+      try {
+        console.log("success aaan tto naseefee", successOrder);
+        // Ensure order is defined before accessing its properties
+        await axiosInstance.post("/user/save_payment", {
+          orderId: successOrder?.id,
+          paymentId: paymentId.razorpay_payment_id,
+          amount: successOrder?.amount,
+          status: "success",
+        });
+      } catch (error) {
+        console.error("Error saving payment:", error);
+      }
+    };
+
+    if (successOrder !== null && paymentId !== "") {
+      handlePaymentSuccess();
     }
-  };
-
-  if(successOrder !== null && paymentId !== ''){
-    handlePaymentSuccess();
-  }
-
-},[successOrder,paymentId])
+  }, [successOrder, paymentId]);
 
   return (
     <RazorpayContext.Provider value={{ createPayment }}>

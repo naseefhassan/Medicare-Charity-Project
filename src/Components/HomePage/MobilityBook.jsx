@@ -1,4 +1,3 @@
-// Book.js
 import React, { useEffect, useState } from "react";
 import { useExcludedDates } from "../../Context/Booking";
 import "react-datepicker/dist/react-datepicker.css";
@@ -7,23 +6,27 @@ import { useRazorpay } from "../../Context/Payment";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function Book() {
+function MobilityBook() {
   const navigate = useNavigate();
-  const { nurseId } = useParams();
+  const { MobilityId } = useParams();
+  console.log(MobilityId, "gv");
   const [details, setDetails] = useState("");
   const [booking, setBooking] = useState([]);
 
   useEffect(() => {
-    const fetchData = async (nurseId) => {
+    const fetchData = async (MobilityId) => {
       try {
-        const res = await axiosInstance.get(`/user/getBookingNurse/${nurseId}`);
-        setDetails(res.data.NurseDetails);
+        const res = await axiosInstance.get(
+          `/user/getMobilityBooking/${MobilityId}`
+        );
+        setDetails(res.data.MobilityAids);
+        console.log(res.data.MobilityAids);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchData(nurseId);
-  }, [nurseId]);
+    fetchData(MobilityId);
+  }, [MobilityId]);
 
   const { fromDate, toDate, setFromDate, setToDate } = useExcludedDates();
   const [selectedDatesCount, setSelectedDatesCount] = useState(0);
@@ -64,23 +67,22 @@ function Book() {
   }
 
   const handlePaymentClick = async () => {
-    if (selectedDatesCount===0) {
-      alert("Please select a date first!");
-    } else {
-      try {
-        const price = details.rate * selectedDatesCount;
-        const response = await createPayment(price);
-        navigate("/user/nurse");
-        const bookid = details._id;
-        setBooking([...booking, bookid]);
-        const res = await axiosInstance.post(`/user/bookingStatus/${bookid}`);
-        console.log(res);
-      } catch (error) {
-        console.error(error, "failed");
-      }
+    if(selectedDatesCount === 0){
+        alert('select a date first')
+    }else{
+    try {
+      const price = details.rate * selectedDatesCount;
+      const response = await createPayment(price);
+      navigate("/user/mobilityaids");
+      const bookid = details._id;
+      setBooking([...booking, bookid]);
+      //   const res = await axiosInstance.post(`/user/bookingStatus/${bookid}`);
+      //   console.log(res);
+    } catch (error) {
+      console.error(error, "failed");
+    }
     }
   };
-
   return (
     <div className="max-w-md m-auto p-6 bg-white rounded-md shadow-md">
       <h1 className="text-2xl text-center font-semibold mb-4">
@@ -120,4 +122,4 @@ function Book() {
   );
 }
 
-export default Book;
+export default MobilityBook;
