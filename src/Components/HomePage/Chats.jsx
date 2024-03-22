@@ -42,7 +42,6 @@ function Chats() {
         });
 
         setReceivedMsg(filteredMessages);
-        console.log(sender, receiver);
 
         socket.emit("userConnection", { sender: senderEmail });
       } catch (error) {
@@ -124,9 +123,6 @@ function Chats() {
                 >
                   <p className="text-sm">{msg.message}</p>
                 </div>
-                <span className="text-xs leading-none text-gray-500">
-                  2 min ago
-                </span>
               </div>
             </div>
           ))}

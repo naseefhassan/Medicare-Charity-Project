@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 function MobilityBook() {
   const navigate = useNavigate();
   const { MobilityId } = useParams();
-  console.log(MobilityId, "gv");
   const [details, setDetails] = useState("");
   const [booking, setBooking] = useState([]);
 
@@ -20,7 +19,6 @@ function MobilityBook() {
           `/user/getMobilityBooking/${MobilityId}`
         );
         setDetails(res.data.MobilityAids);
-        console.log(res.data.MobilityAids);
       } catch (error) {
         console.error(error);
       }
@@ -39,7 +37,6 @@ function MobilityBook() {
       setSelectedDatesCount(diffInDays);
     }
   }, [fromDate, toDate]);
-  console.log(selectedDatesCount);
 
   function formatDate(date) {
     const year = date.getFullYear();
@@ -75,10 +72,8 @@ function MobilityBook() {
       const response = await createPayment(price);
       navigate("/user/mobilityaids");
       const bookid = details._id;
-      console.log(bookid);
       setBooking([...booking, bookid]);
         const res = await axiosInstance.post(`/user/MobilitybookingStatus/${bookid}`);
-        console.log(res);
     } catch (error) {
       console.error(error, "failed");
     }

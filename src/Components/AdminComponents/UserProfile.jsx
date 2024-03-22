@@ -9,7 +9,6 @@ function UserProfile() {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/admin/userProfile");
-        console.log(res.data.Userprofile);
         setUser(res.data.Userprofile);
       } catch (error) {
         console.error(error);

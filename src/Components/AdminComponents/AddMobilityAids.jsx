@@ -32,7 +32,6 @@ function AddMobilityAids() {
     } catch (error) {
       console.error(error, "failed to append");
     }
-    console.log(formData, "mob");
   };
   return (
     <div className="bg-gray-100">

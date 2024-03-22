@@ -8,7 +8,6 @@ function GetOtp({onSentOtp}) {
         try {
             const res = await axios.post("http://localhost:5001/verifyOtp", { phoneNumber })
             onSentOtp()
-            console.log("PhoneNumber sended",res );
         } catch (error) {
             console.error("Error sending OTP: ", error);
         }

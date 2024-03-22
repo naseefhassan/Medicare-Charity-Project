@@ -16,13 +16,11 @@ function EditNurse() {
     rate:"",
     Image: "",
   });
-  console.log(editedNurse);
 
   useEffect(() => {
     const fetchData = async (nurseId) => {
       try {
         const res = await axiosInstance.put(`/admin/editnurse/${nurseId}`);
-        console.log(res, "resedit");
         setEditedNurse(res.data.nurse);
       } catch (error) {
         console.error(error, "Error fetching nurse data");
@@ -46,7 +44,6 @@ function EditNurse() {
         `/admin/editnurse/${nurseId}`,
         editedNurse
       );
-      console.log(res);
     } catch (error) {
       console.error(error, "error in editing");
     }

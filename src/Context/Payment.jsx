@@ -13,10 +13,8 @@ export const RazorpayProvider = ({ children }) => {
   const [paymentId, setPaymentId] = useState("");
 
   const createOrder = async (amount) => {
-    console.log("2", amount);
     try {
       const response = await axiosInstance.post(`/user/payment/${amount}`);
-      console.log(response.data);
 
       return response;
     } catch (error) {
@@ -25,10 +23,8 @@ export const RazorpayProvider = ({ children }) => {
   };
 
   const createPayment = async (amount) => {
-    console.log("1", amount);
     try {
       const response = await createOrder(amount);
-      console.log("response of the create order", response.data.response);
       const successOrderResponse = response.data.response;
       setsuccessOrder(successOrderResponse);
       const options = {
@@ -39,7 +35,6 @@ export const RazorpayProvider = ({ children }) => {
         description: "Test Payment",
         order_id: response.data.id,
         handler: function (response) {
-          console.log(response, "response of handler");
           setPaymentId(response);
           // handlePaymentSuccess(response);
           alert("Payment successful!");
@@ -56,7 +51,6 @@ export const RazorpayProvider = ({ children }) => {
           color: "#3399cc",
         },
       };
-      console.log(amount);
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
@@ -66,9 +60,7 @@ export const RazorpayProvider = ({ children }) => {
 
   useEffect(() => {
     const handlePaymentSuccess = async () => {
-      console.log("3");
       try {
-        console.log("success aaan tto naseefee", successOrder);
         // Ensure order is defined before accessing its properties
         await axiosInstance.post("/user/save_payment", {
           orderId: successOrder?.id,

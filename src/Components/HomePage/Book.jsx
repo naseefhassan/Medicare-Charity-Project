@@ -38,7 +38,6 @@ function Book() {
       setSelectedDatesCount(diffInDays);
     }
   }, [fromDate, toDate]);
-  console.log(selectedDatesCount);
 
   function formatDate(date) {
     const year = date.getFullYear();
@@ -77,7 +76,6 @@ function Book() {
         const bookid = details._id;
         setBooking([...booking, bookid]);
         const res = await axiosInstance.post(`/user/bookingStatus/${bookid}`);
-        console.log(res);
       } catch (error) {
         console.error(error, "failed");
       }

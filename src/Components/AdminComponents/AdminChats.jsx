@@ -43,16 +43,15 @@ function AdminChats() {
   useEffect(() => {
     if (!socket) return;
     socket.on("message", ({ message, sender, receiver }) => {
-      console.log(message);
       setReceivedMsg((prevMsg) => [
         ...prevMsg,
         { message: message.trim(), sender },
       ]);
     });
-     // Clean up the event listener when the component unmounts
-  return () => {
-    socket.off("message");
-  };
+    // Clean up the event listener when the component unmounts
+    return () => {
+      socket.off("message");
+    };
   }, [socket]);
 
   const handleSend = async () => {
@@ -142,7 +141,7 @@ function AdminChats() {
           ))}
         </div>
 
-        <div className="relative flex flex-col w-full">
+        <div className="relative flex flex-col w-full ">
           <div className="flex items-center w-full px-2 py-5 border-b-2">
             <div className="flex items-center justify-center w-12 h-12 font-bold text-gray-700 bg-gray-300 rounded-full">
               {selectedReceiver &&

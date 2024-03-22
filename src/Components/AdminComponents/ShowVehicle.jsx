@@ -10,7 +10,6 @@ function ShowVehicle() {
       try {
         const res = await axiosInstance.get("/admin/showVehicle");
         setVehicle(res.data.Vehicle);
-        console.log(res);
       } catch (error) {
         console.error(error);
       }

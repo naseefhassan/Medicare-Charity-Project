@@ -67,8 +67,8 @@ function Header() {
             </div>
             <ul
               className={`${
-                isMenuOpen ? "block" : "hidden"
-              } absolute top-16 text-[13px] md:text-[16px] left-0 w-[150px] h-[200px] bg-gray-400 bg-opacity-80  sm:flex sm:gap-4 sm:ml-0 sm:w-auto sm:bg-transparent sm:top-auto sm:flex-row sm:justify-end sm:items-center sm:relative`}
+                isMenuOpen ? "block " : "hidden"
+              } absolute top-16 text-[13px] md:text-[16px] left-0 w-[150px] h-[150px] hover:border-b-200 justify-around flex items-start flex-col  bg-gray-400 bg-opacity-80  sm:flex sm:gap-4 sm:ml-0 sm:w-auto sm:bg-transparent sm:top-auto sm:flex-row sm:justify-end sm:items-center sm:relative`}
             >
               <li
                 onClick={scrollToTop}

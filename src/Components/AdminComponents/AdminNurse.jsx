@@ -36,7 +36,6 @@ function AdminNurse() {
     } catch (error) {
       console.error(error, "PostNurse Error");
     }
-    console.log(formData);
   };
 
   return (

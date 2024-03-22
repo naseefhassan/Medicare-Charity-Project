@@ -21,7 +21,6 @@ function ShowNurse() {
 
   const editNurse = async (nurseId) => {
     try {
-      console.log(nurseId, "nurseeeeed");
       const res = await axiosInstance.put(`/admin/editnurse/${nurseId}`);
     } catch (error) {
       console.error(error, "nurse id fetching failed");
