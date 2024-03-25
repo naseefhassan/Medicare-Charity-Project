@@ -54,7 +54,7 @@ function Blog() {
           <div className=" w-[600px] flex items-center   bg-slate-200 rounded-lg">
             <div className="w-1/2">
               <img
-              onClick={handlePrev}
+                onClick={handlePrev}
                 src={blogs[currentPage].img}
                 className="w-[380px] h-[300px]  rounded-t-lg bg-no-repeat bg-cover bg-center"
               />

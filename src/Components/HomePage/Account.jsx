@@ -93,7 +93,7 @@ function Account() {
       <Header />
       <div
         style={{ backgroundImage: `url(${donationImg})` }}
-        className="flex bg-no-repeat bg-center min-h-svh bg-cover justify-stretch px-20 items-center "
+        className="flex bg-no-repeat bg-center min-h-svh   bg-cover justify-stretch px-20 items-center "
       >
         <div className="flex justify-center w-[250px]  sm:w-1/3 border-2 p-10 h-[200px] bg-gray-50 flex-col items-center space-y-4 rounded-tl-2xl rounded-br-2xl">
           <input

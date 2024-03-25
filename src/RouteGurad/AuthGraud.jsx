@@ -22,7 +22,6 @@ const AuthGraud = () => {
       // If there is no token in Redux store and local storage, redirect to home
       navigate("/");
       toast.error("Please Login 🤗");
-      alert("please login");
     }
   }, [token, dispatch, navigate]);
 

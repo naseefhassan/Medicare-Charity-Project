@@ -2,6 +2,7 @@ import axiosInstance from "../../api/axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../Header/Header";
+import { toast } from "react-toastify";
 
 function Profile() {
   const { userId } = useParams();
@@ -53,6 +54,7 @@ function Profile() {
         "/user/profileupdate",
         updatedProfile
       );
+      toast.success('Profile Edited')
     } catch (error) {
       console.error("Failed to update profile:", error);
     }

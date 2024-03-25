@@ -8,7 +8,7 @@ import loco_6 from "../../assets/Images/icons8-mail-24.png";
 
 function Footer() {
   return (
-      <div className="bg-[#4B4B4B] text-white w-full ">
+    <div className="bg-[#4B4B4B] text-white w-[450px] sm:w-full">
       <div className=" flex justify-around items-center  p-2 ">
         <h1 className="text-3xl">Medicare</h1>
         <div className="flex flex-col justify-center items-center">
@@ -23,7 +23,13 @@ function Footer() {
       <div className=" mx-8 sm:mx-32">
         <h1>About Us</h1>
         <h1>
-        Medicare is dedicated to nurturing a Kingdom of God-minded new generation among children and youths. Our mission focuses on instilling Kingdom principles within the hearts and minds of the next generation. Through targeted efforts, we strive to foster a community where young individuals embody the values and teachings of the Kingdom. Our commitment lies in shaping a future generation that reflects the divine principles of love, compassion, and righteousness.
+          Medicare is dedicated to nurturing a Kingdom of God-minded new
+          generation among children and youths. Our mission focuses on
+          instilling Kingdom principles within the hearts and minds of the next
+          generation. Through targeted efforts, we strive to foster a community
+          where young individuals embody the values and teachings of the
+          Kingdom. Our commitment lies in shaping a future generation that
+          reflects the divine principles of love, compassion, and righteousness.
         </h1>
       </div>
       <div className="sm:flex justify-around ">
