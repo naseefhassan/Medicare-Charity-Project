@@ -42,10 +42,7 @@ function EditNurse() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axiosInstance.put(
-        `/admin/editnurse/${nurseId}`,
-        editedNurse
-      );
+      await axiosInstance.put(`/admin/editnurse/${nurseId}`, editedNurse);
       toast.success("Successfully edited");
     } catch (error) {
       console.error(error, "error in editing");
