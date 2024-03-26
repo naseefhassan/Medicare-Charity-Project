@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ShowMobilityAids() {
   const [MobilityAids, setMobilityAids] = useState([]);
@@ -21,6 +23,7 @@ function ShowMobilityAids() {
   const deleteNurse = async (toolsDelId) => {
     try {
       await axiosInstance.delete(`/admin/mobilityDelete/${toolsDelId}`);
+      toast.success('Deleted')
     } catch (error) {
       console.error(error, "error in deleting");
     }
@@ -82,6 +85,7 @@ function ShowMobilityAids() {
             </div>
           ))}
         </div>
+        <ToastContainer/>
       </div>
     </>
   );

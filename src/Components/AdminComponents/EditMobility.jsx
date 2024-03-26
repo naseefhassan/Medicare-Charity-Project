@@ -2,6 +2,8 @@ import  { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function EditMobility() {
   const { toolsId } = useParams();
@@ -44,6 +46,7 @@ function EditMobility() {
         `/admin/editMobilityAids/${toolsId}`,
         editMobilty
       );
+      toast.success('Successfully Edited')
     } catch (error) {
       console.error(error, "error in editing");
     }
@@ -172,6 +175,7 @@ function EditMobility() {
             </form>
           </div>
         </div>
+        <ToastContainer/>
       </div>
     </>
   );

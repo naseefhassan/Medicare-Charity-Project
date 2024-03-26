@@ -3,6 +3,9 @@
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function AdminNurse() {
   const [username, setUsername] = useState("");
@@ -33,6 +36,7 @@ function AdminNurse() {
           "Content-Type": "multipart/form-data",
         },
       });
+      toast.success('Data Added')
     } catch (error) {
       console.error(error, "PostNurse Error");
     }
@@ -193,6 +197,7 @@ function AdminNurse() {
             </div>
           </div>
         </div>
+        <ToastContainer/>
       </div>
     </>
   );

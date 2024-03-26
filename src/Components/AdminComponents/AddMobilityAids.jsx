@@ -2,6 +2,8 @@
 import { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddMobilityAids() {
   const [item, setitem] = useState("");
@@ -11,6 +13,7 @@ function AddMobilityAids() {
   const [rate, setrate] = useState("");
   const [description, setdescription] = useState("");
   const [image, setimage] = useState("");
+  
 
   const DataSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +32,7 @@ function AddMobilityAids() {
           "Content-Type": "multipart/form-data",
         },
       });
+      toast.success('Mobility Item Added')
     } catch (error) {
       console.error(error, "failed to append");
     }
@@ -171,6 +175,7 @@ function AddMobilityAids() {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import AdminHeader from "./AdminHeader";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function ShowNurse() {
   const [NurseData, setNurseData] = useState([]);
@@ -31,7 +34,7 @@ function ShowNurse() {
     try {
       setDeletedNurseIds([...deletedNurseIds, delId]);
       const res = await axiosInstance.post(`/admin/delNurse/${delId}`)
-   
+      toast.success('Deleted ')
     } catch (error) {
       console.error(error,'deleting failed');
     }
@@ -98,6 +101,7 @@ function ShowNurse() {
             </div>
           ))}
         </div>
+        <ToastContainer/>
       </div>
     </>
   );

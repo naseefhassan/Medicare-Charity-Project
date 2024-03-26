@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import axiosInstance from "../../api/axios";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function EditNurse() {
   const { nurseId } = useParams();
 
   const [editedNurse, setEditedNurse] = useState({
-    username: '',
+    username: "",
     gender: "",
     age: "",
     phoneNumber: "",
     Qualification: "",
     Experience: "",
-    rate:"",
+    rate: "",
     Image: "",
   });
 
@@ -44,6 +46,7 @@ function EditNurse() {
         `/admin/editnurse/${nurseId}`,
         editedNurse
       );
+      toast.success("Successfully edited");
     } catch (error) {
       console.error(error, "error in editing");
     }
@@ -56,14 +59,14 @@ function EditNurse() {
           title={"Edit Nurse"}
           Show={"Show Nurse"}
           Add={"Add nurse"}
-          Home={'Home'}
-          Homeroute={'/admin/adminhome'}
+          Home={"Home"}
+          Homeroute={"/admin/adminhome"}
           Addroute={"/admin/adminnurse"}
           Showroute={"/admin/showNurse"}
         />
 
         <div>
-          <div className="flex justify-center h-screen mt-2">
+          <div className="flex justify-center mt-2">
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
               <h1 className="mb-4 text-2xl font-bold text-center tc">
                 Edit Nurse
@@ -182,6 +185,7 @@ function EditNurse() {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );

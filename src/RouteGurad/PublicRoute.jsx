@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const PublicRoute = () => {
-    const navigate = useNavigate()
-    const token = localStorage.getItem('jwtToken')
+  const navigate = useNavigate();
+  const token = localStorage.getItem("jwtToken");
 
-    useEffect(()=>{
-        if(token){
-            navigate('/')
-        }
-    },[])
-  return (
-    <div>{token && <Outlet/>}</div>
-  )
-}         
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, []);
+  return <div>{token && <Outlet />}</div>;
+};
 
-export default PublicRoute
+export default PublicRoute;

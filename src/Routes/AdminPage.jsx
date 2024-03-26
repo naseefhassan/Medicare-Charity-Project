@@ -10,11 +10,13 @@ import ShowVolunteer from '../Components/AdminComponents/ShowVolunteer'
 import UserProfile from '../Components/AdminComponents/UserProfile'
 import ShowVehicle from '../Components/AdminComponents/ShowVehicle'
 import AdminChats from '../Components/AdminComponents/AdminChats'
+import AuthGraud from '../RouteGurad/AuthGraud'
 
 
 function AdminPages() {
   return (
     <Routes>
+        <Route path="/" element={<AuthGraud/>}>
         <Route path='/adminhome/*' element={<AdminPage/>} ></Route>
         <Route path='/adminnurse/*' element={<NursePage/>} ></Route>
         <Route path='/editnurse/:nurseId' element={<EditNurse/>}></Route>
@@ -26,6 +28,7 @@ function AdminPages() {
         <Route path='/userProfile/*' element={<UserProfile/>}></Route>
         <Route path='/showVehicle/*' element={<ShowVehicle/>}></Route>
         <Route path='/chats' element={<AdminChats/>}></Route>
+        </Route>
 
 
     </Routes>
