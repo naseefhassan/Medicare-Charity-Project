@@ -38,10 +38,12 @@ function Blog() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h1 className="text-center text-5xl mt-1">
-        Next Generation for the Kingdom of God
-      </h1>
+    <div className="flex flex-col ml-[40px] justify-center items-center">
+      <div className="w-[450px] sm:w-full pl-[60px] ">
+        <h1 className="text-center  text-5xl mt-1">
+          Next Generation for the Kingdom of God
+        </h1>
+      </div>
       <div className="my-8 sm:flex flex-wrap gap-3 ml-[90px] sm:ml-0">
         <div className="flex sm:gap-10 mt-4 w-[450px] sm:w-full justify-around my-10 items-center ">
           <img

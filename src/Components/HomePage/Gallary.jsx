@@ -15,7 +15,7 @@ import Img12 from "../../assets/Images/gallary_12.jpg";
 
 function Gallary() {
   return (
-    <div className="flex flex-col w-[465px] sm:w-full justify-center items-center ml-[0px] sm:ml-0">
+    <div className="flex flex-col min-w-[410px] sm:w-full justify-center items-center ml-[0px] sm:ml-0">
       <h1 className="text-center text-5xl mb-8 ml-[30px] sm:ml-0 ">
         Our Gallary
       </h1>
