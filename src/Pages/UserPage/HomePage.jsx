@@ -9,16 +9,15 @@ import Donate from "../../Components/HomePage/Donate";
 function HomePage() {
   return (
     <>
-    <div className="">
-
-      <Donate />
-      <Renting />
-      <WhatWeDo />
-      <Volunteer />
-      <Gallary />
-      <Blog />
-      <Footer />
-    </div>
+      <div>
+        <Donate />
+        <Renting />
+        <WhatWeDo />
+        <Volunteer />
+        <Gallary />
+        <Blog />
+        <Footer />
+      </div>
     </>
   );
 }

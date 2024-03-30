@@ -8,7 +8,7 @@ import loco_6 from "../../assets/Images/icons8-mail-24.png";
 
 function Footer() {
   return (
-    <div className="bg-[#4B4B4B] text-white w-[450px] sm:w-full">
+    <div className="bg-[#4B4B4B]  text-white w-[450px] ns:w-[620px] sm:w-full">
       <div className=" flex justify-around items-center  p-2 ">
         <h1 className="text-3xl">Medicare</h1>
         <div className="flex flex-col justify-center items-center">

@@ -53,7 +53,7 @@ function Header() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center  justify-center h-16 text-white bg-gray-400 ring-opacity-70">
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center h-16 text-white bg-gray-400 ring-opacity-70">
         <div className="container px-4 mx-auto sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-center gap-3">
@@ -68,7 +68,7 @@ function Header() {
             <ul
               className={`${
                 isMenuOpen ? "block " : "hidden"
-              } absolute top-16 text-[13px] md:text-[16px] left-0 w-[150px] h-[150px] hover:border-b-200 justify-around flex items-start flex-col  bg-gray-400 bg-opacity-80  sm:flex sm:gap-4 sm:ml-0 sm:w-auto sm:bg-transparent sm:top-auto sm:flex-row sm:justify-end sm:items-center sm:relative`}
+              } absolute top-16 text-[13px] md:text-[16px] left-0 w-[150px] h-[150px] hover:border-b-200 justify-around flex items-center flex-col  bg-gray-400 bg-opacity-80  sm:flex sm:gap-4 sm:ml-0 sm:w-auto sm:bg-transparent sm:top-auto sm:flex-row sm:justify-end sm:items-center sm:relative`}
             >
               <li
                 onClick={scrollToTop}

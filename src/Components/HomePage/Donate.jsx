@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 function Donate() {
   return (
     <div
-      className="image w-[465px] sm:w-full my-[-100px]  h-[110vh] bg-cover bg-no-repeat bg-fixed bg-center "
+      className="image w-[465px] ns:w-[630px] sm:w-full my-[-100px]  h-[110vh] bg-cover bg-no-repeat bg-fixed bg-center "
       style={{ backgroundImage: `url(${HomePhoto})` }}
     >
       <Header />

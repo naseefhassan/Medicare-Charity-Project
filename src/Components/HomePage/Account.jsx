@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,7 +8,6 @@ import Header from "../Header/Header";
 
 function Account() {
   const navigate = useNavigate();
-  const [order, setOrder] = useState(null);
   const [amount, setAmount] = useState("");
   const [successOrder, setsuccessOrder] = useState(null);
   const [paymentId, setPaymentId] = useState("");
@@ -56,7 +55,6 @@ function Account() {
   useEffect(() => {
     const handlePaymentSuccess = async () => {
       try {
-        // Ensure order is defined before accessing its properties
         await axiosInstance.post("/user/save_payment", {
           orderId: successOrder?.id,
           paymentId: paymentId.razorpay_payment_id,
@@ -79,9 +77,8 @@ function Account() {
 
   // Function to handle payment initiation
   const initiatePayment = (amount) => {
-    // Prevent navigation when initiating payment
     if (amount > 0) {
-      setAmount(amount); // This line is optional, just to ensure the latest amount is set
+      setAmount(amount);
       createPayment();
     } else {
       toast.warning("Please enter a valid amount");
@@ -93,24 +90,24 @@ function Account() {
       <Header />
       <div
         style={{ backgroundImage: `url(${donationImg})` }}
-        className="flex bg-no-repeat bg-center min-h-svh   bg-cover justify-stretch px-20 items-center "
+        className="flex bg-no-repeat bg-center min-h-svh   bg-cover justify-stretch px-10 sm:px-20 items-center "
       >
-        <div className="flex justify-center w-[250px]  sm:w-1/3 border-2 p-10 h-[200px] bg-gray-50 flex-col items-center space-y-4 rounded-tl-2xl rounded-br-2xl">
+        <div className="flex justify-center w-[250px]  sm:w-1/2 lg:w-1/3 border-2 p-10 h-[200px] bg-gray-50 flex-col items-center space-y-4 rounded-tl-2xl rounded-br-2xl">
           <input
             type="number"
-            className="border w-1/2 text-sm border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500 appearance-none"
+            className="border w-[200px] text-sm border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500 appearance-none"
             value={amount}
             onChange={handleAmountChange}
             placeholder="Enter amount"
           />
 
           <button
-            className="bg-orange-500 text-white rounded-md px-4 py-2 hover:bg-orange-600 focus:outline-none focus:bg-orange-600"
+            className="bg-orange-500  text-white rounded-md px-4 py-2 hover:bg-orange-600 focus:outline-none focus:bg-orange-600"
             onClick={() => initiatePayment(amount)}
           >
             Donate
           </button>
-          {order && navigate("/")}
+          {successOrder && navigate("/")}
           <ToastContainer />
         </div>
       </div>

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function Volunteer() {
   return (
-    <div className="ml-[35px] sm:ml-0 ">
+    <div className="ml-[40px] sm:ml-0 ">
       <div className="w-[360px] sm:w-full">
         <h1 className="mt-3 text-5xl text-center ">Volunteering </h1>
         <h1 className="mt-3 text-3xl text-center">

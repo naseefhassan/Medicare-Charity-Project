@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useExcludedDates } from "../../Context/Booking";
 import "react-datepicker/dist/react-datepicker.css";
 import axiosInstance from "../../api/axios";
@@ -64,19 +64,19 @@ function MobilityBook() {
   }
 
   const handlePaymentClick = async () => {
-    if(selectedDatesCount === 0){
-        alert('select a date first')
-    }else{
-    try {
-      const price = details.rate * selectedDatesCount;
-      const response = await createPayment(price);
-      navigate("/user/mobilityaids");
-      const bookid = details._id;
-      setBooking([...booking, bookid]);
-        const res = await axiosInstance.post(`/user/MobilitybookingStatus/${bookid}`);
-    } catch (error) {
-      console.error(error, "failed");
-    }
+    if (selectedDatesCount === 0) {
+      alert("select a date first");
+    } else {
+      try {
+        const price = details.rate * selectedDatesCount;
+        await createPayment(price);
+        navigate("/user/mobilityaids");
+        const bookid = details._id;
+        setBooking([...booking, bookid]);
+        await axiosInstance.post(`/user/MobilitybookingStatus/${bookid}`);
+      } catch (error) {
+        console.error(error, "failed");
+      }
     }
   };
   return (

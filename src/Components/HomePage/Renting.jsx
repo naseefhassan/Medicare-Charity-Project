@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Renting() {
   return (
-    <div className="ml-[35px] sm:ml-0 my-32 ">
+    <div className="ml-[40px] sm:ml-0 my-32 ">
       <div className=" w-[350px] sm:w-full">
         <h1 className=" text-4xl   text-center ml-[45px] sm:ml-0 py-10  ">
           “The best way to find yourself is to lose yourself <br /> in the
