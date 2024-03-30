@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import io from "socket.io-client";
 import axios from "axios";
@@ -17,7 +17,7 @@ function AdminChats() {
   };
 
   useEffect(() => {
-    const SocketIo = io("http://13.48.192.26/io", {
+    const SocketIo = io("http://localhost:3333/", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
@@ -42,7 +42,7 @@ function AdminChats() {
 
   useEffect(() => {
     if (!socket) return;
-    socket.on("message", ({ message, sender, receiver }) => {
+    socket.on("message", ({ message, sender }) => {
       setReceivedMsg((prevMsg) => [
         ...prevMsg,
         { message: message.trim(), sender },
@@ -58,20 +58,20 @@ function AdminChats() {
     if (!socket || !selectedReceiver?.email || !message.trim()) return;
 
     try {
-      await axios.post("http://13.48.192.26/io/message/saveMessage", {
+      await axios.post("http://localhost:3333/message/saveMessage", {
         message: message.trim(),
         sender: sender,
         receiver: selectedReceiver.email,
       });
-
+      
       socket.emit("message", {
         sender: sender,
         receiver: selectedReceiver.email,
         message: message.trim(),
       });
-
       const sentMessage = { message: message.trim(), sender: sender };
       setReceivedMsg((prevMsg) => [...prevMsg, sentMessage]);
+
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -79,7 +79,7 @@ function AdminChats() {
   };
 
   const handleReceiverClick = async (receiver) => {
-    const chat = await axios.get("http://13.48.192.26/io/message/getMessage");
+    const chat = await axios.get("http://localhost:3333/message/getMessage");
     const messages = chat.data.message;
     const filteredMessages = messages.filter((msg) => {
       return (
@@ -107,7 +107,7 @@ function AdminChats() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex items-center justify-between px-5 py-5 bg-white border-b-2">
+      <div className="flex items-center justify-between px-5  bg-white border-b-2">
         <div className="text-2xl font-semibold">GoingChat</div>
         <div className="flex items-center justify-center w-12 h-12 p-2 font-semibold text-white bg-yellow-500 rounded-full">
           NH
@@ -141,8 +141,8 @@ function AdminChats() {
           ))}
         </div>
 
-        <div className="relative flex flex-col w-full ">
-          <div className="flex items-center w-full px-2 py-5 border-b-2">
+        <div className="relative flex flex-col w-full  ">
+          <div className="flex  items-center w-full px-2 py-5 border-b-2">
             <div className="flex items-center justify-center w-12 h-12 font-bold text-gray-700 bg-gray-300 rounded-full">
               {selectedReceiver &&
                 selectedReceiver.username.charAt(0).toUpperCase()}
@@ -151,7 +151,7 @@ function AdminChats() {
               {selectedReceiver && selectedReceiver.username}
             </div>
           </div>
-          <div className="flex flex-col flex-grow p-2 overflow-auto">
+          <div className="flex mb-16 flex-col flex-grow p-2 overflow-auto">
             {receivedMsg.map((msg, index) => (
               <div
                 key={index}

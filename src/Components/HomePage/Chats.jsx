@@ -12,7 +12,7 @@ function Chats() {
   const [receivedMsg, setReceivedMsg] = useState([]);
 
   useEffect(() => {
-    const SocketIo = io("http://13.48.192.26/io", {
+    const SocketIo = io("http://localhost:3333/", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
@@ -31,7 +31,7 @@ function Chats() {
         setReceiver(response.data.admin.email);
 
         const chat = await axios.get(
-          "http://13.48.192.26/io/message/getMessage"
+          "http://localhost:3333/message/getMessage"
         );
         const messages = chat.data.message;
         const filteredMessages = messages.filter((msg) => {
@@ -54,6 +54,7 @@ function Chats() {
   useEffect(() => {
     if (!socket) return;
     socket.on("message", ({ message, sender }) => {
+      console.log(message, " messaeage");
       setReceivedMsg((prevMsg) => [
         ...prevMsg,
         { message: message.trim(), sender },
@@ -67,7 +68,7 @@ function Chats() {
 
   const handleSend = async () => {
     if (!socket || !message.trim()) return;
-
+    console.log(socket);
     socket.emit("message", {
       sender: sender,
       receiver: receiver,
@@ -75,7 +76,7 @@ function Chats() {
     });
 
     try {
-      await axios.post("http://13.48.192.26/io/message/saveMessage", {
+      await axios.post("http://localhost:3333/message/saveMessage", {
         message: message,
         sender: sender,
         receiver: receiver,
