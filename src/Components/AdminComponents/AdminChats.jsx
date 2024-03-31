@@ -17,7 +17,7 @@ function AdminChats() {
   };
 
   useEffect(() => {
-    const SocketIo = io("http://13.48.192.26", {
+    const SocketIo = io("http://localhost:3333", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
@@ -58,12 +58,12 @@ function AdminChats() {
     if (!socket || !selectedReceiver?.email || !message.trim()) return;
 
     try {
-      await axios.post("http://13.48.192.26message/saveMessage", {
+      await axios.post("http://localhost:3333/io/message/saveMessage", {
         message: message.trim(),
         sender: sender,
         receiver: selectedReceiver.email,
       });
-      
+
       socket.emit("message", {
         sender: sender,
         receiver: selectedReceiver.email,
@@ -79,7 +79,7 @@ function AdminChats() {
   };
 
   const handleReceiverClick = async (receiver) => {
-    const chat = await axios.get("http://13.48.192.26message/getMessage");
+    const chat = await axios.get("http://localhost:3333/io/message/getMessage");
     const messages = chat.data.message;
     const filteredMessages = messages.filter((msg) => {
       return (
@@ -151,27 +151,28 @@ function AdminChats() {
               {selectedReceiver && selectedReceiver.username}
             </div>
           </div>
-          <div className="flex mb-16 flex-col flex-grow p-2 overflow-auto">
-            {receivedMsg.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex mb-4 ${
-                  msg.sender === sender ? "justify-end" : "justify-start"
-                }`}
-              >
+          {selectedReceiver && (
+            <div className="flex mb-16 flex-col flex-grow p-2 overflow-auto">
+              {receivedMsg.map((msg, index) => (
                 <div
-                  className={`${
-                    msg.sender === sender
-                      ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
-                      : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
-                  } py-3 px-4 mr-2`}
+                  key={index}
+                  className={`flex mb-4 ${
+                    msg.sender === sender ? "justify-end" : "justify-start"
+                  }`}
                 >
-                  {msg.message}
+                  <div
+                    className={`${
+                      msg.sender === sender
+                        ? "bg-blue-400 rounded-bl-xl rounded-tl-xl rounded-tr-xl text-white"
+                        : "bg-gray-400 rounded-br-xl rounded-tr-xl rounded-tl-xl text-white"
+                    } py-3 px-4 mr-2`}
+                  >
+                    {msg.message}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
+              ))}
+            </div>
+          )}
           <div className="absolute bottom-0 flex items-center w-full">
             <input
               className="w-full px-3 py-5 pr-12 bg-gray-300 rounded-xl"
