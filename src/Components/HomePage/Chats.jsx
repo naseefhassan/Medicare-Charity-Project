@@ -12,7 +12,7 @@ function Chats() {
   const [receivedMsg, setReceivedMsg] = useState([]);
 
   useEffect(() => {
-    const SocketIo = io("http://13.48.192.26", {
+    const SocketIo = io("http://13.48.192.26/", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
