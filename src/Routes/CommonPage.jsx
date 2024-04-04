@@ -10,14 +10,16 @@ function CommonPage() {
   return (
     <>
       <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/auth" element={<Login />}></Route>
-        <Route path="/" element={<PublicRoute/>}>
-          <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
-          <Route path='/resetPassword/:id/:token' element={<Resetpassword/>}></Route>  
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/auth" element={<Login />}></Route>
+        <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
+        <Route
+          path="/resetPassword/:id/:token"
+          element={<Resetpassword />}
+        ></Route>
+        <Route path="/" element={<PublicRoute />}>
           <Route path="/otp" element={<OTP />}></Route>
         </Route>
-
       </Routes>
     </>
   );

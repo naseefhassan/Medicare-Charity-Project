@@ -12,7 +12,7 @@ function Chats() {
   const [receivedMsg, setReceivedMsg] = useState([]);
 
   useEffect(() => {
-    const SocketIo = io("http://13.48.192.26/", {
+    const SocketIo = io("http://localhost:3333/", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
@@ -31,7 +31,7 @@ function Chats() {
         setReceiver(response.data.admin.email);
 
         const chat = await axios.get(
-          "http://13.48.192.26/io/message/getMessage"
+          "http://localhost:3333/io/message/getMessage"
         );
         const messages = chat.data.message;
         const filteredMessages = messages.filter((msg) => {
@@ -77,7 +77,7 @@ function Chats() {
     });
 
     try {
-      await axios.post("http://13.48.192.26/io/message/saveMessage", {
+      await axios.post("http://localhost:3333/io/message/saveMessage", {
         message: message,
         sender: sender,
         receiver: receiver,
@@ -111,8 +111,10 @@ function Chats() {
           {receivedMsg.map((msg, index) => (
             <div
               key={index}
-              className={`flex mb-4 ${
-                msg.sender === sender ? "justify-end" : "justify-start"
+              className={`flex mb-3  ${
+                msg.sender === sender
+                  ? "justify-end ml-9"
+                  : "justify-start mr-9"
               }`}
             >
               <div>

@@ -17,7 +17,7 @@ function AdminChats() {
   };
 
   useEffect(() => {
-    const SocketIo = io("http://13.48.192.26", {
+    const SocketIo = io("http://localhost:3333/", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
@@ -58,7 +58,7 @@ function AdminChats() {
     if (!socket || !selectedReceiver?.email || !message.trim()) return;
 
     try {
-      await axios.post("http://13.48.192.26io/message/saveMessage", {
+      await axios.post("http://localhost:3333/io/message/saveMessage", {
         message: message.trim(),
         sender: sender,
         receiver: selectedReceiver.email,
@@ -79,7 +79,7 @@ function AdminChats() {
   };
 
   const handleReceiverClick = async (receiver) => {
-    const chat = await axios.get("http://13.48.192.26io/message/getMessage");
+    const chat = await axios.get("http://localhost:3333/io/message/getMessage");
     const messages = chat.data.message;
     const filteredMessages = messages.filter((msg) => {
       return (
@@ -157,7 +157,9 @@ function AdminChats() {
                 <div
                   key={index}
                   className={`flex mb-4 ${
-                    msg.sender === sender ? "justify-end" : "justify-start"
+                    msg.sender === sender
+                      ? "justify-end ml-10"
+                      : "justify-start mr-10"
                   }`}
                 >
                   <div
