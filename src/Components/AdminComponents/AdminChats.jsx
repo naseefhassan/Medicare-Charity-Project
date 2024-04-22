@@ -17,7 +17,7 @@ function AdminChats() {
   };
 
   useEffect(() => {
-    const SocketIo = io("http://13.48.192.26/io/", {
+    const SocketIo = io("https://13.48.192.26/io/", {
       transports: ["websocket"],
     });
     setSocket(SocketIo);
